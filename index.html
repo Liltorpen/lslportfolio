@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSL STUDIO</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Oswald:wght@400;500;700&display=swap">
+</head>
+
+<body>
+    
+    <header>
+        <div class="logo">
+        <a href="index.html"><img src="images/LSL.svg" alt="LSL STUDIO LOGO"></a>
+        </div>
+        <nav>
+            <ul class="nav">
+                <li><a class="nav__link" href="cases.html">CASES</a></li>
+                <li><a class="nav__link" href="studio.html">STUDIO</a></li>
+                <li><a class="nav__link" href="kontakt.html">KONTAKT</a></li>
+            </ul>
+            <button class="nav-burger" aria-label="Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            </button>
+        </nav>
+        <ul class="nav--mobile">
+        <div class="logo"><a href="index.html"><img src="images/LSL.svg" alt="LSL STUDIO LOGO"></a></div>
+        <li><a class="nav__link" href="cases.html">CASES</a></li>
+        <li><a class="nav__link" href="studio.html">STUDIO</a></li>
+        <li><a class="nav__link" href="kontakt.html">KONTAKT</a></li>
+        <p class="nav__link--mobile-c">LSL 2025. ALL RIGHTS RESERVED</p>
+        </ul>
+    </header>
+
+    <main>
+
+        <div class="timeline">
+            <div class="timeline__line"></div>
+
+
+            <section class="hero hero--landingpage">
+                <h1 class="h1 h1--landingpage">DYNAMISK CONTENT</h1>
+                <h2 class="h2--landingpage">DER SKÆRER IGENNEM STØJEN</h2>
+                <div class="hero--landingpage__scroll"><h2 class="h2--scroll">SCROLL</h2></div>
+            </section>
+
+
+            <section class="intro-container">
+                <p class="p--intro">
+                    <strong>I en verden af uendelig scroll</strong> er opmærksomhed blevet en vigtig valuta.
+                    LSL skaber ikke bare indhold, men visuelle oplevelser, der fastholder seeren.
+                    Uanset om det er motion graphics, visuel identitet, plakater eller brochure,
+                    bygger LSL broen mellem kunstnerisk kant og kommerciel værdi.
+                </p>
+
+                <div class="timeline__thick"></div>
+
+                <div class="staff-badge">
+                    <img src="images/staff_badge_orange.png" alt="LSL Staff Badge" loading="lazy">
+                </div>
+            </section>
+        </div>
+
+        <h2 class="h2--cases">UDVALGTE CASES</h2>
+        <section class="cases-list">
+            <article class="case-item">
+                <div class="case-item__visual"></div>
+                <div class="case-item__info">
+                    <h3>CASE 1</h3>
+                    <div class="case-item__tags">[MOTION] [VIDEO]</div>
+                    <p>En kort tekst om projektet her.</p>
+                </div>
+            </article>
+
+            <article class="case-item case-item--reversed">
+                <div class="case-item__visual"></div>
+                <div class="case-item__info">
+                    <h3>CASE 2</h3>
+                    <div class=" case-item__tags">[BRANDING]</div>
+                    <p>Beskrivelse af case nummer to.</p>
+                </div>
+            </article>
+
+            <article class="case-item">
+                <div class="case-item__visual"></div>
+                <div class="case-item__info">
+                    <h3>CASE 3</h3>
+                    <div class="case-item__tags">[GRAFIK]</div>
+                    <p>Beskrivelse af case nummer tre.</p>
+                </div>
+            </article>
+
+        </section>
+
+
+        <div class="knap__container">
+            <a href="cases.html" class="knap">SE CASES</a>
+        </div>
+
+    </main>
+
+
+    <footer>
+        <h2 class="footer-logo">LSL STUDIO</h2>
+        <p class="copyright">LSL 2025. ALL RIGHTS RESERVED</p>
+
+        <div class="social-links">
+            <a href="#"><i class="ri-instagram-line"></i></a>
+            <a href="#"><i class="ri-linkedin-fill"></i></a>
+            <a href="#"><i class="ri-facebook-circle-fill"></i></a>
+            <a href="#"><i class="ri-tiktok-fill"></i></a>
+        </div>
+    </footer>
+
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        document.querySelectorAll('.case-item, .h2--cases')
+            .forEach((el) => observer.observe(el));
+
+    const burger = document.querySelector('.nav-burger');
+    const navMobile = document.querySelector('.nav--mobile');
+    const links = document.querySelectorAll('.nav--mobile .nav__link');
+
+    burger.addEventListener('click', () => {
+        burger.classList.toggle('active');
+        navMobile.classList.toggle('active');
+        
+        document.body.style.overflow = navMobile.classList.contains('active') ? 'hidden' : 'auto';
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            burger.classList.remove('active');
+            navMobile.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+    </script>
+</body>
+
+</html>
