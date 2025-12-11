@@ -189,7 +189,7 @@ h1 {
 
 .h1--landingpage {
     font-family: var(--font-headline);
-    font-size: clamp(64px, calc(40.727px + 7.273vw), 100px);
+    font-size: clamp(64px, calc(40.727px + 7.273vw), 120px);
     text-transform: uppercase;
     margin-bottom: 0;
     padding-bottom: 5px;
@@ -202,7 +202,6 @@ h2 {
     font-family: var(--font-headline);
     font-size: 36px;
     font-weight: 400;
-    margin-top: 0px;
     background-color: var(--bg-color);
     transition: 0.3s ease-out;
     z-index: 1; 
@@ -224,7 +223,7 @@ h2 {
 
 h3 {
     font-family: var(--font-headline);
-    font-size: clamp(26px, calc(16.545px + 2.955vw), 35px);
+    font-size: clamp(26px, calc(16.545px + 2.955vw), 28px);
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -242,9 +241,9 @@ h3 {
 
 p {
     font-family: var(--font-body);
-    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
     text-align: justify;
-    line-height: 33px;
+    line-height: 30px;
     letter-spacing: 2px;
     background-color: var(--bg-color);
     padding-top: 20px;
@@ -255,17 +254,6 @@ p {
 
 .p--intro {
     max-width: 75%;
-}
-
-.timeline__thick {
-    width: 71px;
-    height: 300px;
-    background-color: var(--accent-color);
-    margin-top: -20px;
-    margin-bottom: -20px; 
-    position: relative;
-    z-index: 1;
-    transition: 1s ease-in;
 }
 
 .staff-badge img {
@@ -279,7 +267,7 @@ p {
 .h2--cases {
     position: relative;
     opacity: 0;
-    padding-top: 200px;
+    padding-top: 130px;
     padding-left: 0;
     transform: translateY(50px);
     transition: all 1s ease-out;
@@ -290,13 +278,13 @@ p {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 300px;
+    gap: 250px;
 }
 
 .case-item {
     display: flex;       
     align-items: center;
-    gap: 60px;
+    gap: 40px;
     opacity: 0;
     transform: translateY(150px);
     transition: all 1s ease-out;
@@ -307,9 +295,10 @@ p {
     aspect-ratio: 1;
     position: relative;
     overflow: hidden;
+    transition: 0.3s ease;
 }
 
-.case-item__visual video {
+.case-item__visual video, .case-item__visual img {
     position: absolute;
     top: 0;
     left: 0;
@@ -326,7 +315,7 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('images/wrap.jpg');
+    background-image: url('images/wrap.webp');
     background-size: cover;
     background-position: center;
     z-index: 2;
@@ -342,7 +331,6 @@ p {
 .case-item__tags {
     color: var(--accent-color);
     letter-spacing: 2px;
-    margin-bottom: 30px;
 }
 
 .case-item__info {
@@ -352,7 +340,7 @@ p {
     width: 100%;
     letter-spacing: 2px;
     line-height: 1.6;
-    text-align: inherit;
+    text-align: justify;
 }
 
 .case-item--reversed {
