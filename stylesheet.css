@@ -210,6 +210,12 @@ h2 {
     font-size: 30px;
 }
 
+.h2--scroll:hover {
+    transition: 0.5s cubic-bezier(0,2,1,-0.5);
+    color: var(--text-color);
+    transform: translateY(-10px);
+}
+
 .h2--landingpage {
     font-family: var(--font-headline);
     font-size: clamp(40px, 22.909px + 3.091vw, 55px);
