@@ -104,7 +104,6 @@ header {
     flex-direction: column;
     text-align: left;
     justify-content: start;
-    align-items: left;
     gap: 110px;
     list-style: none;
     padding: 15px 25px;
@@ -490,7 +489,7 @@ footer {
     flex-direction: column;
     align-items: center;
     font-family: var(--font-headline);
-    font-size: clamp(0,8rem, 2vw, 1.1rem);
+    font-size: clamp(0.8rem, 2vw, 1.1rem);
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
@@ -661,11 +660,11 @@ footer {
     margin-top: 0px;
     font-size: 0.8rem;
     }
-    
-    @media (prefers-reduced-motion: reduce) {
+}
+
+@media (prefers-reduced-motion: reduce) {
     * {
         transition: none !important;
         animation-duration: 0s !important;
     }
-}
 }
