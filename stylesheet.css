@@ -104,7 +104,7 @@ header {
     flex-direction: column;
     text-align: left;
     justify-content: start;
-    gap: 110px;
+    gap: 95px;
     list-style: none;
     padding: 15px 25px;
     margin: 0;
@@ -128,6 +128,7 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px;
+    padding-bottom: 100px;
 }
 
 .timeline {
@@ -140,7 +141,18 @@ main {
     left: 50%;
     transform: translateX(-50%);
     top: 10px;
-    bottom: 110px;
+    bottom: 20px;
+    width: 3px;
+    background-color: var(--accent-color);
+    z-index: 0; 
+}
+
+.timeline__line--kontakt {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    bottom: 170px;
     width: 3px;
     background-color: var(--accent-color);
     z-index: 0; 
@@ -260,6 +272,7 @@ p {
     padding-bottom: 20px;
     position: relative; 
     z-index: 1; 
+    text-decoration: none;
 }
 
 .staff-badge img {
@@ -365,9 +378,8 @@ p {
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 100px;
-    padding-bottom: 100px;
-    gap: 30px;
+    margin: 80px 0px 100px;
+    gap: 18px;
 }
 
 .studio-img {
@@ -379,7 +391,6 @@ p {
 
 .kontakt-flex {
     display: flex;
-    margin-top: 100px;
     width: 100%;
 
 }
@@ -475,8 +486,8 @@ footer {
     align-items: center;
     justify-content: center;
     border-top: 1px solid var(--text-color); 
-    padding: 40px 20px;
-    margin-top: 100px;
+    padding: 20px 20px;
+    margin: 0px;
     background-color: var(--bg-color);
 }
 
@@ -484,7 +495,7 @@ footer {
     font-family: var(--font-headline);
     font-size: clamp(5rem, 5vw, 5rem);
     color: var(--accent-color); 
-    margin: 10px ;
+    margin: 10px;
     line-height: 1;
     font-weight: 700;
     text-transform: uppercase;
@@ -499,6 +510,8 @@ footer {
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
+    margin: 0px;
+    padding: 0px;
 }
 
 .social-links {
@@ -523,6 +536,7 @@ footer {
 
     main {
     padding: 0 25px; 
+    padding-bottom: 100px;
     }
     
     header {
@@ -546,7 +560,7 @@ footer {
     }
 
     .h1--landingpage { 
-    margin-top: 28vh;
+    margin-top: 27vh;
     font-size: clamp(45px, 13.35vw + 1rem, 70px);
     }
     
@@ -582,7 +596,7 @@ footer {
     }
     
     .hero--landingpage__scroll {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     }
 
     .hero {
@@ -647,10 +661,6 @@ footer {
     z-index: 0; 
     }
 
-    .knap__container {
-    margin-top: 50px;
-    }
-    
     .kontakt-flex {
     flex-direction: column;
     margin-top: 60px;
@@ -663,7 +673,6 @@ footer {
     margin-bottom: 0px;
     }
     .copyright {
-    margin-top: 0px;
     font-size: 0.8rem;
     }
 }
