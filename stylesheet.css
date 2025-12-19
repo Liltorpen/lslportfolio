@@ -95,6 +95,7 @@ header {
     z-index: 2000;
     position: relative;
     padding: 0;
+    
 }
 
 .bar {
@@ -153,10 +154,12 @@ header {
 
 .nav-burger.active .bar:nth-child(1) {
     transform: translateY(6.5px) rotate(45deg);
+    background-color: var(--accent-color);
 }
 
 .nav-burger.active .bar:nth-child(2) {
     transform: translateY(-6.5px) rotate(-45deg);
+    background-color: var(--accent-color);
 }
 
 main {
@@ -253,7 +256,7 @@ h2 {
 }
 
 @keyframes hop {
-    0% { transform: translateY(10); }
+    0% { transform: translateY(5px); }
     100% { transform: translateY(-10px); }
 }
 
