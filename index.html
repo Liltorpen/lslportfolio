@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LSL STUDIO</title>
+    <link rel="icon" type="image/lsl_logo" href="images/lsl_logo.svg">
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,19 +51,29 @@
                 <div class="hero--landingpage__scroll"><h2 class="h2--scroll">SCROLL</h2></div>
             </section>
 
-
-            <div class="intro-container">
-                <p>
-                    <strong>I en verden af uendelig scroll</strong> er opmærksomhed blevet en vigtig valuta.
-                    Jeg skaber ikke bare indhold, men visuelle oplevelser, der fastholder seeren.
-                    Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
-                    bygger jeg broen mellem kunstnerisk kant og kommerciel værdi.
-                </p>
+                <section class="hook">
+                <h2>I EN VERDEN AF UENDELIG SCROLL</h2>
+                <p>Er opmærksomhed blevet en vigtig valuta. Jeg skaber <strong>ikke bare indhold</strong>, men <strong>visuelle oplevelser</strong>, der fastholder seeren.
+                Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
+                bygger jeg broen mellem <strong>kunstnerisk kant</strong> og <strong>kommerciel værdi</strong>.</p>
+                </section>
+        
+                <h2 class="h2 h2--stats">ALGORITMEFORSTÅELSE I HØJSÆDET</h2>
+                </div>
+                <section class="stats-flex">
+                    <div class="stat-item"><h2>100K+</h2>
+                    <p>Community Reach</p></div>
+                    <div class="stat-item"><h2>50M+</h2>
+                    <p>TOTALE VISNINGER</p></div>
+                    <div class="stat-item"><h2>113%</h2>
+                    <p>ENGAGEMENT RATE</p></div>
+                    <p class="stats-description">Gennem arbejde med mine egne platforme har jeg opnået en unik forståelse af algoritmerne på TikTok og Instagram.
+                    Jeg omsætter data og tendenser til visuel valuta, der skaber <strong>reel vækst</strong> og fastholder opmærksomheden.</p>
+                </section>
                 <div class="staff-badge">
                     <img src="images/staff_badge.webp" alt="LSL Staff Badge" loading="lazy">
                 </div>
-            </div>
-        </div>
+                
         <h2 class="h2--cases">UDVALGTE CASES</h2>
         <div class="cases-list">
             <article class="case-item">
@@ -86,7 +97,7 @@
                 <div class="case-item__info">
                     <h3>MERCH</h3>
                     <div class=" case-item__tags">[MERCH] [GRAFIK] [MOCKUP]</div>
-                    <p>Designs som adskiller sig fra mængden - designs som skærer igennem støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.</p>
+                    <p>Designs som adskiller sig fra mængden - designs som <strong>skærer igennem</strong> støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.</p>
                 </div>
             </article>
 
@@ -113,7 +124,6 @@
 
 
     <footer>
-        <h2 class="footer-logo">LSL STUDIO</h2>
         <p class="copyright">LSL 2025. ALL RIGHTS RESERVED</p>
 
         <div class="social-links">
@@ -134,7 +144,7 @@
             });
         });
 
-        document.querySelectorAll('.case-item, .h2--cases')
+        document.querySelectorAll('.case-item, .h2--cases, .h2--stats, .stats-flex, .hook, .staff-badge')
             .forEach((el) => observer.observe(el));
 
     const burger = document.querySelector('.nav-burger');
