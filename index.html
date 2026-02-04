@@ -33,7 +33,7 @@
 <body>
     <header>
         <div class="logo">
-        <a href="index.html"><img type="image/svg+xml" src="images/lsl_logo.svg" alt="LSL Studio logo"></a>
+        <a href="index.html"><img type="image/svg+xml" src="images/lsl_logo.svg" alt="LSL Studio Logo"></a>
         </div>
         <nav>
             <ul class="nav">
@@ -85,7 +85,7 @@
                     Jeg omsætter data og tendenser til visuel valuta, der skaber <strong>reel vækst</strong> og fastholder opmærksomheden.</p>
                 </section>
                 <div class="staff-badge">
-                    <img src="images/staff_badge.webp" alt="LSL Staff Badge" loading="lazy">
+                    <img src="images/staff_badge.webp" alt="Et nøglekort hvor mit navn, Lucas Liltorp fremgår. At jeg er 24 år og studerer multimediedesign på UCL i Odense" loading="lazy">
                 </div>
                 
         <h2 class="h2--cases">UDVALGTE CASES</h2>
@@ -106,7 +106,7 @@
 
             <article class="case-item case-item--reversed">
                 <div class="case-item__visual">
-                    <img src="images/merch.webp" alt="Streetwear merch design mockup for LSL Studio" loading="lazy">
+                    <img src="images/merch.webp" alt="Et billede af en mørkegrå t-shirt som indeholder tre fjernsyn stablet ovenpå hinanden hvor bogstaverne L S L som er mine initialer ses forskudt. Dette er et eksempel på et merch design for LSL Studio. Meningen er at skulle vise mine grafiske færdigheder" loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h3>MERCH</h3>
@@ -117,7 +117,7 @@
 
             <article class="case-item">
                 <div class="case-item__visual">
-                     <img src="images/koncertplakat.webp" alt="Eksempel på Lamin koncertplakat" loading="lazy">
+                     <img src="images/koncertplakat.webp" alt="Et eksempel på en koncertplakat. Det er meningen at eksemplet skal vise mine evner indenfor trykte medier med henblik på musik." loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h3>KONCERTPLAKAT</h3>
@@ -146,38 +146,7 @@
         </div>
     </footer>
 
-
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        });
-
-        document.querySelectorAll('.case-item, .h2--cases, .h2--stats, .stats-flex, .hook, .staff-badge')
-            .forEach((el) => observer.observe(el));
-
-    const burger = document.querySelector('.nav-burger');
-    const navMobile = document.querySelector('.nav--mobile');
-    const links = document.querySelectorAll('.nav--mobile .nav__link');
-
-    burger.addEventListener('click', () => {
-        burger.classList.toggle('active');
-        navMobile.classList.toggle('active');
-        
-        document.body.style.overflow = navMobile.classList.contains('active') ? 'hidden' : 'auto';
-    });
-
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            burger.classList.remove('active');
-            navMobile.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
-    </script>
+    <script src="js/scroll.js"></script>
+    <script src="js/burgermenu.js"></script>
 </body>
-
 </html>

@@ -78,7 +78,7 @@
 
             <article class="case-item case-item--reversed">
                 <div class="case-item__visual">
-                    <img src="images/merch.webp" alt="Streetwear merch design mockup for LSL Studio" loading="lazy">
+                    <img src="images/merch.webp" alt="Et billede af en mørkegrå t-shirt som indeholder tre fjernsyn stablet ovenpå hinanden hvor bogstaverne L S L som er mine initialer ses forskudt. Dette er et eksempel på et merch design for LSL Studio. Meningen er at skulle vise mine grafiske færdigheder" loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">MERCH</h2>
@@ -89,7 +89,7 @@
 
             <article class="case-item">
                 <div class="case-item__visual">
-                    <img src="images/albumcover.webp" alt="Et eksempel på et albumcover" loading="lazy">
+                    <img src="images/albumcover.webp" alt="Et albumcover som indeholder en mand med teksten Motion i farven orange. Meningen med dette eksempel er at vise mine kreative færdigheder samt fotografering og billedredigering." loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">ALBUM COVER</h2>
@@ -102,7 +102,7 @@
 
             <article class="case-item case-item--reversed">
                 <div class="case-item__visual">
-                     <img src="images/koncertplakat.webp" alt="Eksempel på Lamin koncertplakat" loading="lazy">
+                     <img src="images/koncertplakat.webp" alt="Et eksempel på en koncertplakat. Det er meningen at eksemplet skal vise mine evner indenfor trykte medier med henblik på musik." loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">KONCERTPLAKAT</h2>
@@ -116,7 +116,7 @@
 
             <article class="case-item">
                 <div class="case-item__visual">
-                    <img src="images/produktbillede.webp" alt="Et produktbillede af en LP" loading="lazy">
+                    <img src="images/produktbillede.webp" alt="Et produktbillede af en LP. Produktet ses på en hvid baggrund og er et typisk packshot i et studie. Meningen med dette eksempel er at vise mine evner indenfor fotografering og særligt med henblik på produktfotografering" loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">PRODUKTBILLEDER</h2>
@@ -129,12 +129,12 @@
 
             <article class="case-item case-item--reversed">
                 <div class="case-item__visual">
-                    <img src="images/rebellion_logo.webp" alt="Fiktivt logo design til Rebellion Records" loading="lazy">
+                    <img src="images/rebellion_logo.webp" alt="Fiktivt logo design til Rebellion Records. Illustrerer bogstavet R som har et kantet udtryk men som også har en visuel balance. Meningen med eksemplet er at vise mine evner indenfor illustration og grafiske udtryk" loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">LOGO DESIGN</h2>
                     <div class="case-item__tags">[VEKTOR] [BRANDING]</div>
-                    <p>Her ses et eksempel på visuel identitet til et fiktionelt pladeselskab "Rebellion Records" som er et mindre pladeselskab i USA.
+                    <p>Her ses et fiktivt eksempel på visuel identitet til et pladeselskab "Rebellion Records" som er et mindre pladeselskab i USA.
                     <br><br>Deres identitet bygger på at være underdogs og det var derfor vigtigt at skabe noget visuelt som er imperfekt, men samtidig ser professionelt ud.
                     </p>
                 </div>
@@ -183,26 +183,8 @@
         });
 
         document.querySelectorAll('.case-item, .h2--cases, .h2--stats')
-            .forEach((el) => observer.observe(el));
-
-    const burger = document.querySelector('.nav-burger');
-    const navMobile = document.querySelector('.nav--mobile');
-    const links = document.querySelectorAll('.nav--mobile .nav__link');
-
-    burger.addEventListener('click', () => {
-        burger.classList.toggle('active');
-        navMobile.classList.toggle('active');
-        
-        document.body.style.overflow = navMobile.classList.contains('active') ? 'hidden' : 'auto';
-    });
-
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            burger.classList.remove('active');
-            navMobile.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
+        .forEach((el) => observer.observe(el));
     </script>
+    <script src="js/burgermenu.js"></script>
 </body>
 </html>
