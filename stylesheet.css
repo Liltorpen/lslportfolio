@@ -417,6 +417,7 @@ p {
 .case-item__info p {
     width: 100%;
     text-align: justify;
+    max-width: 65ch;
 }
 
 .case-item--reversed {
