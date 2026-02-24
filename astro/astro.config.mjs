@@ -1,5 +1,8 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://lucasliltorp.dk
-export default defineConfig({});
+export default defineConfig({
+  build: {
+    format: 'file'
+  },
+  site: 'https://lucasliltorp.dk'
+});

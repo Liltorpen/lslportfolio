@@ -5,6 +5,17 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
 const { title, description } = Astro.props;
+
+// src/components/Header.astro
+const { pathname } = Astro.url;
+
+// Denne funktion fjerner alle skråstreger i enden, før den sammenligner.
+// Det gør den ekstremt stabil overfor server-forskelle.
+const isActive = (path: string) => {
+    const cleanPathname = pathname.replace(/\/$/, "");
+    const cleanPath = path.replace(/\/$/, "");
+    return cleanPathname === cleanPath;
+};
 ---
 
 <!DOCTYPE html>
