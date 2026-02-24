@@ -1,0 +1,39 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="CASES" description="Se mine udvalgte projekter indenfor video, merch og design.">
+    <div class="timeline">
+        <div class="timeline__line"></div>
+        <section class="hero">
+            <h1>CASES</h1>
+        </section>
+            
+        <div class="cases-list">
+            <article class="case-item">
+                <div class="case-item__visual">
+                    <video controls autoplay muted loop playsinline>
+                        <source src="/videos/lsl_optimized.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">VISUALS</h2>
+                    <div class="case-item__tags">[VIDEO] [SHORTFORM]</div>
+                    <p>Denne video skal ses som et manifest for den kreative retning jeg tilbyder.</p>
+                </div>
+            </article>
+
+            <article class="case-item case-item--reversed">
+                <div class="case-item__visual">
+                    <img src="/images/merch.webp" alt="Merch design eksempel" loading="lazy">
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">MERCH</h2>
+                    <div class="case-item__tags">[MERCH] [GRAFIK]</div>
+                    <p>Designs som adskiller sig fra mængden.</p>
+                </div>
+            </article>
+            
+            </div>
+    </div>
+</MainLayout>
