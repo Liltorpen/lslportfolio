@@ -1,5 +1,8 @@
 ---
 // src/components/Header.astro
+const { pathname } = Astro.url;
+
+const isActive = (path: string) => pathname === path || pathname === path + '/';
 ---
 
 <header>
@@ -8,9 +11,9 @@
     </div>
     <nav>
         <ul class="nav">
-            <li><a class="nav__link" href="/cases">CASES</a></li>
-            <li><a class="nav__link" href="/studio">STUDIO</a></li>
-            <li><a class="nav__link" href="/kontakt">KONTAKT</a></li>
+            <li><a class:list={["nav__link", { active: isActive("/cases") }]} href="/cases">CASES</a></li>
+            <li><a class:list={["nav__link", { active: isActive("/studio") }]} href="/studio">STUDIO</a></li>
+            <li><a class:list={["nav__link", { active: isActive("/kontakt") }]} href="/kontakt">KONTAKT</a></li>
         </ul>
         <button class="nav-burger" aria-label="Menu">
             <span class="bar"></span>
@@ -19,9 +22,9 @@
     </nav>
     <ul class="nav--mobile">
         <li class="logo"><a href="/"><img src="/images/lsl_logo.svg" alt="LSL STUDIO LOGO"></a></li>
-        <li><a class="nav__link" href="/cases">CASES</a></li>
-        <li><a class="nav__link" href="/studio">STUDIO</a></li>
-        <li><a class="nav__link" href="/kontakt">KONTAKT</a></li>
+        <li><a class:list={["nav__link", { active: isActive("/cases") }]} href="/cases">CASES</a></li>
+        <li><a class:list={["nav__link", { active: isActive("/studio") }]} href="/studio">STUDIO</a></li>
+        <li><a class:list={["nav__link", { active: isActive("/kontakt") }]} href="/kontakt">KONTAKT</a></li>
         <li><p class="nav__link--mobile-c">LSL 2025. ALL RIGHTS RESERVED</p></li>
     </ul>
 </header>
@@ -39,14 +42,14 @@
             }
             
             newBurger.addEventListener('click', () => {
-                newBurger.classList.toggle('active');
+                (newBurger as HTMLElement).classList.toggle('active');
                 navMobile.classList.toggle('active');
                 document.body.style.overflow = navMobile.classList.contains('active') ? 'hidden' : 'auto';
             });
 
             links.forEach(link => {
                 link.addEventListener('click', () => {
-                    newBurger.classList.remove('active');
+                    (newBurger as HTMLElement).classList.remove('active');
                     navMobile.classList.remove('active');
                     document.body.style.overflow = 'auto';
                 });
@@ -82,7 +85,6 @@
 
     .nav { display: flex; align-items: center; list-style: none; gap: 30px; }
     
-    /* Sliding Underline Animation på links */
     .nav__link {
         text-decoration: none;
         color: var(--text-color);
@@ -106,17 +108,28 @@
         background-color: var(--accent-color);
         transform: scaleX(0);
         transform-origin: bottom right;
-        transition: transform 0.3s ease-out;
     }
 
-    .nav__link:hover::after {
+    .nav__link:hover { 
+        color: var(--accent-color); 
+    }
+
+    .nav__link.active::after {
         transform: scaleX(1);
-        transform-origin: bottom left;
+        animation: lineIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
-    
-    .nav__link:hover { color: var(--accent-color); }
 
-    /* Burger Menu Styling */
+    @keyframes lineIn {
+        from {
+            transform: scaleX(0);
+            transform-origin: bottom right;
+        }
+        to {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    }
+
     .nav-burger {
         display: none; 
         flex-direction: column;
@@ -138,7 +151,6 @@
         transform-origin: center;
     }
 
-    /* Burger Animation (Cross) */
     .nav-burger.active .bar:nth-child(1) {
         transform: translateY(6px) rotate(45deg);
         background-color: var(--accent-color);
@@ -185,7 +197,6 @@
         transform: translateY(0);
     }
 
-    /* Staggered animation delays for mobile items */
     .nav--mobile.active li:nth-child(2) .nav__link { transition-delay: 0.1s; }
     .nav--mobile.active li:nth-child(3) .nav__link { transition-delay: 0.2s; }
     .nav--mobile.active li:nth-child(4) .nav__link { transition-delay: 0.3s; }
