@@ -4,15 +4,15 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 <MainLayout title="KONTAKT">
     <div class="timeline">
-        <div class="timeline__line"></div>
+        <div class="timeline__line" data-aos="slide-down"></div>
         
         <section class="hero">
-            <h1>KONTAKT</h1>
+            <h1 data-aos="fade-down">KONTAKT</h1>
         </section>
     </div> 
-        <div class="contact-wrapper">
+        <div class="contact-wrapper" data-aos="fade-up">
             <section class="contact-info" data-aos="fade-right">
-                <h2 class="glitch-text">LET'S CREATE</h2>
+                <h2>LET'S CREATE</h2>
                 <div class="info-content">
                     <p class="pitch">
                         Har du et projekt i tankerne? <br>
@@ -61,8 +61,8 @@ import MainLayout from '../layouts/MainLayout.astro';
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        gap: 60px;
-        max-width: 1000px;
+        gap: 150px;
+        max-width: 1200px;
         margin: 100px auto 100px;
         position: relative;
         z-index: 1;
