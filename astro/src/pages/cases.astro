@@ -2,38 +2,112 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="CASES" description="Se mine udvalgte projekter indenfor video, merch og design.">
+<MainLayout title="CASES">
     <div class="timeline">
         <div class="timeline__line"></div>
+       
         <section class="hero">
             <h1>CASES</h1>
         </section>
             
         <div class="cases-list">
-            <article class="case-item">
+            <article class="case-item" data-aos="fade-up">
                 <div class="case-item__visual">
                     <video controls autoplay muted loop playsinline>
-                        <source src="/videos/lsl_optimized.mp4" type="video/mp4">
+                    <source src="./videos/lsl_optimized.mp4" type="video/mp4">
+                    Din browser understøtter ikke video.
                     </video>
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">VISUALS</h2>
                     <div class="case-item__tags">[VIDEO] [SHORTFORM]</div>
-                    <p>Denne video skal ses som et manifest for den kreative retning jeg tilbyder.</p>
+                    <p>Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde indenfor videoproduktion. Med særligt henblik på musik.<br><br><i>Medie-aktiverne er blevet transformeret gennem omfattende redigering i Premiere Pro og After Effects for at skabe et nyt kunstnerisk udtryk. Eventuelt anvendt tredjeparts-materiale er benyttet i forbindelse med undervisning og er ikke tiltænkt kommerciel udnyttelse. Projektet er udført med respekt for immaterielle rettigheder.</i></p>
                 </div>
             </article>
 
-            <article class="case-item case-item--reversed">
+            <article class="case-item case-item--reversed" data-aos="fade-up">
                 <div class="case-item__visual">
-                    <img src="/images/merch.webp" alt="Merch design eksempel" loading="lazy">
+                    <img src="/images/merch.webp" alt="Merch design" loading="lazy">
                 </div>
                 <div class="case-item__info">
                     <h2 class="case-title">MERCH</h2>
-                    <div class="case-item__tags">[MERCH] [GRAFIK]</div>
-                    <p>Designs som adskiller sig fra mængden.</p>
+                    <div class=" case-item__tags">[MERCH] [GRAFIK] [MOCKUP]</div>
+                    <p>Designs som adskiller sig fra mængden - designs som skærer igennem støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.</p>
                 </div>
             </article>
-            
-            </div>
+
+            <article class="case-item" data-aos="fade-up">
+                <div class="case-item__visual">
+                    <img src="/images/albumcover.webp" alt="Album cover" loading="lazy">
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">ALBUM COVER</h2>
+                    <div class="case-item__tags">[PHOTO] [BILLEDREDIGERING]</div>
+                    <p>Her ses et eksempel på visuel identitet med hensyn til musikudgivelser. Jeg tog udgangspunkt i nuværende trends, med fokus på at skabe noget som fanger øjet. 
+                    <br><br> Udover at være visuelt fængende var det også vigtigt at have i mente, at visuelle identiteter såsom netop album covers fungerer som et anker på streamingtjenester.
+                    </p>
+                </div>
+            </article>
+
+            <article class="case-item case-item--reversed" data-aos="fade-up">
+                <div class="case-item__visual">
+                     <img src="/images/koncertplakat.webp" alt="Koncertplakat" loading="lazy">
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">KONCERTPLAKAT</h2>
+                    <div class="case-item__tags">[TRYKTE MEDIER]</div>
+                    <p>Lamin optræder i Bella Arena d. 21 februar. 2026.
+                    Jeg udarbejdede derfor et eksempel på hvordan en koncertplakat, kunne se ud.
+                    Lamins grafik er generelt inspireret fra den amerikanske scene og det tog jeg derfor også udgangspunkt i.
+                    </p>
+                </div>
+            </article>
+
+            <article class="case-item" data-aos="fade-up">
+                <div class="case-item__visual">
+                    <img src="/images/produktbillede.webp" alt="Produktbillede" loading="lazy">
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">PRODUKTBILLEDER</h2>
+                    <div class="case-item__tags">[PHOTO]</div>
+                    <p>Vinyl overtog CD-markedet for første gang i 2022 siden 1987. Udover at være et funktionelt lydformat er det også blevet en form for merch.
+                    <br><br>På billedet ses Travis Scott's album "Utopia". Et eksempel på hvordan et produktbillede kunne se ud, det hjælper jeg naturligvis også med.
+                    </p>
+                </div>
+            </article>
+
+            <article class="case-item case-item--reversed" data-aos="fade-up">
+                <div class="case-item__visual">
+                    <img src="/images/rebellion_logo.webp" alt="Logo design" loading="lazy">
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">LOGO DESIGN</h2>
+                    <div class="case-item__tags">[VEKTOR] [BRANDING]</div>
+                    <p>Her ses et fiktivt eksempel på visuel identitet til et pladeselskab "Rebellion Records" som er et mindre pladeselskab i USA.
+                    <br><br>Deres identitet bygger på at være underdogs og det var derfor vigtigt at skabe noget visuelt som er imperfekt, men samtidig ser professionelt ud.
+                    </p>
+                </div>
+            </article>
+
+            <article class="case-item" data-aos="fade-up">
+                <div class="case-item__visual">
+                    <video controls autoplay muted loop playsinline>
+                    <source src="/videos/wanderer_optimized.mp4" type="video/mp4">
+                    Din browser understøtter ikke video.
+                    </video>
+                </div>
+                <div class="case-item__info">
+                    <h2 class="case-title">DYNAMISK CONTENT</h2>
+                    <div class="case-item__tags">[PEOPLES CHOICE AWARD] [ANIMATION]</div>
+                    <p>Opgaven var at give liv til et maleri. Maleriet "Wanderer Above the Sea" udstråler bevægelse, også i statisk tilstand - det var en perfekt kandidat.
+                    Ideen var at få seeren til at føle at de træder ind i maleriet.
+                    </p>
+                </div>
+            </article>
+        </div>
+        
+        <div class="knap__container">
+            <a href="/kontakt" class="knap">KONTAKT</a>
+        </div>
     </div>
 </MainLayout>

@@ -1,12 +1,8 @@
 ---
-// src/pages/index.astro
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout 
-    title="LSL STUDIO" 
-    description="Jeg skaber visuelle oplevelser, der fastholder seeren."
->
+<MainLayout title="LSL STUDIO">
     <div class="timeline">
         <div class="timeline__line"></div>
 
@@ -16,14 +12,16 @@ import MainLayout from '../layouts/MainLayout.astro';
             <div class="hero--landingpage__scroll"><h2 class="h2--scroll">SCROLL</h2></div>
         </section>
 
-        <section class="hook">
+        <section class="hook" data-aos="fade-up">
             <h2>I EN VERDEN AF UENDELIG SCROLL</h2>
-            <p>Er opmærksomhed blevet en vigtig valuta. Jeg skaber <strong>ikke bare indhold</strong>, men <strong>visuelle oplevelser</strong>, der fastholder seeren.</p>
+            <p>Er opmærksomhed blevet en vigtig valuta. Jeg skaber <strong>ikke bare indhold</strong>, men <strong>visuelle oplevelser</strong>, der fastholder seeren.
+            Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
+            bygger jeg broen mellem <strong>kunstnerisk kant</strong> og <strong>kommerciel værdi</strong>.</p>
         </section>
     
-        <h2 class="h2 h2--stats">ALGORITMEFORSTÅELSE I HØJSÆDET</h2>
-        </div>
-        <section class="stats-flex">
+        <h2 class="h2 h2--stats" data-aos="fade-up">ALGORITMEFORSTÅELSE I HØJSÆDET</h2>
+            </div>
+        <section class="stats-flex" data-aos="fade-up">
             <div class="stat-item">
                 <h2>100K+</h2>
                 <p>Community Reach</p>
@@ -38,32 +36,57 @@ import MainLayout from '../layouts/MainLayout.astro';
             </div>
             <p class="stats-description">
                 Gennem arbejde med mine egne platforme har jeg opnået en unik forståelse af algoritmerne på TikTok og Instagram.
+                Jeg omsætter data og tendenser til visuel valuta, der skaber <strong>reel vækst</strong> og fastholder opmærksomheden.
             </p>
         </section>
 
-        <div class="staff-badge">
-            <img src="/images/staff_badge.webp" alt="Lucas Liltorp - 24 år" loading="lazy">
-        </div>
-                
-        <h2 class="h2--cases">UDVALGTE CASES</h2>
-        
-        <div class="cases-list">
-            <article class="case-item">
-                <div class="case-item__visual">
-                    <video controls autoplay muted loop playsinline>
-                        <source src="/videos/lsl_optimized.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="case-item__info">
-                    <h3>VISUALS</h3>
-                    <div class="case-item__tags">[VIDEO] [SHORTFORM]</div>
-                    <p>Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde.</p>
-                </div>
-            </article>
-        </div>
+        <div class="staff-badge" data-aos="fade-down">
+            <img src="/images/staff_badge.webp" alt="Lucas Liltorp - 24 år - Stud. Multimediedesign" loading="lazy">
 
-        <div class="knap__container">
-            <a href="/cases" class="knap">SE CASES</a>
-        </div>
+    </div> <h2 class="h2--cases" data-aos="fade-up">UDVALGTE CASES</h2>
+    
+    <div class="cases-list">
+        <article class="case-item" data-aos="fade-up">
+            <div class="case-item__visual">
+                <video controls autoplay muted loop playsinline>
+                    <source src="/videos/lsl_optimized.mp4" type="video/mp4">
+                    Din browser understøtter ikke video.
+                </video>
+            </div>
+            <div class="case-item__info">
+                <h3 class="case-title">VISUALS</h3>
+                <div class="case-item__tags">[VIDEO] [SHORTFORM]</div>
+                <p>Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde indenfor videoproduktion. Med særligt henblik på musik.<br><br><i>Medie-aktiverne er blevet transformeret gennem omfattende redigering i Premiere Pro og After Effects for at skabe et nyt kunstnerisk udtryk. Eventuelt anvendt tredjeparts-materiale er benyttet i forbindelse med undervisning og er ikke tiltænkt kommerciel udnyttelse. Projektet er udført med respekt for immaterielle rettigheder.</i></p>
+            </div>
+        </article>
+
+        <article class="case-item case-item--reversed" data-aos="fade-up">
+            <div class="case-item__visual">
+                <img src="/images/merch.webp" alt="Merch design eksempel" loading="lazy">
+            </div>
+            <div class="case-item__info">
+                <h3 class="case-title">MERCH</h3>
+                <div class=" case-item__tags">[MERCH] [GRAFIK] [MOCKUP]</div>
+                <p>Designs som adskiller sig fra mængden - designs som <strong>skærer igennem</strong> støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.</p>
+            </div>
+        </article>
+
+        <article class="case-item" data-aos="fade-up">
+            <div class="case-item__visual">
+                 <img src="/images/koncertplakat.webp" alt="Koncertplakat eksempel" loading="lazy">
+            </div>
+            <div class="case-item__info">
+                <h3 class="case-title">KONCERTPLAKAT</h3>
+                <div class="case-item__tags">[TRYKTE MEDIER]</div>
+                <p>Lamin optræder i Bella Arena d. 21 februar. 2026.
+                Jeg udarbejdede derfor et eksempel på hvordan en koncertplakat, kunne se ud.
+                Lamins grafik er generelt inspireret fra den amerikanske scene - det tog jeg derfor også udgangspunkt i.
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <div class="knap__container">
+        <a href="/cases" class="knap">SE CASES</a>
     </div>
 </MainLayout>

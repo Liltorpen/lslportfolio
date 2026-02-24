@@ -2,29 +2,41 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="STUDIO" description="Lær mere om Lucas Liltorp og LSL Studio.">
+<MainLayout title="OM">
     <div class="timeline">
         <div class="timeline__line"></div>
+       
         <section class="hero">
             <h1>STUDIO</h1>
         </section>
-        <div class="intro-container intro-container--studio">
-            <img class="studio-img" src="/images/hero.webp" alt="Behind the scenes hos LSL Studio">
+
+        <div class="intro-container intro-container--studio" data-aos="fade-in">
+            <img class="studio-img" src="/images/hero.webp" alt="Lucas Liltorp">
         </div>
-    </div>  
-    <section class="bts">
+    </div> <section class="bts" data-aos="fade-up">
         <h2>KOM MED BEHIND THE SCENES</h2>
-        <p>Bag LSL Studio står jeg, Lucas. Jeg er hardcore After Effects-bruger og ekspert i shortform content.</p>
+        <p>Bag LSL Studio står jeg, Lucas. Jeg er passioneret omkring alt, hvad der rører sig inden for <strong>visuel kommunikation</strong>. For mig er design ikke bare statiske billeder... Det er <strong>levende fortællinger</strong>.
+        Min styrke ligger i krydsfeltet mellem designvision og teknisk håndværk. <br><br> Jeg er <strong>hardcore After Effects-bruger</strong> og ekspert i shortform content, men jeg tænker altid i hele løsninger - fra grafik og branding til kode. 
+        Jeg hjælper dig med at skabe et univers, der fastholder dit publikum fra første sekund.</p>
     </section>
     
-    <section class="skills-container">
-        <h3 class="h3--skills">MIN VÆRKTØJSKASSE</h3>
+    <section class="skills-container" data-aos="fade-up">
+        <h3 class="h3--skills">MIN VÆRKTØJKASSE</h3>
         <div class="skill-cloud">
             <span class="skill-tag">AFTER EFFECTS</span>
             <span class="skill-tag">PREMIERE PRO</span>
             <span class="skill-tag">PHOTOSHOP</span>
+            <span class="skill-tag">ILLUSTRATOR</span>
+            <span class="skill-tag">LIGHTROOM</span>
+            <span class="skill-tag">INDESIGN</span>
             <span class="skill-tag">FIGMA</span>
             <span class="skill-tag">HTML5 / CSS3</span>
+            <span class="skill-tag">SHORTFORM STRATEGI</span>
+            <span class="skill-tag">BRANDING</span>
         </div>
     </section>
+        
+    <div class="knap__container">
+        <a href="/kontakt" class="knap">KONTAKT</a>
+    </div>
 </MainLayout>

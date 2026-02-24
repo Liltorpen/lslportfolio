@@ -2,19 +2,20 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="KONTAKT" description="Lad os skabe noget fedt sammen. Kontakt LSL Studio her.">
+<MainLayout title="KONTAKT">
     <div class="timeline">
         <div class="timeline__line"></div>
+        
         <section class="hero">
             <h1>KONTAKT</h1>
         </section>
-    </div>
-    <section class="kontakt-flex">
+    </div> <section class="kontakt-flex" data-aos="fade-up">
         <div>
             <h2>LET'S CREATE</h2>
-            <p>Har du et projekt i tankerne? <br> Udfyld formularen eller fang mig // <br><br> +4542300743<br>kontakt@lucasliltorp.dk</p>
+            <p>Har du et projekt i tankerne? <br> Udfyld formularen eller fang mig //
+            <br><br> +4542300743<br>kontakt@lucasliltorp.dk</p>
         </div>
-        <form action="/kontakt">
+        <form action="#">
             <label for="fname">NAVN</label>
             <input type="text" id="fname" name="firstname">
             <label for="email">EMAIL</label>
