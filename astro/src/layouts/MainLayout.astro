@@ -3,14 +3,13 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import 'aos/dist/aos.css';
 
 const { title, description } = Astro.props;
 
 // src/components/Header.astro
 const { pathname } = Astro.url;
 
-// Denne funktion fjerner alle skråstreger i enden, før den sammenligner.
-// Det gør den ekstremt stabil overfor server-forskelle.
 const isActive = (path: string) => {
     const cleanPathname = pathname.replace(/\/$/, "");
     const cleanPath = path.replace(/\/$/, "");
@@ -45,7 +44,6 @@ const isActive = (path: string) => {
 
 <script>
     import AOS from 'aos';
-    import 'aos/dist/aos.css';
 
     const initAOS = () => {
         const animatedElements = document.querySelectorAll('.aos-animate');

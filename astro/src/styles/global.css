@@ -41,7 +41,6 @@ main {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    
     top: 10px;
     bottom: 20px;
     width: 3px;
@@ -439,7 +438,6 @@ input[type=text], select {
     box-sizing: border-box;
     font-family: var(--font-body);
     outline-color: var(--accent-color);
-    background-color: var(--text-color);
 }
 input[type=submit] {
     width: 100%;
@@ -465,6 +463,14 @@ input[type=submit]:hover {
     color: var(--button-color);
     box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.4);
     transform: translateY(-2px);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #2c2a2b inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
 }
 
 /* --- MEDIA QUERIES --- */
