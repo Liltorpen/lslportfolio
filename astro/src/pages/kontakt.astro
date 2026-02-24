@@ -9,20 +9,191 @@ import MainLayout from '../layouts/MainLayout.astro';
         <section class="hero">
             <h1>KONTAKT</h1>
         </section>
-    </div> <section class="kontakt-flex" data-aos="fade-up">
-        <div>
-            <h2>LET'S CREATE</h2>
-            <p>Har du et projekt i tankerne? <br> Udfyld formularen eller fang mig //
-            <br><br> +4542300743<br>kontakt@lucasliltorp.dk</p>
+    </div> 
+        <div class="contact-wrapper">
+            <section class="contact-info" data-aos="fade-right">
+                <h2 class="glitch-text">LET'S CREATE</h2>
+                <div class="info-content">
+                    <p class="pitch">
+                        Har du et projekt i tankerne? <br>
+                        Udfyld formularen eller fang mig // <br>
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="detail-item">
+                            <span class="label">TELEFON</span>
+                            <a href="tel:+4542300743" class="detail-link">+45 42 30 07 43</a>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">MAIL</span>
+                            <a href="mailto:kontakt@lucasliltorp.dk" class="detail-link">kontakt@lucasliltorp.dk</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-container" data-aos="fade-up" data-aos-delay="200">
+                <form class="glass-form" method="POST" action="#">
+                    <div class="form-group">
+                        <input type="text" id="fname" name="firstname" placeholder=" " required>
+                        <label for="fname">NAVN</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">EMAIL</label>
+                    </div>
+            
+                    <div class="form-group">
+                        <textarea id="msg" name="besked" rows="5" placeholder=" " required></textarea>
+                        <label for="msg">BESKED</label>
+                    </div>
+
+                    <button type="submit" class="knap">SEND BESKED</button>
+                </form>
+            </section>
         </div>
-        <form action="#">
-            <label for="fname">NAVN</label>
-            <input type="text" id="fname" name="firstname">
-            <label for="email">EMAIL</label>
-            <input type="text" id="email" name="email">
-            <label for="msg">BESKED</label>
-            <input type="text" id="msg" name="besked">
-            <input type="submit" value="SEND BESKED">
-        </form>
-    </section>
 </MainLayout>
+
+<style>
+    /* --- LAYOUT --- */
+    .contact-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 60px;
+        max-width: 1000px;
+        margin: 100px auto 100px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-info {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .form-container {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    /* --- VENSTRE SIDE (INFO) --- */
+    h2 {
+        font-family: var(--font-headline);
+        font-size: clamp(3rem, 5vw, 4.5rem);
+        margin: 0 0 30px;
+        line-height: 0.9;
+        color: var(--text-color);
+    }
+
+    .pitch {
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        margin-bottom: 50px;
+        color: rgba(243, 226, 200, 0.8);
+    }
+
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label {
+        font-family: var(--font-headline);
+        color: var(--accent-color);
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+    }
+
+    .detail-link {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-family: var(--font-body);
+        transition: color 0.3s ease;
+    }
+
+    .detail-link:hover {
+        color: var(--accent-color);
+    }
+
+    /* --- HØJRE SIDE (FORM) --- */
+    .glass-form {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 40px;
+        border: 1px solid rgba(243, 226, 200, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    input, textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(243, 226, 200, 0.3);
+        padding: 15px 0;
+        color: var(--text-color);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+        resize: vertical;
+    }
+
+    /* Label styling */
+    .form-group label {
+        position: absolute;
+        top: 15px;
+        left: 0;
+        font-family: var(--font-headline);
+        color: rgba(243, 226, 200, 0.5);
+        pointer-events: none;
+        transition: 0.3s ease all;
+        letter-spacing: 1px;
+    }
+
+    input:focus, textarea:focus {
+        border-bottom-color: var(--accent-color);
+    }
+
+    input:focus ~ label,
+    input:not(:placeholder-shown) ~ label,
+    textarea:focus ~ label,
+    textarea:not(:placeholder-shown) ~ label {
+        top: -10px;
+        font-size: 0.8rem;
+        color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+        .contact-wrapper {
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .glass-form {
+            padding: 25px;
+        }
+
+        h2 {
+            font-size: 3rem;
+        }
+    }
+</style>

@@ -10,7 +10,7 @@ const { title, tags, description, image, video, reversed, delay } = Astro.props;
 >
     <div class="case-item__visual">
         {video ? (
-            <video controls autoplay muted loop playsinline>
+            <video muted loop playsinline class="smart-video">
                 <source src={video} type="video/mp4" />
                 Din browser understøtter ikke video.
             </video>
@@ -26,3 +26,33 @@ const { title, tags, description, image, video, reversed, delay } = Astro.props;
         <slot />
     </div>
 </article>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const videos = document.querySelectorAll('.smart-video');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target as HTMLVideoElement;
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {
+                        console.log('Autoplay forhindret af browseren');
+                    });
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.25 });
+
+        videos.forEach(video => observer.observe(video));
+    });
+</script>
+
+<style>
+    .smart-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+</style>

@@ -27,14 +27,12 @@
 </header>
 
 <script>
-    // Vi pakker logikken ind i en funktion så den kan genbruges
     const initBurger = () => {
         const burger = document.querySelector('.nav-burger');
         const navMobile = document.querySelector('.nav--mobile');
         const links = document.querySelectorAll('.nav--mobile .nav__link');
 
         if (burger && navMobile) {
-            // Klon knappen for at fjerne gamle event listeners (vigtigt i Astro)
             const newBurger = burger.cloneNode(true);
             if (burger.parentNode) {
                 burger.parentNode.replaceChild(newBurger, burger);
@@ -43,11 +41,9 @@
             newBurger.addEventListener('click', () => {
                 newBurger.classList.toggle('active');
                 navMobile.classList.toggle('active');
-                // Lås scroll når menuen er åben
                 document.body.style.overflow = navMobile.classList.contains('active') ? 'hidden' : 'auto';
             });
 
-            // Luk menuen når man klikker på et link
             links.forEach(link => {
                 link.addEventListener('click', () => {
                     newBurger.classList.remove('active');
@@ -58,13 +54,10 @@
         }
     };
 
-    // Kør logikken hver gang Astro skifter side
     document.addEventListener('astro:page-load', initBurger);
 </script>
 
-<style>
-    /* Scoped CSS - gælder KUN for denne header komponent */
-    
+<style>    
     header {
         position: sticky;
         top: 0;
