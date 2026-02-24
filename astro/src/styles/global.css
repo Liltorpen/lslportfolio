@@ -434,11 +434,12 @@ p {
 
 .case-item__info {
     flex: 1;
+    min-width: 0;
 }
 .case-item__info p {
     width: 100%;
     text-align: justify;
-    max-width: 65ch;
+    max-width: 100%;
 }
 
 .case-item--reversed {

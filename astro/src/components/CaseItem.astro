@@ -14,15 +14,10 @@ const { title, tags, description, image, video, reversed } = Astro.props;
             <img src={image} alt={title} loading="lazy" />
         )}
     </div>
+    
     <div class="case-item__info">
         <h2 class="case-title">{title}</h2>
         <div class="case-item__tags">{tags}</div>
-        <p>{description}</p>
-        <slot />
+        <p set:html={description} />
     </div>
 </article>
-
-<style>
-    /* Du kan flytte specifik CSS herind for at holde det 'scoped' (kun for denne fil), 
-       eller beholde det i global.css som nu. */
-</style>
