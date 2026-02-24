@@ -1,215 +1,56 @@
 ---
-// src/components/Header.astro
+// src/components/Footer.astro
 ---
 
-<header>
-    <div class="logo">
-        <a href="/"><img src="/images/lsl_logo.svg" alt="LSL Studio Logo"></a>
+<footer>
+    <p class="copyright">LSL 2025. ALL RIGHTS RESERVED</p>
+    <div class="social-links">
+        <a href="#" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+        <a href="#" aria-label="Facebook"><i class="ri-facebook-circle-fill"></i></a>
+        <a href="#" aria-label="TikTok"><i class="ri-tiktok-fill"></i></a>
     </div>
-    <nav>
-        <ul class="nav">
-            <li><a class="nav__link" href="/cases">CASES</a></li>
-            <li><a class="nav__link" href="/studio">STUDIO</a></li>
-            <li><a class="nav__link" href="/kontakt">KONTAKT</a></li>
-        </ul>
-        <button class="nav-burger" aria-label="Menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </nav>
-    <ul class="nav--mobile">
-        <li class="logo"><a href="/"><img src="/images/lsl_logo.svg" alt="LSL STUDIO LOGO"></a></li>
-        <li><a class="nav__link" href="/cases">CASES</a></li>
-        <li><a class="nav__link" href="/studio">STUDIO</a></li>
-        <li><a class="nav__link" href="/kontakt">KONTAKT</a></li>
-        <li><p class="nav__link--mobile-c">LSL 2025. ALL RIGHTS RESERVED</p></li>
-    </ul>
-</header>
-
-<script>
-    // Vi pakker logikken ind i en funktion så den kan genbruges
-    const initBurger = () => {
-        const burger = document.querySelector('.nav-burger');
-        const navMobile = document.querySelector('.nav--mobile');
-        const links = document.querySelectorAll('.nav--mobile .nav__link');
-
-        if (burger && navMobile) {
-            // Klon knappen for at fjerne gamle event listeners (vigtigt i Astro)
-            const newBurger = burger.cloneNode(true);
-            if (burger.parentNode) {
-                burger.parentNode.replaceChild(newBurger, burger);
-            }
-            
-            newBurger.addEventListener('click', () => {
-                newBurger.classList.toggle('active');
-                navMobile.classList.toggle('active');
-                // Lås scroll når menuen er åben
-                document.body.style.overflow = navMobile.classList.contains('active') ? 'hidden' : 'auto';
-            });
-
-            // Luk menuen når man klikker på et link
-            links.forEach(link => {
-                link.addEventListener('click', () => {
-                    newBurger.classList.remove('active');
-                    navMobile.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-            });
-        }
-    };
-
-    // Kør logikken hver gang Astro skifter side
-    document.addEventListener('astro:page-load', initBurger);
-</script>
+</footer>
 
 <style>
-    /* Scoped CSS - gælder KUN for denne header komponent */
-    
-    header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: rgba(22, 20, 21, 0.85); 
-        backdrop-filter: blur(5px); 
-        -webkit-backdrop-filter: blur(5px);
+    footer {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        padding: 20px 40px;
-        border-bottom: 1px solid rgba(243, 226, 200, 0.1);
+        justify-content: center;
+        border-top: 1px solid rgba(243, 226, 200, 0.1);
+        padding: 40px 25px;
+        background-color: var(--bg-color);
+        margin-top: auto; /* Sikrer at den ligger i bunden hvis indholdet er kort */
     }
 
-    .logo img { 
-        height: 50px; 
-        width: auto; 
-        display: block; 
-        transition: 0.2s ease-out; 
+    .copyright {
+        font-family: var(--font-headline);
+        font-size: clamp(0.8rem, 2vw, 1.1rem);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
     }
-    .logo img:hover { transform: scale(1.05); }
 
-    .nav { display: flex; align-items: center; list-style: none; gap: 30px; }
-    
-    /* Sliding Underline Animation på links */
-    .nav__link {
+    .social-links {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .social-links a {
         text-decoration: none;
         color: var(--text-color);
-        font-family: var(--font-headline);
-        text-transform: uppercase;
-        font-weight: 500;
-        letter-spacing: 1px;
-        font-size: 1.4rem;
-        position: relative;
-        display: inline-block;
-        transition: color 0.3s ease;
+        font-size: 2rem;
+        transition: 0.3s ease;
     }
 
-    .nav__link::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        bottom: -2px;
-        left: 0;
-        background-color: var(--accent-color);
-        transform: scaleX(0);
-        transform-origin: bottom right;
-        transition: transform 0.3s ease-out;
-    }
-
-    .nav__link:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
+    .social-links a:hover {
+        color: var(--accent-color);
+        transform: translateY(-3px);
     }
     
-    .nav__link:hover { color: var(--accent-color); }
-
-    /* Burger Menu Styling */
-    .nav-burger {
-        display: none; 
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 14px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 2000;
-        padding: 0;
-    }
-
-    .bar {
-        width: 100%;
-        height: 2px;
-        background-color: var(--text-color);
-        transition: all 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-        transform-origin: center;
-    }
-
-    /* Burger Animation (Cross) */
-    .nav-burger.active .bar:nth-child(1) {
-        transform: translateY(6px) rotate(45deg);
-        background-color: var(--accent-color);
-    }
-    .nav-burger.active .bar:nth-child(2) {
-        transform: translateY(-6px) rotate(-45deg);
-        background-color: var(--accent-color);
-    }
-
-    /* Mobile Menu */
-    .nav--mobile {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: var(--bg-color);
-        display: flex;
-        flex-direction: column;
-        gap: 95px;
-        list-style: none;
-        padding: 15px 25px;
-        margin: 0;
-        z-index: 1500;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
-
-    .nav--mobile.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-
-    .nav--mobile .nav__link {
-        font-size: 3rem;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-    
-    .nav--mobile.active .nav__link {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* Staggered animation delays for mobile items */
-    .nav--mobile.active li:nth-child(2) .nav__link { transition-delay: 0.1s; }
-    .nav--mobile.active li:nth-child(3) .nav__link { transition-delay: 0.2s; }
-    .nav--mobile.active li:nth-child(4) .nav__link { transition-delay: 0.3s; }
-    
-    .nav--mobile li:last-child { margin-top: auto; padding-bottom: 20px; }
-    
-    .nav__link--mobile-c {
-        font-size: 0.9rem;
-        opacity: 0.6;
-        letter-spacing: 1px;
-        margin: 0;
-        font-family: var(--font-headline);
-    }
-
     @media (max-width: 768px) {
-        header { padding: 15px 25px; }
-        .nav { display: none; }
-        .nav-burger { display: flex; }
+        .copyright { font-size: 0.8rem; }
     }
 </style>
