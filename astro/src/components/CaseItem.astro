@@ -1,0 +1,28 @@
+---
+// src/components/CaseItem.astro
+const { title, tags, description, image, video, reversed } = Astro.props;
+---
+
+<article class:list={["case-item", { "case-item--reversed": reversed }]} data-aos="fade-up">
+    <div class="case-item__visual">
+        {video ? (
+            <video controls autoplay muted loop playsinline>
+                <source src={video} type="video/mp4" />
+                Din browser understøtter ikke video.
+            </video>
+        ) : (
+            <img src={image} alt={title} loading="lazy" />
+        )}
+    </div>
+    <div class="case-item__info">
+        <h2 class="case-title">{title}</h2>
+        <div class="case-item__tags">{tags}</div>
+        <p>{description}</p>
+        <slot />
+    </div>
+</article>
+
+<style>
+    /* Du kan flytte specifik CSS herind for at holde det 'scoped' (kun for denne fil), 
+       eller beholde det i global.css som nu. */
+</style>

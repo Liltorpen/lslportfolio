@@ -1,5 +1,29 @@
 ---
+// src/pages/index.astro
 import MainLayout from '../layouts/MainLayout.astro';
+import CaseItem from '../components/CaseItem.astro';
+
+// Data for de UDVALGTE cases der skal vises på forsiden
+const selectedCases = [
+    {
+        title: "VISUALS",
+        tags: "[VIDEO] [SHORTFORM]",
+        video: "/videos/lsl_optimized.mp4",
+        description: `Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde indenfor videoproduktion. Med særligt henblik på musik.<br><br><i>Medie-aktiverne er blevet transformeret gennem omfattende redigering i Premiere Pro og After Effects for at skabe et nyt kunstnerisk udtryk.</i>`
+    },
+    {
+        title: "MERCH",
+        tags: "[MERCH] [GRAFIK] [MOCKUP]",
+        image: "/images/merch.webp",
+        description: `Designs som adskiller sig fra mængden - designs som <strong>skærer igennem</strong> støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.`
+    },
+    {
+        title: "KONCERTPLAKAT",
+        tags: "[TRYKTE MEDIER]",
+        image: "/images/koncertplakat.webp",
+        description: `Lamin optræder i Bella Arena d. 21 februar. 2026. Jeg udarbejdede derfor et eksempel på hvordan en koncertplakat, kunne se ud. Lamins grafik er generelt inspireret fra den amerikanske scene - det tog jeg derfor også udgangspunkt i.`
+    }
+];
 ---
 
 <MainLayout title="LSL STUDIO">
@@ -20,7 +44,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         </section>
     
         <h2 class="h2 h2--stats" data-aos="fade-up">ALGORITMEFORSTÅELSE I HØJSÆDET</h2>
-            </div>
+        
         <section class="stats-flex" data-aos="fade-up">
             <div class="stat-item">
                 <h2>100K+</h2>
@@ -40,50 +64,23 @@ import MainLayout from '../layouts/MainLayout.astro';
             </p>
         </section>
 
-        <div class="staff-badge" data-aos="fade-down">
+        <div class="staff-badge" data-aos="zoom-in">
             <img src="/images/staff_badge.webp" alt="Lucas Liltorp - 24 år - Stud. Multimediedesign" loading="lazy">
-
-    </div> <h2 class="h2--cases" data-aos="fade-up">UDVALGTE CASES</h2>
+        </div>
+    </div> 
+    <h2 class="h2--cases" data-aos="fade-up">UDVALGTE CASES</h2>
     
     <div class="cases-list">
-        <article class="case-item" data-aos="fade-up">
-            <div class="case-item__visual">
-                <video controls autoplay muted loop playsinline>
-                    <source src="/videos/lsl_optimized.mp4" type="video/mp4">
-                    Din browser understøtter ikke video.
-                </video>
-            </div>
-            <div class="case-item__info">
-                <h3 class="case-title">VISUALS</h3>
-                <div class="case-item__tags">[VIDEO] [SHORTFORM]</div>
-                <p>Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde indenfor videoproduktion. Med særligt henblik på musik.<br><br><i>Medie-aktiverne er blevet transformeret gennem omfattende redigering i Premiere Pro og After Effects for at skabe et nyt kunstnerisk udtryk. Eventuelt anvendt tredjeparts-materiale er benyttet i forbindelse med undervisning og er ikke tiltænkt kommerciel udnyttelse. Projektet er udført med respekt for immaterielle rettigheder.</i></p>
-            </div>
-        </article>
-
-        <article class="case-item case-item--reversed" data-aos="fade-up">
-            <div class="case-item__visual">
-                <img src="/images/merch.webp" alt="Merch design eksempel" loading="lazy">
-            </div>
-            <div class="case-item__info">
-                <h3 class="case-title">MERCH</h3>
-                <div class=" case-item__tags">[MERCH] [GRAFIK] [MOCKUP]</div>
-                <p>Designs som adskiller sig fra mængden - designs som <strong>skærer igennem</strong> støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.</p>
-            </div>
-        </article>
-
-        <article class="case-item" data-aos="fade-up">
-            <div class="case-item__visual">
-                 <img src="/images/koncertplakat.webp" alt="Koncertplakat eksempel" loading="lazy">
-            </div>
-            <div class="case-item__info">
-                <h3 class="case-title">KONCERTPLAKAT</h3>
-                <div class="case-item__tags">[TRYKTE MEDIER]</div>
-                <p>Lamin optræder i Bella Arena d. 21 februar. 2026.
-                Jeg udarbejdede derfor et eksempel på hvordan en koncertplakat, kunne se ud.
-                Lamins grafik er generelt inspireret fra den amerikanske scene - det tog jeg derfor også udgangspunkt i.
-                </p>
-            </div>
-        </article>
+        {selectedCases.map((item, index) => (
+            <CaseItem 
+                title={item.title}
+                tags={item.tags}
+                description={item.description}
+                image={item.image}
+                video={item.video}
+                reversed={index % 2 !== 0} 
+            />
+        ))}
     </div>
 
     <div class="knap__container">
