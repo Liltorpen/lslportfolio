@@ -4,18 +4,20 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 <MainLayout title="KONTAKT">
     <div class="timeline">
-        <div class="timeline__line" data-aos="slide-down"></div>
+        <div class="timeline__track">
+            <div class="timeline__line"></div>
+        </div>
         
-        <section class="hero">
-            <h1 data-aos="fade-in">KONTAKT</h1>
+        <section class="hero hero--small">
+            <h1 class="reveal-up">KONTAKT</h1>
         </section>
-    </div> 
+        
         <div class="contact-wrapper">
-            <section class="contact-info" data-aos="fade-up">
+            <section class="contact-info reveal-up">
                 <h2>LET'S CREATE</h2>
                 <div class="info-content">
                     <p class="pitch">
-                        Har du et projekt i tankerne? <br>
+                        Har du et projekt i tankerne?<br>
                         Udfyld formularen eller fang mig // <br>
                     </p>
                     
@@ -32,7 +34,7 @@ import MainLayout from '../layouts/MainLayout.astro';
                 </div>
             </section>
 
-            <section class="form-container" data-aos="fade-up" data-aos-delay="200">
+            <section class="form-container reveal-up">
                 <form class="glass-form" method="POST" action="#">
                     <div class="form-group">
                         <input type="text" id="fname" name="firstname" placeholder=" " required>
@@ -53,9 +55,18 @@ import MainLayout from '../layouts/MainLayout.astro';
                 </form>
             </section>
         </div>
+    </div>
 </MainLayout>
 
 <style>
+    .hero--small { 
+        min-height: 40vh; 
+        display: flex; 
+        justify-content: center; 
+        align-items: flex-end; 
+        padding-bottom: 80px; 
+    }
+
     /* --- LAYOUT --- */
     .contact-wrapper {
         display: flex;
@@ -63,7 +74,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         justify-content: space-between;
         gap: 150px;
         max-width: 1200px;
-        margin: 100px auto 100px;
+        margin: 50px auto 150px;
         position: relative;
         z-index: 1;
     }
@@ -127,20 +138,18 @@ import MainLayout from '../layouts/MainLayout.astro';
 
     /* --- HØJRE SIDE (FORM) --- */
     .glass-form {
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(255, 255, 255, 0.02);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        padding: 40px;
+        padding: 50px;
         border: 1px solid rgba(243, 226, 200, 0.1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 30px; 
     }
 
     .form-group {
         position: relative;
-        margin-bottom: 10px;
     }
 
     input, textarea {
@@ -177,19 +186,27 @@ import MainLayout from '../layouts/MainLayout.astro';
     input:not(:placeholder-shown) ~ label,
     textarea:focus ~ label,
     textarea:not(:placeholder-shown) ~ label {
-        top: -10px;
+        top: -15px;
         font-size: 0.8rem;
         color: var(--accent-color);
+    }
+
+    /* Button styling overwrite for formular */
+    button.knap {
+        margin-top: 20px;
+        width: 100%;
+        background: transparent;
+        cursor: pointer;
     }
 
     @media (max-width: 768px) {
         .contact-wrapper {
             flex-direction: column;
-            gap: 40px;
+            gap: 60px;
         }
         
         .glass-form {
-            padding: 25px;
+            padding: 30px;
         }
 
         h2 {

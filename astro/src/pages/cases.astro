@@ -50,10 +50,12 @@ const casesData = [
 
 <MainLayout title="CASES">
     <div class="timeline">
-        <div class="timeline__line" data-aos="slide-down"></div>
+        <div class="timeline__track">
+            <div class="timeline__line"></div>
+        </div>
        
-        <section class="hero">
-            <h1 data-aos="fade-in">CASES</h1>
+        <section class="hero hero--small">
+            <h1 class="reveal-up">CASES</h1>
         </section>
             
         <div class="cases-list">
@@ -67,10 +69,20 @@ const casesData = [
                     reversed={index % 2 !== 0} 
                 />
             ))}
-            </div>
+        </div>
         
-        <div class="knap__container">
+        <div class="knap__container reveal-up">
             <a href="/kontakt" class="knap">KONTAKT</a>
         </div>
     </div>
 </MainLayout>
+
+<style>
+    .hero--small { 
+        min-height: 40vh; 
+        display: flex; 
+        justify-content: center; 
+        align-items: flex-end; 
+        padding-bottom: 80px; 
+    }
+</style>

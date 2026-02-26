@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #111010; /* Lidt mørkere, mere blæk-agtig sort */
+    --bg-color: #111010;
     --text-color: #F3E2C8;
     --accent-color: #F35226;
     --button-color: #F3E2C8;
@@ -54,7 +54,7 @@ main {
     bottom: 0;
     width: 1px;
     background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.05) 95%, transparent);
-    z-index: 0;
+    z-index: -1; /* ÆNDRET: Skubber banen om i baggrunden */
 }
 
 /* Den glødende orange streg */
@@ -66,10 +66,29 @@ main {
     background: var(--accent-color);
     box-shadow: 0 0 15px rgba(243, 82, 38, 0.6), 0 0 30px rgba(243, 82, 38, 0.2);
     border-radius: 50px;
-    z-index: 1; 
-    height: 0%; /* Animeres af GSAP */
+    z-index: -1;
+    height: 0%; 
 }
 
+.hero__content,
+.hero__scroll,
+.hook,
+.section-title,
+.hero--small h1,
+.bts__header,
+.stats-description,
+.h3--skills {
+    position: relative;
+    z-index: 2;
+    background: radial-gradient(ellipse at center, var(--bg-color) 35%, transparent 75%);
+    padding: 30px 0; 
+}
+
+.stats-flex {
+    position: relative;
+    z-index: 2;
+    background-color: var(--bg-color);
+}
 /* --- TYPOGRAPHY --- */
 h1, h2, h3 {
     font-family: var(--font-headline);
@@ -77,6 +96,8 @@ h1, h2, h3 {
     margin: 0;
     line-height: 1.1;
     text-transform: uppercase;
+    font-size: clamp(40px, 6vw, 100px); 
+    letter-spacing: 2px;
 }
 
 .h1--landingpage {
@@ -94,7 +115,7 @@ h1, h2, h3 {
 p {
     font-size: clamp(0.9rem, 1.2vw, 1.1rem);
     color: rgba(243, 226, 200, 0.8);
-    max-width: 65ch; /* Optimal læselængde */
+    max-width: 65ch; 
 }
 
 /* --- BUTTONS --- */
