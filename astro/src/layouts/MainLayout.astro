@@ -3,18 +3,12 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
-import 'aos/dist/aos.css';
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-
+interface Props { title?: string; description?: string; }
 const { title, description } = Astro.props;
 
-// SEO Metadata
 const siteTitle = title ? `${title} | LSL STUDIO` : 'LSL STUDIO | Visuelle oplevelser der skærer igennem støjen';
-const siteDescription = description || "LSL Studio - Specialist i shortform content, motion graphics og visuel identitet. Skaber visuelle fortællinger der fastholder dit publikum.";
+const siteDescription = description || "LSL Studio - Specialist i shortform content, motion graphics og visuel identitet.";
 ---
 
 <!DOCTYPE html>
@@ -22,35 +16,11 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>{siteTitle}</title>
     <meta name="description" content={siteDescription}>
-    <meta name="author" content="Lucas Liltorp">
-    <link rel="canonical" href={Astro.url}>
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content={Astro.url}>
-    <meta property="og:title" content={siteTitle}>
-    <meta property="og:description" content={siteDescription}>
-    <meta property="og:image" content="/images/hero.webp">
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Lucas Liltorp",
-        "jobTitle": "Multimediedesigner",
-        "url": "https://lucasliltorp.dk",
-        "knowsAbout": ["Shortform Content", "After Effects", "Motion Graphics", "Branding"]
-      }
-    </script>
-    
     <link rel="icon" type="image/svg+xml" href="/images/lsl_logo.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <ClientRouter />
 </head>
 <body>
@@ -61,42 +31,62 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
     <Footer />
 
 <script>
-    import AOS from 'aos';
     import Lenis from 'lenis';
-
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    
+    gsap.registerPlugin(ScrollTrigger);
     let lenis: any;
 
-    const initScripts = () => {
-        // 1. Studio Lenis (Smooth Scroll)
+    const initPremiumExperience = () => {
+        // 1. Smooth Scroll
         lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
         });
 
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
 
-        // 2. AOS Initialisering
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 20,
-            easing: 'ease-out-cubic'
+        // 2. Tidslinje Track (Gløden)
+        const timelineLine = document.querySelector('.timeline__line');
+        if(timelineLine) {
+            gsap.to(timelineLine, {
+                height: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0.5 // Giver en blød forsinkelse på stregen
+                }
+            });
+        }
+
+        // 3. Generelle Fade-ups
+        document.querySelectorAll('.reveal-up').forEach((el) => {
+            gsap.to(el, {
+                y: 0, opacity: 1, duration: 1.2, ease: "power3.out",
+                scrollTrigger: { trigger: el, start: "top 85%" }
+            });
         });
 
-        // Synkroniser AOS med Lenis scroll
-        lenis.on('scroll', AOS.refresh);
+        // 4. Billed/Video Mask Reveals
+        document.querySelectorAll('.reveal-mask').forEach((mask) => {
+            gsap.to(mask, {
+                clipPath: 'inset(0% 0 0 0)', duration: 1.5, ease: "power4.inOut",
+                scrollTrigger: { trigger: mask, start: "top 80%" }
+            });
+        });
     };
 
-    // Kør ved load og efter Astro transitions
-    initScripts();
+    initPremiumExperience();
     document.addEventListener('astro:page-load', () => {
+        ScrollTrigger.killAll(); 
         if (lenis) lenis.destroy();
-        initScripts();
+        initPremiumExperience();
     });
 </script>
 </body>

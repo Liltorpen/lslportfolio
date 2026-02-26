@@ -2,41 +2,76 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="OM">
+<MainLayout title="STUDIO">
     <div class="timeline">
-        <div class="timeline__line" data-aos="slide-down"></div>
+        <div class="timeline__track">
+            <div class="timeline__line"></div>
+        </div>
        
-        <section class="hero">
-            <h1 data-aos="fade-in">STUDIO</h1>
+        <section class="hero hero--small">
+            <h1 class="reveal-up">STUDIO</h1>
         </section>
 
-        <div class="intro-container intro-container--studio">
+        <div class="intro-container reveal-mask">
             <img class="studio-img" src="/images/hero.webp" alt="Lucas Liltorp">
+            <div class="img-overlay"></div>
         </div>
-    </div> <section class="bts" data-aos="fade-up">
-        <h2>KOM MED BEHIND THE SCENES</h2>
-        <p>Bag LSL Studio står jeg, Lucas. Jeg er passioneret omkring alt, hvad der rører sig inden for <strong>visuel kommunikation</strong>. For mig er design ikke bare statiske billeder... Det er <strong>levende fortællinger</strong>.
-        Min styrke ligger i krydsfeltet mellem designvision og teknisk håndværk. <br><br> Jeg er <strong>hardcore After Effects-bruger</strong> og ekspert i shortform content, men jeg tænker altid i hele løsninger - fra grafik og branding til kode. 
-        Jeg hjælper dig med at skabe et univers, der fastholder dit publikum fra første sekund.</p>
-    </section>
-    
-    <section class="skills-container" data-aos="fade-up">
-        <h3 class="h3--skills">MIN VÆRKTØJKASSE</h3>
-        <div class="skill-cloud">
-            <span class="skill-tag">AFTER EFFECTS</span>
-            <span class="skill-tag">PREMIERE PRO</span>
-            <span class="skill-tag">PHOTOSHOP</span>
-            <span class="skill-tag">ILLUSTRATOR</span>
-            <span class="skill-tag">LIGHTROOM</span>
-            <span class="skill-tag">INDESIGN</span>
-            <span class="skill-tag">FIGMA</span>
-            <span class="skill-tag">HTML5 / CSS3</span>
-            <span class="skill-tag">SHORTFORM STRATEGI</span>
-            <span class="skill-tag">BRANDING</span>
-        </div>
-    </section>
+
+        <section class="bts reveal-up">
+            <div class="bts__header">
+                <h2>BEHIND THE SCENES</h2>
+            </div>
+            <div class="bts__content">
+                <div class="bts__col">
+                    <p>Bag LSL Studio står jeg, Lucas. En 24-årig multimediedesigner passioneret omkring alt, hvad der rører sig inden for <strong>visuel kommunikation</strong>. For mig er design ikke bare statiske billeder...</p>
+                    <p>Det er <strong>levende fortællinger</strong>.</p>
+                </div>
+                <div class="bts__col">
+                    <p>Min styrke ligger i krydsfeltet mellem designvision og teknisk håndværk. Jeg er <strong>hardcore After Effects-bruger</strong> og ekspert i shortform content, men jeg tænker altid i hele løsninger - fra grafik og branding til kode.</p>
+                    <p>Jeg hjælper dig med at skabe et univers, der fastholder dit publikum fra første sekund.</p>
+                </div>
+            </div>
+        </section>
         
-    <div class="knap__container">
-        <a href="/kontakt" class="knap">KONTAKT</a>
+        <section class="skills-container reveal-up">
+            <h3 class="h3--skills">MIN VÆRKTØJSKASSE</h3>
+            <div class="skill-cloud">
+                {["AFTER EFFECTS", "PREMIERE PRO", "PHOTOSHOP", "ILLUSTRATOR", "LIGHTROOM", "INDESIGN", "FIGMA", "HTML5 / CSS3", "SHORTFORM STRATEGI", "BRANDING"].map(skill => (
+                    <span class="skill-tag">{skill}</span>
+                ))}
+            </div>
+        </section>
+          
+        <div class="knap__container reveal-up">
+            <a href="/kontakt" class="knap">START ET PROJEKT</a>
+        </div>
     </div>
 </MainLayout>
+
+<style>
+    .hero--small { min-height: 40vh; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 50px; }
+    
+    .intro-container { width: 100vw; height: 60vh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; margin-bottom: 150px; overflow: hidden; }
+    .studio-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%); }
+    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--bg-color), transparent 50%); }
+
+    .bts { max-width: 1000px; margin: 0 auto 150px; }
+    .bts__header { margin-bottom: 60px; border-bottom: 1px solid rgba(243, 226, 200, 0.1); padding-bottom: 20px; }
+    .bts__header h2 { font-size: 3rem; color: var(--accent-color); }
+    
+    .bts__content { display: flex; gap: 60px; }
+    .bts__col { flex: 1; }
+    .bts__col p { margin-bottom: 20px; }
+
+    .skills-container { max-width: 900px; margin: 0 auto 150px; text-align: center; padding: 80px 40px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); }
+    .h3--skills { margin-bottom: 40px; letter-spacing: 4px; opacity: 0.5; }
+    
+    .skill-cloud { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .skill-tag { font-family: var(--font-headline); padding: 12px 25px; border: 1px solid rgba(243, 82, 38, 0.3); color: var(--text-color); transition: all 0.3s ease; background: rgba(0,0,0,0.5); }
+    .skill-tag:hover { border-color: var(--accent-color); color: var(--accent-color); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+    @media (max-width: 768px) {
+        .bts__content { flex-direction: column; gap: 20px; }
+        .intro-container { height: 40vh; }
+    }
+</style>
