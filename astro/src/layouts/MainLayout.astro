@@ -39,7 +39,6 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
     let lenis: any;
 
     const initPremiumExperience = () => {
-        // 1. Smooth Scroll
         lenis = new Lenis({
             duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -50,22 +49,38 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
 
-        // 2. Tidslinje Track (Gløden)
-        const timelineLine = document.querySelector('.timeline__line');
-        if(timelineLine) {
-            gsap.to(timelineLine, {
-                height: "100%",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "body",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 0.5 // Giver en blød forsinkelse på stregen
-                }
-            });
+        // --- FORBEDRET TIMELINE LOGIK ---
+        const timelineLine = document.querySelector('.timeline__line') as HTMLElement;
+        const timelineContainer = document.querySelector('.timeline');
+        const knap = document.querySelector('.knap'); // Finder den første knap (Call to action)
+
+        if (timelineLine && timelineContainer && knap) {
+            const updateTimeline = () => {
+                const timelineRect = timelineContainer.getBoundingClientRect();
+                const knapRect = knap.getBoundingClientRect();
+                
+                // Beregn afstanden fra toppen af tidslinjen til midten af knappen
+                const scrollY = window.scrollY;
+                const stopPoint = (knapRect.top + scrollY) - (timelineRect.top + scrollY) + (knapRect.height / 2);
+
+                gsap.to(timelineLine, {
+                    height: stopPoint,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        endTrigger: knap,
+                        end: "center center",
+                        scrub: 0.4
+                    }
+                });
+            };
+
+            updateTimeline();
+            window.addEventListener('resize', updateTimeline);
         }
 
-        // 3. Generelle Fade-ups
+        // Reveal animationer
         document.querySelectorAll('.reveal-up').forEach((el) => {
             gsap.to(el, {
                 y: 0, opacity: 1, duration: 1.2, ease: "power3.out",
@@ -73,7 +88,6 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
             });
         });
 
-        // 4. Billed/Video Mask Reveals
         document.querySelectorAll('.reveal-mask').forEach((mask) => {
             gsap.to(mask, {
                 clipPath: 'inset(0% 0 0 0)', duration: 1.5, ease: "power4.inOut",

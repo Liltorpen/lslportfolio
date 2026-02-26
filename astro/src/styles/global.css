@@ -77,6 +77,12 @@ main {
 .hero--small h1,
 .bts__header,
 .stats-description,
+.knap__container,
+.label,
+.process,
+.process__grid,
+.skills-section,
+.knap,
 .h3--skills {
     position: relative;
     z-index: 2;
