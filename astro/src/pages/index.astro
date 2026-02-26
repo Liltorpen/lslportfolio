@@ -1,5 +1,4 @@
 ---
-// src/pages/index.astro
 import MainLayout from '../layouts/MainLayout.astro';
 import CaseItem from '../components/CaseItem.astro';
 
@@ -8,26 +7,30 @@ const selectedCases = [
         title: "VISUALS",
         tags: "[VIDEO] [SHORTFORM]",
         video: "/videos/lsl_optimized.mp4",
-        description: `Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde indenfor videoproduktion. Med særligt henblik på musik.<br><br><i>Medie-aktiverne er blevet transformeret gennem omfattende redigering i Premiere Pro og After Effects for at skabe et nyt kunstnerisk udtryk.</i>`
+        description: `Denne video skal ses som et manifest for den kreative og eksperimenterende retning jeg kan tilbyde indenfor videoproduktion.
+ Med særligt henblik på musik.<br><br><i>Medie-aktiverne er blevet transformeret gennem omfattende redigering i Premiere Pro og After Effects for at skabe et nyt kunstnerisk udtryk.</i>`
     },
     {
         title: "MERCH",
         tags: "[MERCH] [GRAFIK] [MOCKUP]",
         image: "/images/merch.webp",
-        description: `Designs som adskiller sig fra mængden - designs som <strong>skærer igennem</strong> støjen. Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.`
+        description: `Designs som adskiller sig fra mængden - designs som <strong>skærer igennem</strong> støjen.
+ Jeg hjælper med at designe merch, hvad end det er til labels, brands eller kunstnere.`
     },
     {
         title: "KONCERTPLAKAT",
         tags: "[TRYKTE MEDIER]",
         image: "/images/koncertplakat.webp",
-        description: `Lamin optræder i Bella Arena d. 21 februar. 2026. Jeg udarbejdede derfor et eksempel på hvordan en koncertplakat, kunne se ud. Lamins grafik er generelt inspireret fra den amerikanske scene - det tog jeg derfor også udgangspunkt i.`
+        description: `Lamin optræder i Bella Arena d.
+ 21 februar. 2026. Jeg udarbejdede derfor et eksempel på hvordan en koncertplakat, kunne se ud.
+ Lamins grafik er generelt inspireret fra den amerikanske scene - det tog jeg derfor også udgangspunkt i.`
     }
 ];
 ---
 
 <MainLayout title="PORTFOLIO">
     <div class="timeline">
-        <div class="timeline__line" data-aos="slide-up"></div>
+        <div class="timeline__line" data-aos="draw-line"></div>
 
         <section class="hero hero--landingpage" data-aos="zoom-out">
             <h1 class="h1 h1--landingpage">DYNAMISK CONTENT</h1>
@@ -37,8 +40,9 @@ const selectedCases = [
 
         <section class="hook" data-aos="fade-up">
             <h2>I EN VERDEN AF UENDELIG SCROLL</h2>
-            <p>Er opmærksomhed blevet en vigtig valuta. Jeg skaber <strong>ikke bare indhold</strong>, men <strong>visuelle oplevelser</strong>, der fastholder seeren.
-            Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
+            <p>Er opmærksomhed blevet en vigtig valuta.
+ Jeg skaber <strong>ikke bare indhold</strong>, men <strong>visuelle oplevelser</strong>, der fastholder seeren.
+ Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
             bygger jeg broen mellem <strong>kunstnerisk kant</strong> og <strong>kommerciel værdi</strong>.</p>
         </section>
     
@@ -46,27 +50,27 @@ const selectedCases = [
             </div>
         <section class="stats-flex" data-aos="fade-up">
             <div class="stat-item">
-                <h2>100K+</h2>
+                <h2 class="stat-number">100K+</h2>
                 <p>Community Reach</p>
             </div>
             <div class="stat-item">
-                <h2>50M+</h2>
+                <h2 class="stat-number">50M+</h2>
                 <p>TOTALE VISNINGER</p>
             </div>
             <div class="stat-item">
-                <h2>113%</h2>
+                <h2 class="stat-number">113%</h2>
                 <p>ENGAGEMENT RATE</p>
             </div>
             <p class="stats-description">
                 Gennem arbejde med mine egne platforme har jeg opnået en unik forståelse af algoritmerne på TikTok og Instagram.
-                Jeg omsætter data og tendenser til visuel valuta, der skaber <strong>reel vækst</strong> og fastholder opmærksomheden.
-            </p>
+ Jeg omsætter data og tendenser til visuel valuta, der skaber <strong>reel vækst</strong> og fastholder opmærksomheden.
+ </p>
         </section>
 
         <div class="staff-badge" data-aos="fade-down">
             <img src="/images/staff_badge.webp" alt="Lucas Liltorp - 24 år - Stud. Multimediedesign" loading="lazy">
-
     </div> 
+
     <h2 class="h2--cases" data-aos="fade-up">UDVALGTE CASES</h2>
     
     <div class="cases-list" data-aos="fade-up">
@@ -77,7 +81,7 @@ const selectedCases = [
                 description={item.description}
                 image={item.image}
                 video={item.video}
-                reversed={index % 2 !== 0} 
+                reversed={index % 2 !== 0}
             />
         ))}
     </div>
@@ -86,3 +90,15 @@ const selectedCases = [
         <a href="/cases" class="knap">SE CASES</a>
     </div>
 </MainLayout>
+
+<script>
+    // WOW-effekt: Counter animation for dine stats
+    const animateNumbers = () => {
+        const stats = document.querySelectorAll('.stat-number');
+        stats.forEach(stat => {
+            const target = parseInt(stat.innerHTML.replace(/[^0-9]/g, ''));
+            // Her kunne man tilføje en reel counter-logik hvis ønsket
+        });
+    }
+    document.addEventListener('astro:page-load', animateNumbers);
+</script>

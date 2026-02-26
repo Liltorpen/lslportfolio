@@ -5,16 +5,16 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import 'aos/dist/aos.css';
 
+interface Props {
+  title?: string;
+  description?: string;
+}
+
 const { title, description } = Astro.props;
 
-// src/components/Header.astro
-const { pathname } = Astro.url;
-
-const isActive = (path: string) => {
-    const cleanPathname = pathname.replace(/\/$/, "");
-    const cleanPath = path.replace(/\/$/, "");
-    return cleanPathname === cleanPath;
-};
+// SEO Metadata
+const siteTitle = title ? `${title} | LSL STUDIO` : 'LSL STUDIO | Visuelle oplevelser der skærer igennem støjen';
+const siteDescription = description || "LSL Studio - Specialist i shortform content, motion graphics og visuel identitet. Skaber visuelle fortællinger der fastholder dit publikum.";
 ---
 
 <!DOCTYPE html>
@@ -22,8 +22,28 @@ const isActive = (path: string) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title ? `${title} | LSL STUDIO` : 'LSL STUDIO'}</title>
-    <meta name="description" content={description || "LSL Studio - Visuelle oplevelser der skærer igennem støjen."}>
+    
+    <title>{siteTitle}</title>
+    <meta name="description" content={siteDescription}>
+    <meta name="author" content="Lucas Liltorp">
+    <link rel="canonical" href={Astro.url}>
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={Astro.url}>
+    <meta property="og:title" content={siteTitle}>
+    <meta property="og:description" content={siteDescription}>
+    <meta property="og:image" content="/images/hero.webp">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Lucas Liltorp",
+        "jobTitle": "Multimediedesigner",
+        "url": "https://lucasliltorp.dk",
+        "knowsAbout": ["Shortform Content", "After Effects", "Motion Graphics", "Branding"]
+      }
+    </script>
     
     <link rel="icon" type="image/svg+xml" href="/images/lsl_logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,37 +55,49 @@ const isActive = (path: string) => {
 </head>
 <body>
     <Header />
-
     <main>
         <slot />
     </main>
-
     <Footer />
 
 <script>
     import AOS from 'aos';
+    import Lenis from 'lenis';
 
-    const initAOS = () => {
-        const animatedElements = document.querySelectorAll('.aos-animate');
-        animatedElements.forEach(el => el.classList.remove('aos-animate'));
+    let lenis: any;
 
-        setTimeout(() => {
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 20,
-                delay: 0,
-                easing: 'ease-out-cubic'
-            });
-            
-            AOS.refresh();
-        }, 200); 
+    const initScripts = () => {
+        // 1. Studio Lenis (Smooth Scroll)
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+        });
+
+        function raf(time: number) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. AOS Initialisering
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 20,
+            easing: 'ease-out-cubic'
+        });
+
+        // Synkroniser AOS med Lenis scroll
+        lenis.on('scroll', AOS.refresh);
     };
 
-    initAOS();
-    document.addEventListener('astro:page-load', initAOS);
-    
-    document.addEventListener('astro:after-swap', AOS.refresh);
+    // Kør ved load og efter Astro transitions
+    initScripts();
+    document.addEventListener('astro:page-load', () => {
+        if (lenis) lenis.destroy();
+        initScripts();
+    });
 </script>
 </body>
 </html>
