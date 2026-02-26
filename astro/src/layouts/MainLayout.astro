@@ -39,64 +39,86 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
     let lenis: any;
 
     const initPremiumExperience = () => {
+        // 1. Lenis Smooth Scroll Setup
         lenis = new Lenis({
-            duration: 1.5,
+            duration: 1.2, // Lidt hurtigere for en mere responsiv følelse
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
         });
 
         lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
         gsap.ticker.lagSmoothing(0);
 
-        // --- FORBEDRET TIMELINE LOGIK ---
+        // 2. --- OPTIMERET TIMELINE LOGIK ---
         const timelineLine = document.querySelector('.timeline__line') as HTMLElement;
-        const timelineContainer = document.querySelector('.timeline');
-        const knap = document.querySelector('.knap'); // Finder den første knap (Call to action)
+        const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
+        const knapContainer = document.querySelector('.knap__container');
 
-        if (timelineLine && timelineContainer && knap) {
-            const updateTimeline = () => {
-                const timelineRect = timelineContainer.getBoundingClientRect();
-                const knapRect = knap.getBoundingClientRect();
-                
-                // Beregn afstanden fra toppen af tidslinjen til midten af knappen
+        if (timelineLine && timelineTrack && knapContainer) {
+            // Funktion til at beregne den præcise pixel-destination
+            const getStopPoint = () => {
+                const knapRect = knapContainer.getBoundingClientRect();
+                const trackRect = timelineTrack.getBoundingClientRect();
                 const scrollY = window.scrollY;
-                const stopPoint = (knapRect.top + scrollY) - (timelineRect.top + scrollY) + (knapRect.height / 2);
-
-                gsap.to(timelineLine, {
-                    height: stopPoint,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: "body",
-                        start: "top top",
-                        endTrigger: knap,
-                        end: "center center",
-                        scrub: 0.4
-                    }
-                });
+                // Returnerer afstanden fra toppen af banen til midten af knappen
+                return (knapRect.top + scrollY) - (trackRect.top + scrollY) + (knapRect.height / 2);
             };
 
-            updateTimeline();
-            window.addEventListener('resize', updateTimeline);
+            gsap.to(timelineLine, {
+                height: () => getStopPoint(), // Brug funktion for dynamisk opdatering
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    endTrigger: knapContainer,
+                    end: "center center",
+                    scrub: 0.1, // Langt mere snappy end 0.5
+                    invalidateOnRefresh: true, // Genberegner alt ved resize/load
+                }
+            });
         }
 
-        // Reveal animationer
-        document.querySelectorAll('.reveal-up').forEach((el) => {
-            gsap.to(el, {
-                y: 0, opacity: 1, duration: 1.2, ease: "power3.out",
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
+        // 3. Reveal Animationer (Subtilt fade up)
+        const revealUps = document.querySelectorAll('.reveal-up');
+        revealUps.forEach((el) => {
+            gsap.fromTo(el, 
+                { y: 30, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
         });
 
-        document.querySelectorAll('.reveal-mask').forEach((mask) => {
+        // 4. Reveal Masks (Editorial image reveal)
+        const revealMasks = document.querySelectorAll('.reveal-mask');
+        revealMasks.forEach((mask) => {
             gsap.to(mask, {
-                clipPath: 'inset(0% 0 0 0)', duration: 1.5, ease: "power4.inOut",
-                scrollTrigger: { trigger: mask, start: "top 80%" }
+                clipPath: 'inset(0% 0 0 0)',
+                duration: 1.4,
+                ease: "power4.inOut",
+                scrollTrigger: {
+                    trigger: mask,
+                    start: "top 85%",
+                }
             });
         });
     };
 
+    // Kør init load
     initPremiumExperience();
+
+    // Re-init efter Astro sidskift
     document.addEventListener('astro:page-load', () => {
         ScrollTrigger.killAll(); 
         if (lenis) lenis.destroy();

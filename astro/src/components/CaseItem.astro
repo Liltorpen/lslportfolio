@@ -12,6 +12,9 @@ const { title, tags, description, image, video, reversed } = Astro.props;
             ) : (
                 <img src={image} alt={title} loading="lazy" class="premium-media" />
             )}
+            
+            <div class="case-wrap"></div>
+            
             <div class="case-overlay"></div>
         </div>
     </div>
@@ -19,7 +22,7 @@ const { title, tags, description, image, video, reversed } = Astro.props;
     <div class="case-item__info">
         <div class="case-item__tags">{tags}</div>
         <h2 class="case-title">{title}</h2>
-        <p set:html={description} />
+        <div class="case-description" set:html={description} />
     </div>
 </article>
 
@@ -120,6 +123,35 @@ const { title, tags, description, image, video, reversed } = Astro.props;
     }
 
     .case-item--reversed { flex-direction: row-reverse; }
+
+    /* THE WRAP EFFECT */
+    .case-wrap {
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/wrap.webp');
+        background-size: cover;
+        background-position: center;
+        z-index: 2;
+        mix-blend-mode: screen; /* Fjerner det sorte fra teksturen */
+        opacity: 0.6; /* Gør det subtilt */
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+    }
+
+    .case-item:hover .case-wrap {
+        opacity: 0; /* Fader ud så casen står rent ved hover */
+    }
+
+    .case-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: radial-gradient(circle at center, transparent 40%, rgba(17, 16, 16, 0.8) 120%);
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+    }
+
+    .case-item:hover .case-overlay { opacity: 0; }
 
     @media (max-width: 900px) {
         .case-item, .case-item--reversed { flex-direction: column; gap: 40px; margin-bottom: 120px; }
