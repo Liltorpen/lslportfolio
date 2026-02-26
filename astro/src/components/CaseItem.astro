@@ -6,7 +6,7 @@ const { title, tags, description, image, video, reversed } = Astro.props;
     <div class="case-item__visual-wrapper">
         <div class="case-item__inner">
             {video ? (
-                <video muted loop playsinline class="smart-video premium-media">
+                <video controls muted loop playsinline class="smart-video premium-media">
                     <source src={video} type="video/mp4" />
                 </video>
             ) : (
