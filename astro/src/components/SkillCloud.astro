@@ -1,8 +1,14 @@
 ---
+// src/components/SkillCloud.astro
 const skills = [
-    "AFTER EFFECTS", "PREMIERE PRO", "PHOTOSHOP", "ILLUSTRATOR", 
-    "LIGHTROOM", "INDESIGN", "FIGMA", "HTML5 / CSS3", 
-    "SHORTFORM STRATEGI", "BRANDING"
+    { name: "AFTER EFFECTS", type: "MOTION DESIGN", desc: "Avanceret animation & VFX" },
+    { name: "PREMIERE PRO", type: "VIDEO EDITING", desc: "Storytelling & Color Grading" },
+    { name: "PHOTOSHOP", type: "IMAGE ASSETS", desc: "Digital komposition" },
+    { name: "ILLUSTRATOR", type: "BRAND ASSETS", desc: "Vektorbaseret grafik" },
+    { name: "FIGMA", type: "UI / UX", desc: "Prototyping & Designsystemer" },
+    { name: "HTML5 / CSS3", type: "DEVELOPMENT", desc: "Interaktiv frontend kodning" },
+    { name: "SHORTFORM STRATEGI", type: "CONTENT", desc: "Algoritme-optimering" },
+    { name: "BRANDING", type: "IDENTITY", desc: "Visuel konceptudvikling" }
 ];
 ---
 
@@ -11,58 +17,166 @@ const skills = [
         <span class="label">TOOLKIT</span>
         <h2 class="section-title">TEKNISKE KOMPETENCER</h2>
     </div>
-    <div class="skills-grid">
-        {skills.map(skill => (
-            <div class="skill-box">
-                <span class="skill-name">{skill}</span>
+
+    <div class="skills-list">
+        {skills.map((skill, index) => (
+            <div class="skill-row" data-skill={skill.name.toLowerCase()}>
+                <div class="skill-row__content">
+                    <span class="skill-index">0{index + 1}</span>
+                    <div class="skill-info">
+                        <h3 class="skill-name">{skill.name}</h3>
+                        <span class="skill-type">{skill.type}</span>
+                    </div>
+                    <p class="skill-desc">{skill.desc}</p>
+                </div>
+                <div class="skill-row__line"></div>
             </div>
         ))}
     </div>
+
+    <div class="skill-portal">
+        <div class="portal-inner">
+            <div class="portal-media">
+                <div class="portal-overlay"></div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    import { gsap } from 'gsap';
+
+    const initSkillPortal = () => {
+        const rows = document.querySelectorAll('.skill-row');
+        const portal = document.querySelector('.skill-portal');
+        const portalInner = document.querySelector('.portal-inner');
+
+        if (!portal || !rows.length || window.matchMedia("(hover: none)").matches) return;
+
+        // 1. Mouse Follow med Inertia (UX: Føles flydende, ikke hakkende)
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(portal, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.6,
+                ease: "power3.out"
+            });
+        });
+
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                // Animation af rækken
+                gsap.to(row, { paddingLeft: "40px", duration: 0.4, ease: "power2.out" });
+                
+                // Portal reveal
+                gsap.to(portalInner, {
+                    scale: 1,
+                    opacity: 1,
+                    rotation: Math.random() * 6 - 3, // Subtil organisk rotation
+                    duration: 0.5,
+                    ease: "back.out(1.5)"
+                });
+            });
+
+            row.addEventListener('mouseleave', () => {
+                gsap.to(row, { paddingLeft: "0px", duration: 0.4, ease: "power2.out" });
+                
+                gsap.to(portalInner, {
+                    scale: 0.3,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in"
+                });
+            });
+        });
+    };
+
+    initSkillPortal();
+    document.addEventListener('astro:page-load', initSkillPortal);
+</script>
 
 <style>
     .skills-section {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto 150px;
-        padding: 0 20px;
+        padding: 0 5vw;
+        position: relative;
     }
-    .skills-header { text-align: center; margin-bottom: 60px; }
-    .label {
-        color: var(--accent-color);
-        font-family: var(--font-headline);
-        letter-spacing: 5px;
-        font-size: 0.9rem;
-        display: block;
-        margin-bottom: 10px;
-    }
-    .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        border-top: 1px solid rgba(243, 226, 200, 0.1);
-        border-left: 1px solid rgba(243, 226, 200, 0.1);
-    }
-    .skill-box {
-        padding: 50px 30px;
-        border-right: 1px solid rgba(243, 226, 200, 0.1);
-        border-bottom: 1px solid rgba(243, 226, 200, 0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: all 0.4s ease;
-        background: transparent;
-    }
-    .skill-box:hover { background: rgba(243, 82, 38, 0.03); }
-    .skill-name {
-        font-family: var(--font-headline);
-        font-size: 1.1rem;
-        letter-spacing: 2px;
-        opacity: 0.5;
-        transition: all 0.3s ease;
-    }
-    .skill-box:hover .skill-name { opacity: 1; color: var(--accent-color); transform: scale(1.05); }
 
+    .skills-header { margin-bottom: 80px; }
+
+    .skills-list {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid rgba(243, 226, 200, 0.1);
+    }
+
+    .skill-row {
+        position: relative;
+        padding: 30px 0;
+        cursor: pointer;
+        transition: all 0.4s ease;
+    }
+
+    .skill-row__content {
+        display: grid;
+        grid-template-columns: 80px 1.5fr 1fr;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .skill-index {
+        font-family: var(--font-headline);
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        opacity: 0.5;
+    }
+
+    .skill-name {
+        font-size: clamp(1.5rem, 4vw, 3.5rem);
+        margin: 0;
+        line-height: 1;
+    }
+
+    .skill-type {
+        font-family: var(--font-headline);
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        opacity: 0.4;
+        display: block;
+        margin-top: 5px;
+    }
+
+    .skill-desc {
+        font-size: 0.9rem;
+        opacity: 0.5;
+        margin: 0;
+        text-align: right;
+    }
+
+    .skill-row__line {
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 100%; height: 1px;
+        background: rgba(243, 226, 200, 0.1);
+        transform-origin: left;
+    }
+
+    .skill-row:hover .skill-row__line {
+        background: var(--accent-color);
+        height: 2px;
+    }
+
+    .skill-row:hover .skill-name { color: var(--accent-color); }
+
+    /* UX: Mobile Fallback (Ingen portal, men tydelig markering) */
     @media (max-width: 768px) {
-        .skills-grid { grid-template-columns: 1fr 1fr; }
-        .skill-box { padding: 30px 15px; }
+        .skill-row__content {
+            grid-template-columns: 40px 1fr;
+        }
+        .skill-desc { display: none; }
+        .skill-name { font-size: 1.8rem; }
+        .skill-portal { display: none; }
+        .skill-row:hover { padding-left: 15px; }
     }
 </style>
