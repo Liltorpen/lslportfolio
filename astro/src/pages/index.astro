@@ -89,31 +89,3 @@ const selectedCases = [
         });
     });
 </script>
-
-<style>
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-    .hero__content { margin-top: auto; }
-    .hero__scroll { margin-top: auto; margin-bottom: 40px; font-family: var(--font-headline); font-size: 1.2rem; letter-spacing: 4px; opacity: 0.5; }
-    
-    .hook { margin: 150px auto 250px; text-align: center; max-width: 800px; }
-    .hook h2 { font-size: clamp(30px, 4vw, 45px); margin-bottom: 20px; }
-    .hook p { margin: 0 auto; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.8; }
-
-    .section-title { text-align: center; margin-bottom: 80px; letter-spacing: 2px; }
-
-    .stats-section { margin: 0 auto 200px; max-width: 1000px; text-align: center; }
-    .stats-flex { display: flex; justify-content: space-around; padding: 60px 0; border-top: 1px solid rgba(243, 226, 200, 0.1); border-bottom: 1px solid rgba(243, 226, 200, 0.1); margin-bottom: 40px; }
-    .stat-item { flex: 1; }
-    .stat-number { display: inline-block; font-size: clamp(50px, 6vw, 90px); color: var(--accent-color); line-height: 1; }
-    .stat-item span { font-family: var(--font-headline); font-size: clamp(30px, 4vw, 50px); color: var(--accent-color); }
-    .stat-item p { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin: 10px auto 0; opacity: 0.7; }
-    .stats-description { max-width: 700px; margin: 0 auto; }
-
-    .staff-badge { display: flex; justify-content: center; margin: 0 auto 200px; }
-    .staff-badge img { max-width: 250px; border-radius: 5px; filter: grayscale(100%); transition: filter 0.5s ease; }
-    .staff-badge img:hover { filter: grayscale(0%); }
-
-    @media (max-width: 768px) {
-        .stats-flex { flex-direction: column; gap: 50px; }
-    }
-</style>
