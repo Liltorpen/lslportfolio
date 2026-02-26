@@ -43,7 +43,7 @@ main {
     margin-right: auto;
     top: 10px;
     bottom: 20px;
-    width: 3px;
+    width: 1px;
     background-color: var(--accent-color);
     z-index: 0; 
 }
