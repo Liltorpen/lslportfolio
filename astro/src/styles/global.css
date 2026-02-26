@@ -39,6 +39,16 @@ main {
     padding-bottom: 150px;
 }
 
+.hero--small {
+    min-height: 45vh; /* Fast ensartet højde på alle undersider */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centrerer teksten vertikalt */
+    text-align: center;
+    padding-top: 80px; /* Giver plads til den fixed header */
+    margin-bottom: 50px;
+}
+
 .timeline {
     position: relative;
     width: 100%;
@@ -88,6 +98,11 @@ main {
     z-index: 2;
     background: radial-gradient(ellipse at center, var(--bg-color) 35%, transparent 75%);
     padding: 30px 0; 
+}
+
+/* Sørg for at tidslinjen altid ligger bagved alt indhold */
+.timeline__track, .timeline__line {
+    z-index: -1 !important;
 }
 
 .stats-flex {
