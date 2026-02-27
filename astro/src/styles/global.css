@@ -128,7 +128,20 @@ header {
     background-color: var(--bg-color); display: flex; flex-direction: column;
     justify-content: flex-start; align-items: flex-start; padding: 15px var(--container-padding);
     z-index: 1500; opacity: 0; visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
+
+/* DETTE ER FIXET: Gør menuen synlig når den har klassen .active */
+.nav--mobile.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sørg for at links i mobilmenuen er synlige */
+.nav--mobile .nav__link {
+    opacity: 1 !important;
+}
+
 .nav--mobile__header { margin-bottom: 60px; }
 .nav--mobile__header img { height: 40px; }
 .nav--mobile__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 60px; }
@@ -170,25 +183,34 @@ header {
     will-change: height, opacity;
 }
 
-/* Maskering - Tilføjet alle sektioner der skal dække stregen */
+/* Maskering - OPDATERET: Tilføjet .stats-flex, .bts__content og .intro-container */
 .hero__content, .hero__scroll, .hook, .section-title, .hero--small h1, .bts__header, 
-.stats-description, .knap__container, .label, .skills-section, .case-item__info, 
-.contact-info, .form-container, .staff-badge, .process {
-    position: relative; z-index: 2;
-    background: radial-gradient(ellipse at center, var(--bg-color) 45%, transparent 80%);
-    padding: var(--mask-padding) 0; 
-}
-
-/* 2. Tilføj dette nederst i din CSS fil for at fixe kontakt-siden specifikt */
-.glass-form .knap__container {
-    background: transparent !important; /* Fjerner den mørke gradient klat */
-    padding: 0 !important;
-}
-
-/* Sørg for at form-container ikke skjuler linjen på kontakt-siden */
-.form-container {
-    background: transparent !important;
+.bts__content, .intro-container, .stats-flex, .stats-description, .knap__container, 
+.label, .skills-section, .case-item__info, .contact-info, .form-container, .case-item, 
+.staff-badge, .process {
+    position: relative; 
     z-index: 2;
+    background: linear-gradient(
+        to bottom, 
+        transparent 0%, 
+        var(--bg-color) 20%, 
+        var(--bg-color) 80%, 
+        transparent 100%
+    );
+    padding: var(--mask-padding) 0;
+}
+
+/* Særligt fix til elementer hvor baggrunden skal være helt ren (f.eks. knapper) */
+.knap__container {
+    background: radial-gradient(ellipse at center, var(--bg-color) 50%, transparent 100%);
+    /* Knapper behøver en mere fokuseret maske så de ikke fylder hele skærmen */
+}
+
+/* Fix for kontakt-siden så formularen ikke får en mørk baggrund overhovedet */
+.glass-form .knap__container,
+.form-container {
+    background: none !important;
+    background-color: transparent !important;
 }
 
 /* ==========================================================================
@@ -228,7 +250,14 @@ header {
 
 /* Skills */
 .skills-list { display: flex; flex-direction: column; border-top: 1px solid rgba(243, 226, 200, 0.1); }
-.skill-row { position: relative; padding: 30px 0; cursor: pointer; transition: 0.4s ease; }
+.skill-row {
+    position: relative; 
+    padding: 30px 0; 
+    cursor: pointer; 
+    transition: 0.4s ease;
+    background-color: var(--bg-color); 
+    z-index: 2;
+}
 .skill-row__content { display: grid; grid-template-columns: 80px 1.5fr 1fr; align-items: center; gap: 20px; }
 .skill-index { font-family: var(--font-headline); font-size: 0.9rem; color: var(--accent-color); opacity: 0.5; }
 .skill-name { font-size: clamp(1.5rem, 4vw, 3.5rem); margin: 0; line-height: 1; }

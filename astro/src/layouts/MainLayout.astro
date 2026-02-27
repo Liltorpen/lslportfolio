@@ -41,6 +41,7 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
     let resizeObserver: ResizeObserver | null = null;
 
     const initPremiumExperience = () => {
+        // 1. Lenis Smooth Scroll Setup
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -51,7 +52,7 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
 
-        // --- TIMELINE LOGIK (PRÆCISIONS-FIX) ---
+        // 2. --- TIMELINE LOGIK (PRÆCISIONS-FIX) ---
         const timelineLine = document.querySelector('.timeline__line') as HTMLElement;
         const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
 
@@ -65,18 +66,19 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack, // Trigger på selve banen for 100% præcision
-                    start: "top 80%",       // Begynder først at vokse når toppen er nær midten
-                    end: "bottom 70%",     // Er færdig når bunden af banen er forbi midten
-                    scrub: 0.1,             // En smule delay gør den mere "smooth"
+                    start: "top 65%",       // Begynder først at vokse når den er sikkert under header blur
+                    end: "bottom 75%",      // Er færdig når bunden af banen (knappen) rammer det nedre område
+                    scrub: 0.5,             // Gør bevægelsen flydende og premium
                     invalidateOnRefresh: true, 
                 }
             });
         }
 
-        // --- REVEAL ANIMATIONER (STABILITETS-FIX) ---
+        // 3. --- REVEAL ANIMATIONER (STABILITETS-FIX) ---
+        // Reveal Up (Tekst og sektioner)
         const reveals = document.querySelectorAll('.reveal-up');
         reveals.forEach((el) => {
-            gsap.set(el, { y: 50, opacity: 0 }); // Tvungen start-state
+            gsap.set(el, { y: 50, opacity: 0 }); // Tvungen start-state for View Transitions
 
             gsap.to(el, {
                 y: 0,
@@ -85,13 +87,27 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: el,
-                    start: "top 90%", // Trigger lidt før den rammer bunden af skærmen
+                    start: "top 92%", // Trigger når elementet næsten er synligt
                     toggleActions: "play none none none"
                 }
             });
         });
 
-        // ResizeObserver sikrer at linjen når bunden selvom videoer loader langsomt
+        // FIX: Reveal Mask (Billeder og hero sektioner, f.eks. Studio Hero)
+        const masks = document.querySelectorAll('.reveal-mask');
+        masks.forEach((mask) => {
+            gsap.to(mask, {
+                clipPath: 'inset(0% 0 0 0)',
+                duration: 1.5,
+                ease: "power4.inOut",
+                scrollTrigger: {
+                    trigger: mask,
+                    start: "top 90%",
+                }
+            });
+        });
+
+        // 4. ResizeObserver sikrer at GSAP kender sidens rigtige højde
         const mainElement = document.querySelector('main');
         if (mainElement) {
             resizeObserver = new ResizeObserver(() => {
@@ -103,22 +119,26 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
         ScrollTrigger.refresh();
     };
 
+    // Første kørsel
     initPremiumExperience();
 
+    // Astro Page Load handler til View Transitions
     document.addEventListener('astro:page-load', () => {
+        // Ryd op i gamle instanser
         ScrollTrigger.killAll(); 
         if (lenis) lenis.destroy();
         if (resizeObserver) resizeObserver.disconnect();
         
         requestAnimationFrame(() => {
             initPremiumExperience();
-            // Vi venter lidt længere på at View Transitions er helt færdige
+            // Vi venter lidt længere på at View Transitions er helt færdige før refresh
             setTimeout(() => {
                 ScrollTrigger.refresh();
             }, 500); 
         });
     });
 
+    // Handle vindue resize
     window.addEventListener('resize', () => ScrollTrigger.refresh());
 </script>
 </body>
