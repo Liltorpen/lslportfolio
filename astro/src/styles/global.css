@@ -141,15 +141,18 @@ header {
 .timeline { position: relative; width: 100%; }
 /* --- src/styles/global.css --- */
 
+/* --- src/styles/global.css --- */
+
+/* Opdateret track-position */
 .timeline__track {
     position: absolute; 
     left: 0; 
     right: 0; 
     margin: 0 auto; 
-    top: 150px; /* Mere luft fra toppen sikrer den gemmer sig bag headeren */
-    bottom: 0; 
+    top:180px; /* Rykket lidt længere ned for at skjule den helt i starten */
+    bottom: 40px; /* FIX: Stopper nu tidligere, så linjen lander præcis på knappen */
     width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.05) 95%, transparent); 
+    background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.01) 95%, transparent); 
     z-index: -1;
 }
 
@@ -159,11 +162,14 @@ header {
     top: 0; 
     width: 3px; 
     background: var(--accent-color);
-    box-shadow: 0 0 15px rgba(243, 82, 38, 0.6); 
+    box-shadow: 
+        0 0 10px var(--accent-color), 
+        0 0 25px var(--accent-color), 
+        0 0 45px rgba(243, 82, 38, 0.4); 
     border-radius: 50px; 
     z-index: -1;
     transform-origin: top; 
-    opacity: 0; /* Starter helt usynlig */
+    opacity: 0;
     will-change: height, opacity;
 }
 
