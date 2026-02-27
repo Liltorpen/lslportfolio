@@ -34,64 +34,26 @@ const skills = [
             </div>
         ))}
     </div>
-
-    <div class="skill-portal">
-        <div class="portal-inner">
-            <div class="portal-media">
-                <div class="portal-overlay"></div>
-            </div>
-        </div>
-    </div>
 </section>
 
 <script>
     import { gsap } from 'gsap';
 
-    const initSkillPortal = () => {
+    const initSkillHover = () => {
         const rows = document.querySelectorAll('.skill-row');
-        const portal = document.querySelector('.skill-portal');
-        const portalInner = document.querySelector('.portal-inner');
-
-        if (!portal || !rows.length || window.matchMedia("(hover: none)").matches) return;
-
-        // 1. Mouse Follow med Inertia (UX: Føles flydende, ikke hakkende)
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(portal, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.6,
-                ease: "power3.out"
-            });
-        });
+        if (window.matchMedia("(hover: none)").matches) return;
 
         rows.forEach(row => {
             row.addEventListener('mouseenter', () => {
-                // Animation af rækken
                 gsap.to(row, { paddingLeft: "40px", duration: 0.4, ease: "power2.out" });
-                
-                // Portal reveal
-                gsap.to(portalInner, {
-                    scale: 1,
-                    opacity: 1,
-                    rotation: Math.random() * 6 - 3, // Subtil organisk rotation
-                    duration: 0.5,
-                    ease: "back.out(1.5)"
-                });
             });
 
             row.addEventListener('mouseleave', () => {
                 gsap.to(row, { paddingLeft: "0px", duration: 0.4, ease: "power2.out" });
-                
-                gsap.to(portalInner, {
-                    scale: 0.3,
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: "power2.in"
-                });
             });
         });
     };
 
-    initSkillPortal();
-    document.addEventListener('astro:page-load', initSkillPortal);
+    initSkillHover();
+    document.addEventListener('astro:page-load', initSkillHover);
 </script>

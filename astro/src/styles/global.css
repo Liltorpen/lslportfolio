@@ -219,7 +219,7 @@ position: absolute;
     right: 0; 
     margin: 0 auto; 
     top: 0px;
-    bottom: 40px; 
+    bottom: 60px; 
     width: 1px;
     background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.01) 95%, transparent); 
     z-index: -1;
@@ -242,40 +242,31 @@ position: absolute;
     will-change: height, opacity;
 }
 
-/* Maskering - OPDATERET: Tilføjet .stats-flex, .bts__content og .intro-container */
+/* Maskering - OPDATERET TIL ÆGTE CSS MASK-IMAGE */
 .hero__content, .hero__scroll, .hook, .section-title, .hero--small h1, .bts__header, 
 .bts__content, .intro-container, .stats-flex, .stats-description, .knap__container, 
 .label, .skills-section, .case-item__info, .contact-info, .form-container, .case-item, 
 .staff-badge, .process, .detail-item, .info-content, .stats-section, .bts, .process__grid {
     position: relative; 
     z-index: 2;
-    background: linear-gradient(
-        to bottom, 
-        transparent 0%, 
-        var(--bg-color) 20%, 
-        var(--bg-color) 80%, 
+    
+    /* Fjerner den gamle "fake" background mask */
+    background: transparent; 
+
+    /* Ægte CSS maskering (Virker i alle moderne browsere) */
+    mask-image: linear-gradient(
+        from top to bottom, 
+        transparent 0px, 
+        black 5px, 
+        black calc(100% - 20px), 
         transparent 100%
     );
-    padding: var(--mask-padding) 0;
-}
-
-/* Særligt fix til elementer hvor baggrunden skal være helt ren (f.eks. knapper) */
-.knap__container {
-    background: radial-gradient(ellipse at center, var(--bg-color) 50%, transparent 100%);
-    /* Knapper behøver en mere fokuseret maske så de ikke fylder hele skærmen */
-}
-
-/* Fix for kontakt-siden så formularen ikke får en mørk baggrund overhovedet */
-.glass-form .knap__container,
-.form-container {
-    background: none !important;
-    background-color: transparent !important;
 }
 
 /* ==========================================================================
    5. KOMPONENTER (Knapper, Cases, Skills, Footer)
    ========================================================================== */
-.knap__container { display: flex; justify-content: center; margin: 80px 0; }
+.knap__container { display: flex; justify-content: center; margin: 50px 0; }
 .knap {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 15px 40px; background: transparent; color: var(--text-color); 
@@ -398,14 +389,6 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
 .reveal-up { opacity: 0; transform: translateY(40px); }
 .reveal-mask { clip-path: inset(100% 0 0 0); }
 
-@media (max-width: 900px) {
-    /* Sikrer vi ikke har centreret tekst på mobil overhovedet */
-    .case-item, .case-item--reversed { flex-direction: column; gap: 40px; }
-    .case-item__info { text-align: left; align-items: flex-start; }
-    .section-title, .hook, .hook h2, .stats-section, .bts__header, .bts__header h2, .contact-info h2 { text-align: left !important; }
-    p { text-align: left !important; }
-}
-
 @media (max-width: 768px) {
     :root { --mask-padding: 15px; }
     main { padding-bottom: 60px; }
@@ -413,6 +396,11 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
     .nav { display: none; }
     .nav-burger { display: flex; }
     .nav--mobile__list { gap: 40px; }
+
+    .case-item, .case-item--reversed{ flex-direction: column; gap: 40px; }
+    .case-item__info { text-align: left; align-items: flex-start; }
+    .section-title, .hook, .hook h2, .stats-section, .bts__header, .bts__header h2, .contact-info h2 { text-align: left !important; }
+    p { text-align: left !important; }
     
     .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: left; }
     .footer-col:nth-child(2), .footer-col:nth-child(3) { text-align: left; }
