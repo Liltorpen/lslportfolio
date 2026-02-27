@@ -246,7 +246,7 @@ position: absolute;
 .hero__content, .hero__scroll, .hook, .section-title, .hero--small h1, .bts__header, 
 .bts__content, .intro-container, .stats-flex, .stats-description, .knap__container, 
 .label, .skills-section, .case-item__info, .contact-info, .form-container, .case-item, 
-.staff-badge, .process, .detail-item, .info-content {
+.staff-badge, .process, .detail-item, .info-content, .stats-section {
     position: relative; 
     z-index: 2;
     background: linear-gradient(
