@@ -307,7 +307,7 @@ header {
 .knap__container { 
     display: flex; 
     justify-content: center; 
-    margin: 50px 0; 
+    margin: 0; 
 }
 
 .knap {
@@ -364,6 +364,7 @@ header {
 .skill-row__line { position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: rgba(243, 226, 200, 0.1); }
 .skill-row:hover .skill-row__line { background: var(--accent-color); height: 2px; }
 .skill-row:hover .skill-name { color: var(--accent-color); }
+.skills-section { margin-bottom: var(--section-spacing); }
 
 /* Footer */
 footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--container-padding); position: relative; z-index: 10; }
