@@ -124,29 +124,88 @@ header {
 
 /* Mobil Curtain */
 .nav--mobile {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background-color: var(--bg-color); display: flex; flex-direction: column;
-    justify-content: flex-start; align-items: flex-start; padding: 15px var(--container-padding);
-    z-index: 1500; opacity: 0; visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh;
+    background-color: var(--bg-color); 
+    z-index: 1500; 
+    opacity: 0; 
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-/* DETTE ER FIXET: Gør menuen synlig når den har klassen .active */
-.nav--mobile.active {
-    opacity: 1;
-    visibility: visible;
+.nav--mobile__inner {
+height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrerer links vertikalt */
+    padding: 0 var(--container-padding);
 }
 
-/* Sørg for at links i mobilmenuen er synlige */
+.nav--mobile__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .nav--mobile .nav__link {
-    opacity: 1 !important;
+    font-size: clamp(2.5rem, 10vw, 4.5rem); 
+    display: table; /* FIX: 'table' eller 'inline-block' gør at linket (og dermed stregen) kun fylder teksten */
+    width: fit-content;
+    margin-bottom: 20px;
+    opacity: 0.3; /* FIX: Gør inaktive punkter mørkere (lavere opacity) */
+    transition: opacity 0.3s ease;
 }
 
-.nav--mobile__header { margin-bottom: 60px; }
-.nav--mobile__header img { height: 40px; }
-.nav--mobile__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 60px; }
-.nav--mobile .nav__link { font-size: clamp(2.5rem, 10vw, 4.5rem); display: inline-block; }
-.nav__link--mobile-c { font-size: 0.8rem; opacity: 0.3; letter-spacing: 2px; margin-top: 20px; }
+/* Sørg for at aktive punkter og hover i mobilmenuen er tydelige */
+.nav--mobile .nav__link.active,
+.nav--mobile .nav__link:hover {
+    opacity: 1; /* Fuld synlighed når punktet er aktivt */
+}
+
+.nav--mobile__logo {
+position: absolute;
+    top: 15px; /* Matcher header padding */
+    left: var(--container-padding);
+}
+
+.nav--mobile__logo img {
+    height: 40px;
+    width: auto;
+}
+
+.nav--mobile__footer {
+    position: absolute;
+    bottom: 40px;
+    left: var(--container-padding);
+    border-top: none !important; /* FIX: Fjerner linjen i bunden */
+    padding-top: 0 !important;
+}
+
+.mobile-contact {
+    margin-bottom: 30px;
+}
+
+.mobile-contact .social-links {
+    justify-content: flex-start;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.nav__link--mobile-c {
+    font-size: 0.7rem;
+    opacity: 0.3;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Burger Animation Justering */
+.nav-burger.active .bar {
+    background-color: var(--accent-color);
+}
 
 /* ==========================================================================
    4. TIMELINE LOGIK
