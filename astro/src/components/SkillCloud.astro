@@ -11,13 +11,6 @@ const skills = [
     { name: "BRANDING", type: "IDENTITY", desc: "Visuel konceptudvikling" }
 ];
 ---
-
-<section class="skills-section reveal-up">
-    <div class="soft-glow-bg"><div class="skills-header">
-        <span class="label">TOOLKIT</span>
-        <h2 class="section-title">VÆRKTØJSKASSE</h2></div>
-    </div>
-
     <div class="skills-list">
         {skills.map((skill, index) => (
             <div class="skill-row" data-skill={skill.name.toLowerCase()}>
@@ -33,7 +26,6 @@ const skills = [
             </div>
         ))}
     </div>
-</section>
 
 <script>
     import { gsap } from 'gsap';

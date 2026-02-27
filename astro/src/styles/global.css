@@ -77,7 +77,7 @@ h1 {
 }
 
 .section-title {
-    font-size: clamp(30px, 4vw, 45px); 
+    font-size: clamp(30px, 4vw, 55px); 
     margin-bottom: 40px;
 }
 
