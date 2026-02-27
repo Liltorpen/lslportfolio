@@ -12,9 +12,7 @@ const { title, tags, description, image, video, reversed } = Astro.props;
             ) : (
                 <img src={image} alt={title} loading="lazy" class="premium-media" />
             )}
-            
             <div class="case-wrap"></div>
-            
             <div class="case-overlay"></div>
         </div>
     </div>
@@ -31,9 +29,14 @@ const { title, tags, description, image, video, reversed } = Astro.props;
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const video = entry.target as HTMLVideoElement;
-                entry.isIntersecting ? video.play().catch(()=>{}) : video.pause();
+                if (entry.isIntersecting) {
+                    video.play().catch(()=>{});
+                } else {
+                    video.pause();
+                }
             });
         }, { threshold: 0.2 });
+        
         document.querySelectorAll('.smart-video').forEach(v => observer.observe(v));
     });
 </script>

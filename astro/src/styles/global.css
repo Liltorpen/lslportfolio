@@ -9,13 +9,15 @@
     --font-headline: 'Oswald', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    /* Pacing System - Tilbage til det luftige, redaktionelle look */
+    /* Pacing System */
     --section-spacing: clamp(100px, 20vh, 300px);
     --container-padding: 5vw;
     --mask-padding: 15px; 
 }
 
-* { box-sizing: border-box; }
+* { 
+    box-sizing: border-box; 
+}
 
 body {
     background-color: var(--bg-color);
@@ -32,7 +34,10 @@ html.lenis { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
-strong { color: var(--accent-color); font-weight: 600; }
+strong { 
+    color: var(--accent-color); 
+    font-weight: 600; 
+}
 
 main {
     position: relative;
@@ -52,10 +57,11 @@ h1, h2, h3 {
     line-height: 1.1;
     text-transform: uppercase;
     letter-spacing: 2px;
-
 }
 
-h1 { font-size: clamp(35px, 10vw, 100px); }
+h1 { 
+    font-size: clamp(35px, 10vw, 100px); 
+}
 
 .h1--landingpage {
     font-size: clamp(35px, 15vw, 140px);
@@ -80,44 +86,97 @@ p {
     color: rgba(243, 226, 200, 0.8);
     max-width: 65ch;
     margin-bottom: 1.5rem;
-    text-align: left; /* Tvinger alt venstrestillet */
+    text-align: left;
 }
 
 /* ==========================================================================
    3. HEADER & NAV (Inkl. Burger Fix)
    ========================================================================== */
 header {
-    position: fixed; top: 0; width: 100%; z-index: 1000;
-    background-color: rgba(17, 16, 16, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    display: flex; justify-content: space-between; align-items: center;
+    position: fixed; 
+    top: 0; 
+    width: 100%; 
+    z-index: 1000;
+    background-color: rgba(17, 16, 16, 0.75); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
     padding: 15px var(--container-padding);
-    border-bottom: 1px solid rgba(243, 226, 200, 0.05); overflow: visible;
+    border-bottom: 1px solid rgba(243, 226, 200, 0.05); 
 }
 
-.logo img { height: 40px; }
-.nav { display: flex; list-style: none; gap: 40px; padding: 0; }
+.logo img { 
+    height: 40px; 
+}
+
+.nav { 
+    display: flex; 
+    list-style: none; 
+    gap: 40px; 
+    padding: 0; 
+}
 
 .nav__link {
-    text-decoration: none; color: var(--text-color); font-family: var(--font-headline);
-    font-size: 1.1rem; letter-spacing: 2px; opacity: 0.5; transition: 0.3s ease;
-    position: relative; padding: 5px 0;
+    text-decoration: none; 
+    color: var(--text-color); 
+    font-family: var(--font-headline);
+    font-size: 1.1rem; 
+    letter-spacing: 2px; 
+    opacity: 0.5; 
+    transition: 0.3s ease;
+    position: relative; 
+    padding: 5px 0;
 }
 
-.nav__link:hover, .nav__link.active { opacity: 1; }
+.nav__link:hover, .nav__link.active { 
+    opacity: 1; 
+}
+
 .nav__link::after {
-    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
-    background-color: var(--accent-color); transform: scaleX(0); transform-origin: right;
+    content: ''; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 2px;
+    background-color: var(--accent-color); 
+    transform: scaleX(0); 
+    transform-origin: right;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.nav__link:hover::after, .nav__link.active::after { transform: scaleX(1); transform-origin: left; }
+
+.nav__link:hover::after, .nav__link.active::after { 
+    transform: scaleX(1); 
+    transform-origin: left; 
+}
 
 /* Burger */
 .nav-burger {
-    display: none; flex-direction: column; justify-content: center; align-items: center;
-    gap: 8px; width: 44px; height: 44px; background: transparent; border: none;
-    cursor: pointer; z-index: 2100; position: relative; padding: 0; margin-right: -10px;
+    display: none; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    gap: 8px; 
+    width: 44px; 
+    height: 44px; 
+    background: transparent; 
+    border: none;
+    cursor: pointer; 
+    z-index: 2100; 
+    position: relative; 
+    padding: 0; 
+    margin-right: -10px;
 }
-.bar { width: 28px; height: 2px; background-color: var(--text-color); transition: 0.4s ease; }
+
+.bar { 
+    width: 28px; 
+    height: 2px; 
+    background-color: var(--text-color); 
+    transition: 0.4s ease; 
+}
+
 .nav-burger.active .bar { background-color: var(--accent-color); }
 .nav-burger.active .bar:nth-child(1) { transform: translateY(5px) rotate(45deg); }
 .nav-burger.active .bar:nth-child(2) { transform: translateY(-5px) rotate(-45deg); }
@@ -138,10 +197,10 @@ header {
 }
 
 .nav--mobile__inner {
-height: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrerer links vertikalt */
+    justify-content: center;
     padding: 0 var(--container-padding);
 }
 
@@ -153,22 +212,21 @@ height: 100%;
 
 .nav--mobile .nav__link {
     font-size: clamp(2.5rem, 10vw, 4.5rem); 
-    display: table; /* FIX: 'table' eller 'inline-block' gør at linket (og dermed stregen) kun fylder teksten */
+    display: table;
     width: fit-content;
     margin-bottom: 20px;
-    opacity: 0.3; /* FIX: Gør inaktive punkter mørkere (lavere opacity) */
+    opacity: 0.3;
     transition: opacity 0.3s ease;
 }
 
-/* Sørg for at aktive punkter og hover i mobilmenuen er tydelige */
 .nav--mobile .nav__link.active,
 .nav--mobile .nav__link:hover {
-    opacity: 1; /* Fuld synlighed når punktet er aktivt */
+    opacity: 1;
 }
 
 .nav--mobile__logo {
-position: absolute;
-    top: 15px; /* Matcher header padding */
+    position: absolute;
+    top: 15px;
     left: var(--container-padding);
 }
 
@@ -181,18 +239,6 @@ position: absolute;
     position: absolute;
     bottom: 40px;
     left: var(--container-padding);
-    border-top: none !important; /* FIX: Fjerner linjen i bunden */
-    padding-top: 0 !important;
-}
-
-.mobile-contact {
-    margin-bottom: 30px;
-}
-
-.mobile-contact .social-links {
-    justify-content: flex-start;
-    gap: 30px;
-    margin-top: 15px;
 }
 
 .nav__link--mobile-c {
@@ -202,17 +248,11 @@ position: absolute;
     text-transform: uppercase;
 }
 
-/* Burger Animation Justering */
-.nav-burger.active .bar {
-    background-color: var(--accent-color);
-}
-
 /* ==========================================================================
-   4. TIMELINE LOGIK
+   4. TIMELINE LOGIK & MASKERING
    ========================================================================== */
 .timeline { position: relative; width: 100%; }
 
-/* Opdateret track-position */
 .timeline__track {
     position: absolute; 
     left: 0; 
@@ -242,31 +282,28 @@ position: absolute;
     will-change: height, opacity;
 }
 
-/* Maskering - OPDATERET TIL ÆGTE CSS MASK-IMAGE */
+/* Ægte CSS Maskering (Gør elementer usynlige i toppen/bunden foran timelinen) */
 .hero__content, .hero__scroll, .hook, .section-title, .hero--small h1, .bts__header, 
 .bts__content, .intro-container, .stats-flex, .stats-description, .knap__container, 
 .label, .skills-section, .case-item__info, .contact-info, .form-container, .case-item, 
 .staff-badge, .process, .detail-item, .info-content, .stats-section, .bts, .process__grid {
     position: relative; 
     z-index: 2;
+    padding: var(--mask-padding) 0;
     
-    /* Fjerner den gamle "fake" background mask */
-    background: transparent; 
-
-    /* Ægte CSS maskering (Virker i alle moderne browsere) */
-    mask-image: linear-gradient(
-        from top to bottom, 
-        transparent 0px, 
-        black 5px, 
-        black calc(100% - 20px), 
-        transparent 100%
-    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 50px, black calc(100% - 50px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0px, black 50px, black calc(100% - 50px), transparent 100%);
 }
 
 /* ==========================================================================
    5. KOMPONENTER (Knapper, Cases, Skills, Footer)
    ========================================================================== */
-.knap__container { display: flex; justify-content: center; margin: 50px 0; }
+.knap__container { 
+    display: flex; 
+    justify-content: center; 
+    margin: 50px 0; 
+}
+
 .knap {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 15px 40px; background: transparent; color: var(--text-color); 
@@ -274,10 +311,12 @@ position: absolute;
     font-family: var(--font-headline); font-size: 1.1rem; letter-spacing: 3px;
     position: relative; overflow: hidden; z-index: 1; transition: 0.4s ease;
 }
+
 .knap::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--accent-color); transform: scaleY(0); transform-origin: bottom; transition: 0.4s ease; z-index: -1;
 }
+
 .knap:hover { color: var(--bg-color); border-color: var(--accent-color); }
 .knap:hover::before { transform: scaleY(1); }
 
@@ -316,8 +355,6 @@ position: absolute;
 .skill-row__line { position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: rgba(243, 226, 200, 0.1); }
 .skill-row:hover .skill-row__line { background: var(--accent-color); height: 2px; }
 .skill-row:hover .skill-name { color: var(--accent-color); }
-.skill-portal { position: fixed; top: 0; left: 0; width: 300px; height: 180px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
-.portal-inner { width: 100%; height: 100%; opacity: 0; transform: scale(0.3); border-radius: 4px; background: var(--accent-color); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
 
 /* Footer */
 footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--container-padding); margin-top: var(--section-spacing); position: relative; z-index: 10; }
@@ -339,7 +376,7 @@ footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--con
 .hero__scroll { margin-top: auto; margin-bottom: 40px; font-family: var(--font-headline); font-size: 1.2rem; letter-spacing: 4px; opacity: 0.5; }
 .hook { margin: var(--section-spacing) auto; text-align: center; max-width: 800px; justify-content: center;}
 .hook h2 { font-size: clamp(30px, 4vw, 45px); margin-bottom: 20px; }
-.hook p {margin: auto;}
+.hook p { margin: auto; }
 .stats-section { margin-bottom: var(--section-spacing); text-align: center; }
 .stats-flex { display: flex; justify-content: space-around; padding: 60px 0; border-top: 1px solid rgba(243, 226, 200, 0.1); border-bottom: 1px solid rgba(243, 226, 200, 0.1); margin-bottom: 40px; }
 .stat-number { font-size: clamp(50px, 6vw, 90px); color: var(--accent-color); line-height: 1; display: inline-block; }
@@ -383,7 +420,7 @@ input:focus ~ label, input:not(:placeholder-shown) ~ label, textarea:focus ~ lab
 button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: pointer; }
 
 /* ==========================================================================
-   7. GSAP & MOBIL OPTIMERING (Kun left-align på mobil)
+   7. GSAP & MOBIL OPTIMERING
    ========================================================================== */
 .reveal-up { opacity: 0; transform: translateY(40px); }
 .reveal-mask { clip-path: inset(100% 0 0 0); }
@@ -392,12 +429,14 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
     :root { --mask-padding: 15px; }
     main { padding-bottom: 60px; }
     .hero--small { min-height: 20vh; padding-top: 100px; }
+    
     .nav { display: none; }
     .nav-burger { display: flex; }
     .nav--mobile__list { gap: 40px; }
 
     .case-item, .case-item--reversed{ flex-direction: column; gap: 40px; }
     .case-item__info { text-align: left; align-items: flex-start; }
+    
     .section-title, .hook, .hook h2, .stats-section, .bts__header, .bts__header h2, .contact-info h2 { text-align: left !important; }
     p { text-align: left !important; }
     
@@ -410,7 +449,7 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
     .process__grid { grid-template-columns: 1fr; gap: 30px; }
     .intro-container { height: 45vh; }
     
-    .skill-portal, .skill-desc { display: none; }
+    .skill-desc { display: none; }
     .skill-row__content { grid-template-columns: 40px 1fr; gap: 10px; }
     
     .contact-wrapper { gap: 60px; flex-direction: column; }

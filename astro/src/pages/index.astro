@@ -72,19 +72,16 @@ const selectedCases = [
     gsap.registerPlugin(ScrollTrigger);
 
     document.addEventListener('astro:page-load', () => {
-        // Tjek om .hero-anim findes på siden, før vi animerer
         const heroAnims = document.querySelectorAll('.hero-anim');
         if (heroAnims.length > 0) {
             gsap.fromTo(heroAnims, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power4.out" });
         }
 
-        // Tjek om .hero-anim-late findes på siden
         const heroAnimLate = document.querySelectorAll('.hero-anim-late');
         if (heroAnimLate.length > 0) {
             gsap.fromTo(heroAnimLate, { opacity: 0 }, { opacity: 1, duration: 2, delay: 1 });
         }
 
-        // Tæller animation (forEach ignorerer automatisk, hvis listen er tom)
         document.querySelectorAll('.stat-number').forEach(stat => {
             const target = parseInt(stat.getAttribute('data-target') || '0');
             gsap.to(stat, {

@@ -1,5 +1,4 @@
 ---
-// src/components/SkillCloud.astro
 const skills = [
     { name: "AFTER EFFECTS", type: "MOTION DESIGN", desc: "Avanceret animation & VFX" },
     { name: "PREMIERE PRO", type: "VIDEO EDITING", desc: "Storytelling & Color Grading" },
@@ -54,6 +53,5 @@ const skills = [
         });
     };
 
-    initSkillHover();
     document.addEventListener('astro:page-load', initSkillHover);
 </script>
