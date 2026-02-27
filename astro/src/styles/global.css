@@ -158,6 +158,18 @@ header {
     padding: var(--mask-padding) 0; 
 }
 
+/* 2. Tilføj dette nederst i din CSS fil for at fixe kontakt-siden specifikt */
+.glass-form .knap__container {
+    background: transparent !important; /* Fjerner den mørke gradient klat */
+    padding: 0 !important;
+}
+
+/* Sørg for at form-container ikke skjuler linjen på kontakt-siden */
+.form-container {
+    background: transparent !important;
+    z-index: 2;
+}
+
 /* ==========================================================================
    5. KOMPONENTER (Knapper, Cases, Skills, Footer)
    ========================================================================== */
