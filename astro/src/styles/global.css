@@ -282,17 +282,29 @@ header {
     will-change: height, opacity;
 }
 
-/* Ægte CSS Maskering (Gør elementer usynlige i toppen/bunden foran timelinen) */
-.hero__content, .hero__scroll, .hook, .section-title, .hero--small h1, .bts__header, 
-.bts__content, .intro-container, .stats-flex, .stats-description, .knap__container, 
-.label, .skills-section, .case-item__info, .contact-info, .form-container, .case-item, 
-.staff-badge, .process, .detail-item, .info-content, .stats-section, .bts, .process__grid {
-    position: relative; 
+.hero__content h1, .hero__content h2, 
+.hero__scroll, 
+.hook h2, .hook p, 
+.section-title, 
+.bts__header h2, 
+.stats-flex .stat-number, .stats-flex p, .stats-flex span,
+.label,
+.process__item h3,
+.case-title {
+    position: relative;
     z-index: 2;
-    padding: var(--mask-padding) 0;
-    
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 50px, black calc(100% - 50px), transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0px, black 50px, black calc(100% - 50px), transparent 100%);
+    text-shadow: 
+        0 0 10px var(--bg-color),
+        0 0 15px var(--bg-color),
+        0 0 20px var(--bg-color),
+        0 0 30px var(--bg-color),
+        0 0 40px var(--bg-color);
+}
+
+/* Sørg for at billeder har en z-index så de ligger over stregen naturligt */
+.staff-badge img, .intro-container img {
+    position: relative;
+    z-index: 2;
 }
 
 /* ==========================================================================
@@ -306,10 +318,12 @@ header {
 
 .knap {
     display: inline-flex; align-items: center; justify-content: center;
-    padding: 15px 40px; background: transparent; color: var(--text-color); 
+    padding: 15px 40px; 
+    background: var(--bg-color); /* FIX: Dækker stregen naturligt */
+    color: var(--text-color); 
     border: 1px solid rgba(243, 226, 200, 0.2); text-decoration: none; 
     font-family: var(--font-headline); font-size: 1.1rem; letter-spacing: 3px;
-    position: relative; overflow: hidden; z-index: 1; transition: 0.4s ease;
+    position: relative; overflow: hidden; z-index: 2; transition: 0.4s ease;
 }
 
 .knap::before {
@@ -338,6 +352,7 @@ header {
 .case-item--reversed { flex-direction: row-reverse; }
 
 /* Skills */
+.skills-header {text-align: center;}
 .skills-list { display: flex; flex-direction: column; border-top: 1px solid rgba(243, 226, 200, 0.1); }
 .skill-row {
     position: relative; 
@@ -392,8 +407,8 @@ footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--con
 .intro-container { width: 100vw; height: 65vh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; margin-bottom: var(--section-spacing); overflow: hidden; }
 .studio-img { width: 100%; height: 100%; object-fit: cover;}
 .bts { max-width: 1000px; margin: 0 auto var(--section-spacing); }
-.bts__header { margin-bottom: 60px; padding-bottom: 20px; text-align: center; border-bottom: 1px solid rgba(243, 226, 200, 0.1); }
-.bts__header h2 { font-size: 3.5rem; color: var(--accent-color); }
+.bts__header { text-align: center; margin: 50px 0;}
+.bts__header h2 { font-size: 3.5rem; color: var(--text-color); }
 .bts__content { display: flex; gap: 60px; }
 .bts__col { flex: 1; }
 /* Process Grid fra Studio */
