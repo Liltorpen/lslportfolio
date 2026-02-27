@@ -65,9 +65,9 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack, // Trigger på selve banen for 100% præcision
-                    start: "top 45%",       // Begynder først at vokse når toppen er nær midten
-                    end: "bottom 55%",     // Er færdig når bunden af banen er forbi midten
-                    scrub: 0.3,             // En smule delay gør den mere "smooth"
+                    start: "top 80%",       // Begynder først at vokse når toppen er nær midten
+                    end: "bottom 70%",     // Er færdig når bunden af banen er forbi midten
+                    scrub: 0.1,             // En smule delay gør den mere "smooth"
                     invalidateOnRefresh: true, 
                 }
             });
@@ -85,7 +85,7 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: el,
-                    start: "top 88%", // Trigger lidt før den rammer bunden af skærmen
+                    start: "top 90%", // Trigger lidt før den rammer bunden af skærmen
                     toggleActions: "play none none none"
                 }
             });

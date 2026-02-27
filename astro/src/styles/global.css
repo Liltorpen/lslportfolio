@@ -139,9 +139,6 @@ header {
    4. TIMELINE LOGIK
    ========================================================================== */
 .timeline { position: relative; width: 100%; }
-/* --- src/styles/global.css --- */
-
-/* --- src/styles/global.css --- */
 
 /* Opdateret track-position */
 .timeline__track {
@@ -149,8 +146,8 @@ header {
     left: 0; 
     right: 0; 
     margin: 0 auto; 
-    top:180px; /* Rykket lidt længere ned for at skjule den helt i starten */
-    bottom: 40px; /* FIX: Stopper nu tidligere, så linjen lander præcis på knappen */
+    top: 0px;
+    bottom: 40px; 
     width: 1px;
     background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.01) 95%, transparent); 
     z-index: -1;
