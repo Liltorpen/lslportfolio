@@ -246,7 +246,7 @@ position: absolute;
 .hero__content, .hero__scroll, .hook, .section-title, .hero--small h1, .bts__header, 
 .bts__content, .intro-container, .stats-flex, .stats-description, .knap__container, 
 .label, .skills-section, .case-item__info, .contact-info, .form-container, .case-item, 
-.staff-badge, .process, .detail-item, .info-content, .stats-section {
+.staff-badge, .process, .detail-item, .info-content, .stats-section, .bts, .process__grid {
     position: relative; 
     z-index: 2;
     background: linear-gradient(
@@ -372,7 +372,7 @@ footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--con
 /* Process Grid fra Studio */
 .process { max-width: 1200px; margin: 0 auto var(--section-spacing); text-align: center; }
 .process__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
-.process__item { text-align: left; padding: 30px; background: rgba(255,255,255,0.02); border-left: 2px solid var(--accent-color); }
+.process__item { text-align: left; padding: 30px; background-color: var(--bg-color); border-left: 2px solid var(--accent-color); z-index: 2;}
 .step { font-family: var(--font-headline); color: var(--accent-color); font-size: 1.2rem; opacity: 0.5; }
 .process__item h3 { margin: 10px 0; letter-spacing: 2px; }
 
