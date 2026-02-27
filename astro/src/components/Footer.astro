@@ -1,52 +1,13 @@
 ---
+// src/components/Footer.astro
 ---
 
-<footer class="reveal-up">
-    <div class="footer-grid" style="align-items: start;">
-        
-        <div class="footer-col">
-            <a href="/" aria-label="Forside">
-                <img src="/images/lsl_logo.svg" alt="LSL Studio Logo" style="height: 35px; opacity: 0.9; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
-            </a>
-            <p style="margin-top: 20px; max-width: 280px; font-size: 0.9rem; opacity: 0.6; line-height: 1.6;">
-                Visuelle oplevelser, der skærer igennem støjen. Bygger bro mellem kunstnerisk kant og kommerciel værdi.
-            </p>
-        </div>
-
-        <div class="footer-col">
-            <p class="footer-label">Socials</p>
-            <div class="social-links" style="margin-top: 20px;">
-                <a href="#" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
-                <a href="#" aria-label="TikTok"><i class="ri-tiktok-fill"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
-            </div>
-        </div>
-
-        <div class="footer-col">
-            <p class="footer-label">Information</p>
-            <div style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7; line-height: 1.8;">
-                <p style="margin: 0;">Odense, Danmark</p>
-                <a href="mailto:kontakt@lucasliltorp.dk" class="footer-link">kontakt@lucasliltorp.dk</a><br>
-                <a href="tel:+4542300743" class="footer-link">+45 42 30 07 43</a>
-            </div>
-            
-            <p class="copyright" style="margin-top: 30px; font-family: var(--font-headline); letter-spacing: 2px; font-size: 0.75rem; color: var(--accent-color); opacity: 0.8;">
-                © 2026 LSL STUDIO. ALL RIGHTS RESERVED.
-            </p>
-        </div>
-
+<footer>
+    <p class="copyright">LSL 2025. ALL RIGHTS RESERVED</p>
+    <div class="social-links">
+        <a href="#" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+        <a href="#" aria-label="Facebook"><i class="ri-facebook-circle-fill"></i></a>
+        <a href="#" aria-label="TikTok"><i class="ri-tiktok-fill"></i></a>
     </div>
 </footer>
-
-<style>
-    /* Lidt ekstra styling specielt til footeren for at gøre den knivskarp */
-    .footer-link {
-        color: var(--text-color);
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-    
-    .footer-link:hover {
-        color: var(--accent-color);
-    }
-</style>

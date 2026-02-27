@@ -367,14 +367,44 @@ header {
 .skills-section { margin-bottom: var(--section-spacing); }
 
 /* Footer */
-footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--container-padding); position: relative; z-index: 10; }
-.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; max-width: 1400px; margin: 0 auto; }
-.footer-col:nth-child(2) { text-align: center; }
-.footer-col:nth-child(3) { text-align: right; }
-.footer-label { font-family: var(--font-headline); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; margin: 0; }
-.social-links { display: flex; justify-content: center; gap: 30px; }
-.social-links a { color: var(--text-color); font-size: 1.5rem; opacity: 0.6; transition: 0.4s ease; text-decoration: none; }
-.social-links a:hover { color: var(--accent-color); opacity: 1; transform: translateY(-5px); }
+footer { 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 40px var(--container-padding);
+    background-color: var(--bg-color); /* Forhindrer tidslinjen i at stikke ud */
+    border-top: 1px solid rgba(243, 226, 200, 0.1); 
+    position: relative; 
+    z-index: 10; 
+}
+
+.copyright {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
+
+.social-links { 
+    display: flex; 
+    gap: 25px; 
+}
+
+.social-links a { 
+    color: var(--text-color); 
+    font-size: 1.5rem; 
+    opacity: 0.6; 
+    transition: 0.3s ease; 
+    text-decoration: none; 
+    display: inline-block;
+}
+
+.social-links a:hover { 
+    color: var(--accent-color); 
+    opacity: 1; 
+    transform: translateY(-5px); 
+}
 
 /* ==========================================================================
    6. PAGE SPECIFIKKE SEKTIONER (Index, Studio, Kontakt)
@@ -451,9 +481,18 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
     .stats-section, .bts__header, .bts__header h2, .contact-info h2 { text-align: left !important; }
     p { text-align: left !important; }
     
-    .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: left; }
-    .footer-col:nth-child(2), .footer-col:nth-child(3) { text-align: left; }
-    .social-links { justify-content: flex-start; gap: 40px; }
+    /* Footer Mobil */
+    footer {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+        padding: 50px var(--container-padding);
+    }
+    
+    .social-links { 
+        justify-content: center; 
+        gap: 25px; 
+    }
     
     .stats-flex { flex-wrap: wrap; text-align: center; gap: 50px; }
     .bts__content { flex-direction: column; gap: 30px; }
