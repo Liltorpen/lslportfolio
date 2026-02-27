@@ -139,14 +139,32 @@ header {
    4. TIMELINE LOGIK
    ========================================================================== */
 .timeline { position: relative; width: 100%; }
+/* --- src/styles/global.css --- */
+
 .timeline__track {
-    position: absolute; left: 0; right: 0; margin: 0 auto; top: 0; bottom: 0; width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.05) 95%, transparent); z-index: -1;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    margin: 0 auto; 
+    top: 150px; /* Mere luft fra toppen sikrer den gemmer sig bag headeren */
+    bottom: 0; 
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(243, 226, 200, 0.05) 5%, rgba(243, 226, 200, 0.05) 95%, transparent); 
+    z-index: -1;
 }
+
 .timeline__line {
-    position: absolute; left: -1px; top: 0; width: 3px; background: var(--accent-color);
-    box-shadow: 0 0 15px rgba(243, 82, 38, 0.6); border-radius: 50px; z-index: -1;
-    transform-origin: top; will-change: transform;
+    position: absolute; 
+    left: -1px; 
+    top: 0; 
+    width: 3px; 
+    background: var(--accent-color);
+    box-shadow: 0 0 15px rgba(243, 82, 38, 0.6); 
+    border-radius: 50px; 
+    z-index: -1;
+    transform-origin: top; 
+    opacity: 0; /* Starter helt usynlig */
+    will-change: height, opacity;
 }
 
 /* Maskering - Tilføjet alle sektioner der skal dække stregen */

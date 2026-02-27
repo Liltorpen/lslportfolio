@@ -41,7 +41,6 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
     let resizeObserver: ResizeObserver | null = null;
 
     const initPremiumExperience = () => {
-        // 1. Lenis Smooth Scroll Setup
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -49,95 +48,77 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
         });
 
         lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
 
-        // 2. --- TIMELINE LOGIK ---
+        // --- TIMELINE LOGIK (PRÆCISIONS-FIX) ---
         const timelineLine = document.querySelector('.timeline__line') as HTMLElement;
         const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
-        const knapContainer = document.querySelector('.knap__container');
 
-        if (timelineLine && timelineTrack && knapContainer) {
-            // Beregn stop-punktet dynamisk
-            const getStopPoint = () => {
-                const knapRect = knapContainer.getBoundingClientRect();
-                const trackRect = timelineTrack.getBoundingClientRect();
-                const scrollY = window.scrollY;
-                // Finder midten af knappen relativt til banens start
-                return (knapRect.top + scrollY) - (trackRect.top + scrollY) + (knapRect.height / 2);
-            };
+        if (timelineLine && timelineTrack) {
+            // Nulstil alt før start
+            gsap.set(timelineLine, { height: 0, opacity: 0 });
 
             gsap.to(timelineLine, {
-                height: () => getStopPoint(), // Brug funktion så den altid henter frisk data
+                height: "100%",
+                opacity: 1,
                 ease: "none",
                 scrollTrigger: {
-                    trigger: "body",
-                    start: "top top",
-                    endTrigger: knapContainer,
-                    end: "center center",
-                    scrub: 0.1,
-                    invalidateOnRefresh: true, // Genberegner ved refresh
+                    trigger: timelineTrack, // Trigger på selve banen for 100% præcision
+                    start: "top 45%",       // Begynder først at vokse når toppen er nær midten
+                    end: "bottom 55%",     // Er færdig når bunden af banen er forbi midten
+                    scrub: 0.3,             // En smule delay gør den mere "smooth"
+                    invalidateOnRefresh: true, 
                 }
             });
         }
 
-        // 3. Reveal Animationer
-        document.querySelectorAll('.reveal-up').forEach((el) => {
-            gsap.fromTo(el, 
-                { y: 30, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 90%",
-                        toggleActions: "play none none none"
-                    }
+        // --- REVEAL ANIMATIONER (STABILITETS-FIX) ---
+        const reveals = document.querySelectorAll('.reveal-up');
+        reveals.forEach((el) => {
+            gsap.set(el, { y: 50, opacity: 0 }); // Tvungen start-state
+
+            gsap.to(el, {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 88%", // Trigger lidt før den rammer bunden af skærmen
+                    toggleActions: "play none none none"
                 }
-            );
+            });
         });
 
-        // 4. --- DET AFGØRENDE FIX: ResizeObserver ---
-        // Denne holder øje med om dine videoer/billeder ændrer sidens højde efter load
+        // ResizeObserver sikrer at linjen når bunden selvom videoer loader langsomt
         const mainElement = document.querySelector('main');
         if (mainElement) {
             resizeObserver = new ResizeObserver(() => {
-                // Hver gang main-elementet ændrer højde, beder vi GSAP om at måle efter igen
                 ScrollTrigger.refresh();
             });
             resizeObserver.observe(mainElement);
         }
 
-        // Tving en måling med det samme
         ScrollTrigger.refresh();
     };
 
-    // Initial kørsel
     initPremiumExperience();
 
-    // Astro Page Load handler (View Transitions fix)
     document.addEventListener('astro:page-load', () => {
-        // Ryd op i gamle instanser for at undgå memory leaks og konflikter
         ScrollTrigger.killAll(); 
         if (lenis) lenis.destroy();
         if (resizeObserver) resizeObserver.disconnect();
         
-        // Vent på næste frame så browseren har tegnet den nye side
         requestAnimationFrame(() => {
             initPremiumExperience();
-            
-            // Ekstra sikkerheds-refresh efter 200ms
+            // Vi venter lidt længere på at View Transitions er helt færdige
             setTimeout(() => {
                 ScrollTrigger.refresh();
-            }, 200);
+            }, 500); 
         });
     });
 
-    // Handle vindue resize
     window.addEventListener('resize', () => ScrollTrigger.refresh());
 </script>
 </body>
