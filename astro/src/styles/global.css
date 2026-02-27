@@ -78,7 +78,7 @@ h1 {
 
 .section-title {
     font-size: clamp(30px, 4vw, 45px); 
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .section-title--cases {
@@ -413,7 +413,7 @@ footer { border-top: 1px solid rgba(243, 226, 200, 0.1); padding: 80px var(--con
 .process__item h3 { margin: 10px 0; letter-spacing: 2px; }
 
 /* --- KONTAKT.ASTRO --- */
-.contact-wrapper { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 150px; max-width: 1200px; margin: 50px auto var(--section-spacing); position: relative; z-index: 1; }
+.contact-wrapper { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 150px; max-width: 1400px; margin: 50px auto var(--section-spacing); position: relative; z-index: 1; }
 .contact-info, .form-container { flex: 1; min-width: 300px; }
 .pitch { font-size: 1.1rem; margin-bottom: 50px; color: rgba(243, 226, 200, 0.8); }
 .contact-details { display: flex; flex-direction: column; gap: 30px; }
