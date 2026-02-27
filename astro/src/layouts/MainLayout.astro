@@ -49,12 +49,16 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     let lenis: any;
     let resizeObserver: ResizeObserver | null = null;
+    let currentWindowWidth = window.innerWidth; // Gemmer skærmens bredde
 
     const initPremiumExperience = () => {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
+            // Sikrer at native mobil scroll fungerer optimalt uden at Lenis overtager:
+            smoothTouch: false, 
+            touchMultiplier: 2, 
         });
 
         lenis.on('scroll', ScrollTrigger.update);
@@ -100,11 +104,11 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         masks.forEach((mask) => {
             gsap.to(mask, {
                 clipPath: 'inset(0% 0 0 0)',
-                duration: 1,
+                duration: 1.5,
                 ease: "power4.inOut",
                 scrollTrigger: {
                     trigger: mask,
-                    start: "top 100%",
+                    start: "top 90%",
                 }
             });
         });
@@ -112,7 +116,12 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         const mainElement = document.querySelector('main');
         if (mainElement) {
             resizeObserver = new ResizeObserver(() => {
-                ScrollTrigger.refresh();
+                // MOBIL FIX: Opdaterer kun hvis bredden (width) har ændret sig,
+                // for at undgå at mobilens URL-bar "hakker" siden på scroll.
+                if (window.innerWidth !== currentWindowWidth) {
+                    currentWindowWidth = window.innerWidth;
+                    ScrollTrigger.refresh();
+                }
             });
             resizeObserver.observe(mainElement);
         }
@@ -132,8 +141,6 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
             }, 500); 
         });
     });
-
-    window.addEventListener('resize', () => ScrollTrigger.refresh());
 </script>
 </body>
 </html>
