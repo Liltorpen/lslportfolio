@@ -1,6 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import CaseItem from '../components/CaseItem.astro';
+import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
 
 const casesData = [
     {
@@ -49,30 +51,20 @@ const casesData = [
 ---
 
 <MainLayout title="CASES">
-    <div class="timeline">
-        <div class="timeline__track">
-            <div class="timeline__line"></div>
-        </div>
-       
-        <section class="hero hero--small">
-            <h1 class="reveal-up">CASES</h1>
-        </section>
-            
-        <div class="cases-list">
-            {casesData.map((item, index) => (
-                <CaseItem 
-                    title={item.title}
-                    tags={item.tags}
-                    description={item.description}
-                    image={item.image}
-                    video={item.video}
-                    reversed={index % 2 !== 0} 
-                />
-            ))}
-        </div>
+    <PageHero title="CASES" />
         
-        <div class="knap__container reveal-up">
-            <a href="/kontakt" class="knap">KONTAKT</a>
-        </div>
+    <div class="cases-list">
+        {casesData.map((item, index) => (
+            <CaseItem 
+                title={item.title}
+                tags={item.tags}
+                description={item.description}
+                image={item.image}
+                video={item.video}
+                reversed={index % 2 !== 0} 
+            />
+        ))}
     </div>
+    
+    <Button href="/kontakt" text="KONTAKT" />
 </MainLayout>

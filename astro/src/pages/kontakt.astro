@@ -1,61 +1,54 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <MainLayout title="KONTAKT">
-    <div class="timeline">
-        <div class="timeline__track">
-            <div class="timeline__line"></div>
-        </div>
-        
-        <section class="hero hero--small">
-            <h1 class="reveal-up">KONTAKT</h1>
-        </section>
-        
-        <div class="contact-wrapper">
-            <section class="contact-info reveal-up">
-                <h2>LET'S CREATE</h2>
-                <div class="info-content">
-                    <p class="pitch">
-                        Har du et projekt i tankerne?<br>
-                        Udfyld formularen eller fang mig // <br>
-                    </p>
-                    
-                    <div class="contact-details">
-                        <div class="detail-item">
-                            <span class="label">TELEFON</span>
-                            <a href="tel:+4542300743" class="detail-link">+45 42 30 07 43</a>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">MAIL</span>
-                            <a href="mailto:kontakt@lucasliltorp.dk" class="detail-link">kontakt@lucasliltorp.dk</a>
-                        </div>
+    <PageHero title="KONTAKT" />
+    
+    <div class="contact-wrapper">
+        <section class="contact-info reveal-up">
+            <h2>LET'S CREATE</h2>
+            <div class="info-content">
+                <p class="pitch">
+                    Har du et projekt i tankerne?<br>
+                    Udfyld formularen eller fang mig // <br>
+                </p>
+                
+                <div class="contact-details">
+                    <div class="detail-item">
+                        <span class="label">TELEFON</span>
+                        <a href="tel:+4542300743" class="detail-link">+45 42 30 07 43</a>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">MAIL</span>
+                        <a href="mailto:kontakt@lucasliltorp.dk" class="detail-link">kontakt@lucasliltorp.dk</a>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="form-container reveal-up">
-                <form class="glass-form" method="POST" action="#">
-                    <div class="form-group">
-                        <input type="text" id="fname" name="firstname" placeholder=" " required>
-                        <label for="fname">NAVN</label>
-                    </div>
+        <section class="form-container reveal-up">
+            <form class="glass-form" method="POST" action="#">
+                <div class="form-group">
+                    <input type="text" id="fname" name="firstname" placeholder=" " required>
+                    <label for="fname">NAVN</label>
+                </div>
 
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder=" " required>
-                        <label for="email">EMAIL</label>
-                    </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email">EMAIL</label>
+                </div>
 
-                    <div class="form-group">
-                        <textarea id="msg" name="besked" rows="5" placeholder=" " required></textarea>
-                        <label for="msg">BESKED</label>
-                    </div>
+                <div class="form-group">
+                    <textarea id="msg" name="besked" rows="5" placeholder=" " required></textarea>
+                    <label for="msg">BESKED</label>
+                </div>
 
-                    <div class="knap__container">
-                        <button type="submit" class="knap">SEND BESKED</button>
-                    </div>
-                </form>
-            </section>
-        </div>
+                <div class="knap__container">
+                    <button type="submit" class="knap">SEND BESKED</button>
+                </div>
+            </form>
+        </section>
     </div>
 </MainLayout>

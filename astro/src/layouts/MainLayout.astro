@@ -29,7 +29,14 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
 <body>
     <Header />
     <main>
-        <slot />
+        <div class="timeline">
+            <div class="timeline__track">
+                <div class="timeline__line"></div>
+            </div>
+            
+            <slot />
+            
+        </div>
     </main>
     <Footer />
 

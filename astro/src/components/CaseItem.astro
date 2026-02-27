@@ -3,7 +3,7 @@ const { title, tags, description, image, video, reversed } = Astro.props;
 ---
 
 <article class:list={["case-item", { "case-item--reversed": reversed }]} class="reveal-up">
-    <div class="case-item__visual-wrapper">
+    <div class="soft-glow-bg"><div class="case-item__visual-wrapper">
         <div class="case-item__inner">
             {video ? (
                 <video controls muted loop playsinline class="smart-video premium-media">
