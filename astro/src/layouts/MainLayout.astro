@@ -11,7 +11,7 @@ interface Props {
 const { title, description } = Astro.props;
 
 const siteTitle = title ? `${title} | LSL STUDIO` : 'LSL STUDIO | Visuelle oplevelser der skærer igennem støjen';
-const siteDescription = description || "LSL Studio - Specialist i shortform content, motion graphics og visuel identitet.";
+const siteDescription = description || "LSL Studio - Multimediedesign Portfolio";
 ---
 
 <!DOCTYPE html>
@@ -100,11 +100,11 @@ const siteDescription = description || "LSL Studio - Specialist i shortform cont
         masks.forEach((mask) => {
             gsap.to(mask, {
                 clipPath: 'inset(0% 0 0 0)',
-                duration: 1.5,
+                duration: 1,
                 ease: "power4.inOut",
                 scrollTrigger: {
                     trigger: mask,
-                    start: "top 90%",
+                    start: "top 100%",
                 }
             });
         });

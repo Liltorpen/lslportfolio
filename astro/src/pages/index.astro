@@ -54,7 +54,7 @@ const selectedCases = [
     </div> 
 
     <section class="cases-section">
-        <h2 class="section-title reveal-up">UDVALGTE CASES</h2>
+        <h2 class="section-title section-title--cases reveal-up">UDVALGTE CASES</h2>
         <div class="cases-list">
             {selectedCases.map((item, index) => (
                 <CaseItem {...item} reversed={index % 2 !== 0} />
