@@ -71,14 +71,15 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
 
         if (timelineLine && timelineTrack) {
-            gsap.set(timelineLine, { height: 0, opacity: 0.5 });
+            gsap.set(timelineLine, { scaleY: 0, opacity: 0.5 });
+            
             gsap.to(timelineLine, {
-                height: "100%",
+                scaleY: 1,
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack,
-                    start: "top 65%", 
-                    end: "bottom 50%", 
+                    start: "top 70%", 
+                    end: "bottom 65%", 
                     scrub: true,  
                     invalidateOnRefresh: true, 
                 }
