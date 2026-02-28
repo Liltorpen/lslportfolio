@@ -59,7 +59,6 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
-            smoothTouch: false, 
         });
 
         lenis.on('scroll', ScrollTrigger.update);
@@ -79,7 +78,7 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
                     trigger: timelineTrack,
                     start: "top 70%", 
                     end: "bottom 80%", 
-                    scrub: true,  
+                    scrub: 1,  
                     invalidateOnRefresh: true, 
                 }
             });
