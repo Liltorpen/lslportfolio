@@ -7,8 +7,9 @@ import '../styles/global.css';
 interface Props { 
     title?: string; 
     description?: string; 
+    shortTimeline?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, shortTimeline = false } = Astro.props;
 
 const siteTitle = title ? `${title} | LSL STUDIO` : 'LSL STUDIO | Multimediedesign Portfolio';
 const siteDescription = description || "LSL Studio - Multimediedesign Portfolio";
@@ -30,7 +31,7 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     <Header />
     <main>
         <div class="timeline">
-            <div class="timeline__track">
+            <div class:list={["timeline__track", { "timeline__track--short": shortTimeline }]}>
                 <div class="timeline__line"></div>
             </div>
             
@@ -49,14 +50,13 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     let lenis: any;
     let resizeObserver: ResizeObserver | null = null;
-    let currentWindowWidth = window.innerWidth; // Gemmer skærmens bredde
+    let currentWindowWidth = window.innerWidth;
 
     const initPremiumExperience = () => {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
-            // Sikrer at native mobil scroll fungerer optimalt uden at Lenis overtager:
             smoothTouch: false, 
             touchMultiplier: 2, 
         });
@@ -76,8 +76,8 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack,
-                    start: "top 65%",
-                    end: "bottom 75%",
+                    start: "top 50%", 
+                    end: "bottom bottom", 
                     scrub: 0.5,  
                     invalidateOnRefresh: true, 
                 }

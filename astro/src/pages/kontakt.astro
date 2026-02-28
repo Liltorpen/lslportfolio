@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import PageHero from '../components/PageHero.astro';
 ---
 
-<MainLayout title="KONTAKT">
+<MainLayout title="KONTAKT" shortTimeline={true}>
     <PageHero title="KONTAKT" />
     
     <div class="contact-wrapper">
@@ -52,18 +52,3 @@ import PageHero from '../components/PageHero.astro';
         </section>
     </div>
 </MainLayout>
-
-<style is:global>
-    /* Gør tidslinjen kortere KUN på kontakt-siden */
-    .timeline__track {
-        bottom: auto !important; 
-        height: 40vh !important; /* Hero-sektionen fylder ca. 35vh, så den stopper lige under */
-    }
-
-    /* På mobil er hero-sektionen lidt mindre, så her justerer vi den også */
-    @media (max-width: 768px) {
-        .timeline__track {
-            height: 25vh !important;
-        }
-    }
-</style>
