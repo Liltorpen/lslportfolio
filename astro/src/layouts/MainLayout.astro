@@ -48,8 +48,12 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     gsap.registerPlugin(ScrollTrigger);
     
+    // Optimering: Fikser det hakkeri der sker på mobil når URL-baren forsvinder/kommer frem
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    
     let lenis: any;
     let resizeObserver: ResizeObserver | null = null;
+    let refreshTimeout: any;
 
     const initPremiumExperience = () => {
         lenis = new Lenis({
@@ -68,6 +72,7 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
 
         if (timelineLine && timelineTrack) {
+            // Vi sætter opacity til 1 konsekvent, så den ikke varierer baseret på sidens længde
             gsap.set(timelineLine, { height: 0, opacity: 0.5 });
             gsap.to(timelineLine, {
                 height: "100%",
@@ -117,17 +122,19 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
             
             resizeObserver = new ResizeObserver(() => {
                 const newHeight = mainElement.getBoundingClientRect().height;
-                if (newHeight !== lastHeight) {
+                if (Math.abs(newHeight - lastHeight) > 5) {
                     lastHeight = newHeight;
-                    ScrollTrigger.refresh();
+                    clearTimeout(refreshTimeout);
+                    refreshTimeout = setTimeout(() => {
+                        ScrollTrigger.refresh();
+                    }, 250);
                 }
             });
             resizeObserver.observe(mainElement);
         }
 
-        // Sikkerhedsnet: Tving en refresh, når alle elementer og billeder i dokumentet er fuldt indlæst
         window.addEventListener('load', () => {
-            ScrollTrigger.refresh();
+            setTimeout(() => ScrollTrigger.refresh(), 100);
         });
 
         ScrollTrigger.refresh();
@@ -137,6 +144,7 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         ScrollTrigger.killAll(); 
         if (lenis) lenis.destroy();
         if (resizeObserver) resizeObserver.disconnect();
+        clearTimeout(refreshTimeout);
         
         requestAnimationFrame(() => {
             initPremiumExperience();
