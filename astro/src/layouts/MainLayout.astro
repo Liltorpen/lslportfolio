@@ -50,7 +50,6 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     gsap.registerPlugin(ScrollTrigger);
     
-    // Ignorerer at skærmen skifter højde når URL-baren på mobil kommer og går
     ScrollTrigger.config({ ignoreMobileResize: true });
     
     let lenis: any;
@@ -60,7 +59,7 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
-            smoothTouch: false, // Lader mobiler bruge deres native, hardware-accelererede scroll
+            smoothTouch: false, 
         });
 
         lenis.on('scroll', ScrollTrigger.update);
@@ -78,17 +77,18 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack,
-                    start: "top 50%", 
-                    end: "bottom 65%", 
+                    start: "top 70%", 
+                    end: "bottom 80%", 
                     scrub: true,  
                     invalidateOnRefresh: true, 
                 }
             });
         }
 
+        // Standard reveal animationer
         const reveals = document.querySelectorAll('.reveal-up');
         reveals.forEach((el) => {
-            gsap.set(el, { y: 50, opacity: 0 }); 
+            gsap.set(el, { y: 40, opacity: 0 }); 
             gsap.to(el, {
                 y: 0,
                 opacity: 1,
@@ -115,13 +115,14 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
             });
         });
 
+        // Sikkerheds-refresh når alt er fuldt indlæst
         window.addEventListener('load', () => {
             ScrollTrigger.refresh();
         });
         
         setTimeout(() => {
             ScrollTrigger.refresh();
-        }, 1500);
+        }, 1000);
 
         ScrollTrigger.refresh();
     };
