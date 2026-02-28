@@ -10,7 +10,7 @@ interface Props {
 }
 const { title, description } = Astro.props;
 
-const siteTitle = title ? `${title} | LSL STUDIO` : 'LSL STUDIO | Visuelle oplevelser der skærer igennem støjen';
+const siteTitle = title ? `${title} | LSL STUDIO` : 'LSL STUDIO | Multimediedesign Portfolio';
 const siteDescription = description || "LSL Studio - Multimediedesign Portfolio";
 ---
 
@@ -116,8 +116,6 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         const mainElement = document.querySelector('main');
         if (mainElement) {
             resizeObserver = new ResizeObserver(() => {
-                // MOBIL FIX: Opdaterer kun hvis bredden (width) har ændret sig,
-                // for at undgå at mobilens URL-bar "hakker" siden på scroll.
                 if (window.innerWidth !== currentWindowWidth) {
                     currentWindowWidth = window.innerWidth;
                     ScrollTrigger.refresh();
