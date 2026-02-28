@@ -23,8 +23,6 @@ import { skills } from '../data/skills.js';
 
     const initSkillHover = () => {
         const rows = document.querySelectorAll('.skill-row');
-        
-        // Vi tjekker om enheden understøtter hover (desktop)
         if (window.matchMedia("(hover: none)").matches) return;
 
         rows.forEach(row => {

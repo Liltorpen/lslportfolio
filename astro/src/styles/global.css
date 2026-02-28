@@ -19,7 +19,7 @@
 }
 
 html {
-    scroll-behavior: auto; /* Lad Lenis styre det */
+    scroll-behavior: auto;
 }
 
 body {
@@ -28,7 +28,7 @@ body {
     font-family: var(--font-body);
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Dræber horisontal scroll */
+    overflow-x: hidden;
     width: 100%;
 }
 
@@ -67,7 +67,7 @@ h1 { font-size: clamp(35px, 10vw, 100px); }
 p { font-size: clamp(0.9rem, 1.2vw, 1.1rem); color: rgba(243, 226, 200, 0.8); max-width: 65ch; margin-bottom: 1.5rem; text-align: left; }
 
 /* ==========================================================================
-   3. HEADER & NAV (Fixet for perfekt alignment)
+   3. HEADER & NAV
    ========================================================================== */
 header {
     position: fixed; 
@@ -85,7 +85,7 @@ header {
     justify-content: space-between; 
     align-items: center;
     width: 100%;
-    max-width: 1400px; /* Samme bredde som Main! */
+    max-width: 1400px;
     margin: 0 auto;
     padding: 15px var(--container-padding);
 }
@@ -191,7 +191,7 @@ header {
 .skill-row:hover .skill-name { color: var(--accent-color); }
 .skills-section { margin-bottom: var(--section-spacing); }
 
-/* Footer opdateret til at matche max-width princippet */
+
 footer { 
     width: 100%;
     background-color: var(--bg-color);
@@ -233,15 +233,12 @@ footer {
 
 .hero--small { min-height: 35vh; display: flex; justify-content: center; align-items: center; text-align: center; padding-top: 120px; margin-bottom: 40px; }
 .intro-container {
-    /* Tvinger containeren til at fylde 100% af skærmens bredde */
     width: 100vw;
     position: relative;
     left: 50%;
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    
-    /* Bevarer din ønskede højde */
     height: 65vh; 
     margin-bottom: var(--section-spacing);
     overflow: hidden;
