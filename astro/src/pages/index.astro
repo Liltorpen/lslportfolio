@@ -13,7 +13,17 @@ const selectedCases = [casesData[0], casesData[1], casesData[3]];
             <h1 class="h1--landingpage hero-anim">LSL STUDIO</h1>
             <h2 class="h2--landingpage hero-anim">PORTFOLIO</h2>
         </div>
-        <div class="hero__scroll hero-anim-late">SCROLL</div>
+        <div class="hero__scroll hero-anim-late">
+    <div class="scroll-ticker">
+        <span>EXPLORE</span>
+        <span>VISION</span>
+        <span>CREATIVE</span>
+        <span>MOTION</span>
+        <span>PORTFOLIO</span>
+        <span>PROJECTS</span>
+        <span class="final-word">SCROLL</span>
+    </div>
+</div>
     </section>
 
     <section class="hook reveal-up">
@@ -64,7 +74,9 @@ const selectedCases = [casesData[0], casesData[1], casesData[3]];
 <script>
     import { gsap } from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
-    gsap.registerPlugin(ScrollTrigger);
+    import { SplitText } from 'gsap/SplitText';
+    
+    gsap.registerPlugin(ScrollTrigger, SplitText);
 
     document.addEventListener('astro:page-load', () => {
         const heroAnims = document.querySelectorAll('.hero-anim');
@@ -72,16 +84,39 @@ const selectedCases = [casesData[0], casesData[1], casesData[3]];
             gsap.fromTo(heroAnims, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power4.out" });
         }
 
-        const heroAnimLate = document.querySelectorAll('.hero-anim-late');
-        if (heroAnimLate.length > 0) {
-            gsap.fromTo(heroAnimLate, { opacity: 0 }, { opacity: 1, duration: 2, delay: 1 });
+        const ticker = document.querySelector('.scroll-ticker');
+        const heroAnimLate = document.querySelector('.hero-anim-late');
+
+        if (ticker && heroAnimLate) {
+            gsap.fromTo(heroAnimLate, { opacity: 0 }, { 
+                opacity: 0.5, 
+                duration: 1.5, 
+                delay: 1,
+                onComplete: () => {
+                    gsap.to(ticker, {
+                        y: "-85.7%", // (6/7 * 100)
+                        duration: 2.5,
+                        ease: "expo.inOut",
+                        onComplete: () => {
+                            const finalWord = new SplitText(".final-word", { type: "chars" });
+                            gsap.from(finalWord.chars, {
+                                opacity: 0,
+                                scale: 1.5,
+                                stagger: 0.1,
+                                duration: 0.5,
+                                ease: "back.out(2)"
+                            });
+                        }
+                    });
+                }
+            });
         }
 
         document.querySelectorAll('.stat-number').forEach(stat => {
             const target = parseInt(stat.getAttribute('data-target') || '0');
             gsap.to(stat, {
                 innerHTML: target,
-                duration: 2.5,
+                duration: 3.5,
                 snap: { innerHTML: 1 },
                 ease: "power2.out",
                 scrollTrigger: { trigger: stat, start: "top 85%" }

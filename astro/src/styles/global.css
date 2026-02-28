@@ -89,6 +89,31 @@ h1 { font-size: clamp(35px, 10vw, 100px); }
 .section-title--cases { margin: 50px 0; }
 p { font-size: clamp(0.9rem, 1.2vw, 1.1rem); color: rgba(243, 226, 200, 0.8); max-width: 65ch; margin-bottom: 1.5rem; text-align: left; }
 
+/* Tilføj dette til global.css */
+.hero__scroll {
+    height: 1.5rem; /* Skal matche din font-størrelse ca. */
+    overflow: hidden;
+    margin-top: auto;
+    margin-bottom: 40px;
+    font-family: var(--font-headline);
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    opacity: 0.5;
+    position: relative;
+}
+
+.scroll-ticker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    will-change: transform;
+}
+
+.scroll-ticker span {
+    height: 1.5rem;
+    line-height: 1.5rem;
+    display: block;
+}
 /* ==========================================================================
    3. HEADER & NAV
    ========================================================================== */
@@ -241,7 +266,6 @@ footer {
    ========================================================================== */
 .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .hero__content { margin-top: auto; }
-.hero__scroll { margin-top: auto; margin-bottom: 40px; font-family: var(--font-headline); font-size: 1.2rem; letter-spacing: 4px; opacity: 0.5; }
 .hook { margin: var(--section-spacing) auto; max-width: 800px; justify-content: center;}
 .hook h2 { font-size: clamp(30px, 4vw, 45px); margin-bottom: 20px; text-align: center; }
 .hook p {margin: 0 auto;}
@@ -303,10 +327,9 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
    ========================================================================== */
 .reveal-up { 
     opacity: 0; 
-    transform: translateY(40px); 
+    transform: translateY(60px); 
     will-change: transform, opacity; 
 }
-.reveal-mask { clip-path: inset(100% 0 0 0); }
 
 @media (max-width: 768px) {
     :root { --mask-padding: 15px; --section-spacing: clamp(60px, 15vh, 120px); } 
