@@ -19,14 +19,22 @@
     box-sizing: border-box; 
 }
 
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-body);
     margin: 0;
-    overflow-x: hidden;
+    padding: 0;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+}
+
+
+.site-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 
 /* --- LENIS SMOOTH SCROLL --- */
@@ -99,6 +107,7 @@ header {
     position: fixed; 
     top: 0; 
     width: 100%; 
+    max-width: 1400px;
     z-index: 1000;
     background-color: rgba(17, 16, 16, 0.75); 
     backdrop-filter: blur(15px); 
@@ -296,13 +305,17 @@ header {
 .soft-glow-bg::before {
     content: '';
     position: absolute;
-    top: -20px; left: -40px; right: -40px; bottom: -20px;
-    /* En cirkulær fade der er massiv på midten og forsvinder ud mod kanterne */
-    background: radial-gradient(ellipse at center, var(--bg-color) 40%, transparent 80%);
+    /* 1. Vi gør boksen meget større, så gløden har masser af plads at dø ud på */
+    top: -80px; 
+    left: -100px; 
+    right: -100px; 
+    bottom: -80px;
+    
+    /* 2. Vi fader til din specifikke baggrundsfarve (111010) ved 0% opacity (rgba 17,16,16,0) for et silkeblødt fade */
+    background: radial-gradient(ellipse at center, var(--bg-color) 20%, rgba(17, 16, 16, 0) 75%);
     z-index: -1;
     pointer-events: none;
 }
-
 .knap__container { 
     display: flex; 
     justify-content: center; 
@@ -427,7 +440,16 @@ footer {
 
 /* --- STUDIO.ASTRO --- */
 .hero--small { min-height: 35vh; display: flex; justify-content: center; align-items: center; text-align: center; padding-top: 120px; margin-bottom: 40px; }
-.intro-container { width: 100vw; height: 65vh; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; margin-bottom: var(--section-spacing); overflow: hidden; }
+.intro-container { 
+    width: 100vw; 
+    max-width: 100vw;
+    height: 65vh; 
+    position: relative; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    margin-bottom: var(--section-spacing); 
+    overflow: hidden; 
+}
 .studio-img { width: 100%; height: 100%; object-fit: cover;}
 .bts { max-width: 1000px; margin: 0 auto var(--section-spacing); }
 .bts__header { text-align: center; margin: 20px 0;}
@@ -464,9 +486,10 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
 .reveal-mask { clip-path: inset(100% 0 0 0); }
 
 @media (max-width: 768px) {
-    :root { --mask-padding: 15px; }
+    :root { --mask-padding: 15px; --section-spacing: clamp(60px, 15vh, 120px); } 
     main { padding-bottom: 60px; }
     .hero--small { min-height: 20vh; padding-top: 100px; }
+    
     
     .nav { display: none; }
     .nav-burger { display: flex; }
@@ -505,4 +528,5 @@ button.knap { margin-top: 20px; width: 100%; background: transparent; cursor: po
     .hook h2 { text-align: left; }
     .hook p { margin: 0; }
     .stats-description { margin: 0; }
+
 }
