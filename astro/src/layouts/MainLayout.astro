@@ -28,18 +28,20 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     <ClientRouter />
 </head>
 <body>
-    <Header />
-    <main>
-        <div class="timeline">
-            <div class:list={["timeline__track", { "timeline__track--short": shortTimeline }]}>
-                <div class="timeline__line"></div>
+    <div class="site-wrapper">
+        <Header />
+        <main>
+            <div class="timeline">
+                <div class:list={["timeline__track", { "timeline__track--short": shortTimeline }]}>
+                    <div class="timeline__line"></div>
+                </div>
+                
+                <slot />
+                
             </div>
-            
-            <slot />
-            
-        </div>
-    </main>
-    <Footer />
+        </main>
+        <Footer />
+    </div>
 
 <script>
     import Lenis from 'lenis';
@@ -48,20 +50,17 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     gsap.registerPlugin(ScrollTrigger);
     
-    // Optimering: Fikser det hakkeri der sker på mobil når URL-baren forsvinder/kommer frem
+    // Ignorerer at skærmen skifter højde når URL-baren på mobil kommer og går
     ScrollTrigger.config({ ignoreMobileResize: true });
     
     let lenis: any;
-    let resizeObserver: ResizeObserver | null = null;
-    let refreshTimeout: any;
 
     const initPremiumExperience = () => {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
-            smoothTouch: false, 
-            touchMultiplier: 2, 
+            smoothTouch: false, // Lader mobiler bruge deres native, hardware-accelererede scroll
         });
 
         lenis.on('scroll', ScrollTrigger.update);
@@ -72,7 +71,6 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
 
         if (timelineLine && timelineTrack) {
-            // Vi sætter opacity til 1 konsekvent, så den ikke varierer baseret på sidens længde
             gsap.set(timelineLine, { height: 0, opacity: 0.5 });
             gsap.to(timelineLine, {
                 height: "100%",
@@ -116,26 +114,13 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
             });
         });
 
-        const mainElement = document.querySelector('main');
-        if (mainElement) {
-            let lastHeight = mainElement.getBoundingClientRect().height;
-            
-            resizeObserver = new ResizeObserver(() => {
-                const newHeight = mainElement.getBoundingClientRect().height;
-                if (Math.abs(newHeight - lastHeight) > 5) {
-                    lastHeight = newHeight;
-                    clearTimeout(refreshTimeout);
-                    refreshTimeout = setTimeout(() => {
-                        ScrollTrigger.refresh();
-                    }, 250);
-                }
-            });
-            resizeObserver.observe(mainElement);
-        }
-
         window.addEventListener('load', () => {
-            setTimeout(() => ScrollTrigger.refresh(), 100);
+            ScrollTrigger.refresh();
         });
+        
+        setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 1500);
 
         ScrollTrigger.refresh();
     };
@@ -143,14 +128,12 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     document.addEventListener('astro:page-load', () => {
         ScrollTrigger.killAll(); 
         if (lenis) lenis.destroy();
-        if (resizeObserver) resizeObserver.disconnect();
-        clearTimeout(refreshTimeout);
         
         requestAnimationFrame(() => {
             initPremiumExperience();
             setTimeout(() => {
                 ScrollTrigger.refresh();
-            }, 500); 
+            }, 300); 
         });
     });
 </script>
