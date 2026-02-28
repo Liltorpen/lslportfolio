@@ -50,7 +50,6 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     let lenis: any;
     let resizeObserver: ResizeObserver | null = null;
-    let currentWindowWidth = window.innerWidth;
 
     const initPremiumExperience = () => {
         lenis = new Lenis({
@@ -69,16 +68,16 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
         const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
 
         if (timelineLine && timelineTrack) {
-            gsap.set(timelineLine, { height: 0, opacity: 0 });
+            gsap.set(timelineLine, { height: 0, opacity: 0.5 });
             gsap.to(timelineLine, {
                 height: "100%",
                 opacity: 1,
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack,
-                    start: "top 50%", 
-                    end: "bottom bottom", 
-                    scrub: 0.5,  
+                    start: "top 65%", 
+                    end: "bottom 50%", 
+                    scrub: true,  
                     invalidateOnRefresh: true, 
                 }
             });
@@ -115,14 +114,22 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
 
         const mainElement = document.querySelector('main');
         if (mainElement) {
+            let lastHeight = mainElement.getBoundingClientRect().height;
+            
             resizeObserver = new ResizeObserver(() => {
-                if (window.innerWidth !== currentWindowWidth) {
-                    currentWindowWidth = window.innerWidth;
+                const newHeight = mainElement.getBoundingClientRect().height;
+                if (newHeight !== lastHeight) {
+                    lastHeight = newHeight;
                     ScrollTrigger.refresh();
                 }
             });
             resizeObserver.observe(mainElement);
         }
+
+        // Sikkerhedsnet: Tving en refresh, når alle elementer og billeder i dokumentet er fuldt indlæst
+        window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
+        });
 
         ScrollTrigger.refresh();
     };
