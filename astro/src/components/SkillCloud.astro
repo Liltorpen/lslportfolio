@@ -1,46 +1,47 @@
 ---
-const skills = [
-    { name: "AFTER EFFECTS", type: "MOTION DESIGN", desc: "Avanceret animation & VFX" },
-    { name: "PREMIERE PRO", type: "VIDEO EDITING", desc: "Storytelling & Color Grading" },
-    { name: "PHOTOSHOP", type: "IMAGE ASSETS", desc: "Digital komposition" },
-    { name: "ILLUSTRATOR", type: "BRAND ASSETS", desc: "Vektorbaseret grafik" },
-    { name: "FIGMA", type: "UI / UX", desc: "Prototyping & Designsystemer" },
-    { name: "HTML5 / CSS3", type: "DEVELOPMENT", desc: "Interaktiv frontend kodning" },
-    { name: "FRAMEWORKS", type: "MODERN FRONTEND", desc: "React, Astro, Vite, Electron" },
-    { name: "SHORTFORM STRATEGI", type: "CONTENT", desc: "Algoritme-optimering" },
-    { name: "BRANDING", type: "IDENTITY", desc: "Visuel konceptudvikling" }
-];
+import { skills } from '../data/skills.js';
 ---
-    <div class="skills-list">
-        {skills.map((skill, index) => (
-            <div class="skill-row" data-skill={skill.name.toLowerCase()}>
-                <div class="skill-row__content">
-                    <span class="skill-index">0{index + 1}</span>
-                    <div class="skill-info">
-                        <h3 class="skill-name">{skill.name}</h3>
-                        <span class="skill-type">{skill.type}</span>
-                    </div>
-                    <p class="skill-desc">{skill.desc}</p>
+
+<div class="skills-list">
+    {skills.map((skill, index) => (
+        <div class="skill-row" data-skill={skill.name.toLowerCase()}>
+            <div class="skill-row__content">
+                <span class="skill-index">0{index + 1}</span>
+                <div class="skill-info">
+                    <h3 class="skill-name">{skill.name}</h3>
+                    <span class="skill-type">{skill.type}</span>
                 </div>
-                <div class="skill-row__line"></div>
+                <p class="skill-desc">{skill.desc}</p>
             </div>
-        ))}
-    </div>
+            <div class="skill-row__line"></div>
+        </div>
+    ))}
+</div>
 
 <script>
     import { gsap } from 'gsap';
 
     const initSkillHover = () => {
         const rows = document.querySelectorAll('.skill-row');
+        
+        // Vi tjekker om enheden understøtter hover (desktop)
         if (window.matchMedia("(hover: none)").matches) return;
 
         rows.forEach(row => {
             row.addEventListener('mouseenter', () => {
-                gsap.to(row, { paddingLeft: "40px", duration: 0.4, ease: "power2.out" });
+                gsap.to(row, { 
+                    paddingLeft: "40px", 
+                    duration: 0.4, 
+                    ease: "power2.out" 
+                });
             });
 
             row.addEventListener('mouseleave', () => {
-                gsap.to(row, { paddingLeft: "0px", duration: 0.4, ease: "power2.out" });
+                gsap.to(row, { 
+                    paddingLeft: "0px", 
+                    duration: 0.4, 
+                    ease: "power2.out" 
+                });
             });
         });
     };
