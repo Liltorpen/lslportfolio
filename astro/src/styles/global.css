@@ -1,10 +1,9 @@
 /* ==========================================================================
-   GLOBAL.CSS – LSL STUDIO
-   Optimeret: SEO-ready, a11y-compliant, performance-tuned
+   GLOBAL.CSS – LSL STUDIO — OPTIMERET
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLER & BASE STYLES
+   1. VARIABLER & BASE
    ========================================================================== */
 :root {
     --bg-color: #111010;
@@ -14,7 +13,6 @@
     --font-body: 'Inter', sans-serif;
     --section-spacing: clamp(100px, 30vh, 300px);
     --container-padding: 5vw;
-    --mask-padding: 15px;
     --header-bg: rgba(17, 16, 16, 0.75);
     --header-blur: 15px;
 }
@@ -25,13 +23,14 @@
     box-sizing: border-box;
 }
 
-/* 
-  FIX: scroll-behavior: auto er intentionelt – 
-  Lenis smooth scroll håndterer al scrolling og overskriver browser-default.
-  Undgå at sætte smooth her da det konflikter med Lenis.
+/*
+    FIX: scroll-behavior: auto er korrekt — Lenis håndterer smooth scroll.
+    Sæt derudover scrollbar-gutter: stable så layout ikke hopper
+    når overflow skifter ved åbning af mobilmenu.
 */
 html {
     scroll-behavior: auto;
+    scrollbar-gutter: stable;
 }
 
 body {
@@ -42,12 +41,12 @@ body {
     padding: 0;
     overflow-x: hidden;
     width: 100%;
+    line-height: 1.5;
 }
 
-/* 
-  a11y FIX: Synlig fokus-indikator for tastaturbrugere.
-  Fjerner IKKE outline – erstatter den med en smuk branded variant.
-  Gælder alle interaktive elementer.
+/*
+    FIX: Synlig fokus-indikator for tastaturnavigation.
+    :focus-visible vises kun ved tastatur — ikke ved museklik.
 */
 :focus-visible {
     outline: 2px solid var(--accent-color);
@@ -55,7 +54,6 @@ body {
     border-radius: 2px;
 }
 
-/* Fjern outline for mus-brugere (de har hover-states) */
 :focus:not(:focus-visible) {
     outline: none;
 }
@@ -67,9 +65,11 @@ body {
 }
 
 /*
-  PERFORMANCE FIX: Grain-overlay bruger ekstern SVG.
-  Tilføjet fallback-opacity: 0 hvis URL fejler (graceful degradation).
-  Overvej at hoste noise.svg lokalt i /public/images/ for stabilitet.
+    FIX: Grain-overlay bruger contain: strict for at isolere
+    dens animerede repaints fra resten af siden.
+    overflow: hidden på .site-wrapper klippes af contain.
+    Tilføj noise.svg til /public/images/ for lokal hosting
+    i stedet for ekstern URL.
 */
 .site-wrapper::after {
     content: "";
@@ -78,18 +78,13 @@ body {
     left: -150%;
     width: 300%;
     height: 300%;
-    background-image: url('/images/noise.svg'), none; /* FIX: lokal fallback */
+    background-image: url('/images/noise.svg');
     opacity: 0.06;
     pointer-events: none;
     z-index: 9999;
     animation: grain 8s steps(10) infinite;
-    /* a11y: Respekter reduced-motion for grain-animation */
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .site-wrapper::after {
-        animation: none;
-    }
+    will-change: transform;
+    contain: strict;
 }
 
 @keyframes grain {
@@ -102,7 +97,7 @@ body {
     90%  { transform: translate(10%, 5%); }
 }
 
-/* Lenis smooth scroll integration */
+/* Lenis */
 html.lenis          { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
@@ -116,18 +111,12 @@ main {
     position: relative;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--container-padding);
-    padding-bottom: var(--section-spacing);
+    padding: 0 var(--container-padding) var(--section-spacing);
 }
 
 /* ==========================================================================
    2. TYPOGRAFI
    ========================================================================== */
-
-/* 
-  Heading-hierarki (h1 → h2 → h3) er semantisk og SEO-vigtigt.
-  Alle headings deler base-styles – specifikke klasser tilpasser størrelse.
-*/
 h1,
 h2,
 h3 {
@@ -147,11 +136,6 @@ h1 { font-size: clamp(35px, 10vw, 100px); }
     line-height: 0.85;
 }
 
-/* 
-  FIX: Var tidligere h2-element i index.astro.
-  Nu brugt på <p class="subtitle--landingpage"> – styling bevaret.
-  .h2--landingpage beholdes til evt. brug på andre sider.
-*/
 .h2--landingpage,
 .subtitle--landingpage {
     font-family: var(--font-headline);
@@ -173,7 +157,6 @@ h1 { font-size: clamp(35px, 10vw, 100px); }
     margin: 50px 0;
 }
 
-/* Global brødtekst */
 p {
     font-size: clamp(0.9rem, 1.2vw, 1.1rem);
     color: rgba(243, 226, 200, 0.8);
@@ -183,7 +166,7 @@ p {
 }
 
 /* ==========================================================================
-   3. SCROLL-TICKER (hero)
+   3. SCROLL-TICKER
    ========================================================================== */
 .hero__scroll {
     height: 1.5rem;
@@ -193,19 +176,16 @@ p {
     font-family: var(--font-headline);
     font-size: 1.2rem;
     letter-spacing: 4px;
-
-    /* 
-      opacity styres af GSAP (starter på 0, animeres til 0.5).
-      Sættes ikke i CSS for at undgå FOUC. 
-    */
     position: relative;
+    /* Opacity styres af GSAP — starter på 0 */
+    opacity: 0;
 }
 
 .scroll-ticker {
     display: flex;
     flex-direction: column;
     align-items: center;
-    will-change: transform; /* Fjernes af GSAP efter animation via cleanup */
+    will-change: transform;
 }
 
 .scroll-ticker span {
@@ -225,9 +205,14 @@ header {
     width: 100%;
     z-index: 1000;
     background-color: var(--header-bg);
-    backdrop-filter: blur(var(--header-blur));
     -webkit-backdrop-filter: blur(var(--header-blur));
+    backdrop-filter: blur(var(--header-blur));
     border-bottom: 1px solid rgba(243, 226, 200, 0.05);
+    /*
+        FIX: contain: layout style isolerer header-repaints
+        fra resten af siden — særligt ved sticky scroll.
+    */
+    contain: layout style;
 }
 
 .header__inner {
@@ -240,7 +225,11 @@ header {
     padding: 15px var(--container-padding);
 }
 
-.logo img { height: 40px; }
+.logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
 
 .nav {
     display: flex;
@@ -257,9 +246,11 @@ header {
     font-size: 1.1rem;
     letter-spacing: 2px;
     opacity: 0.5;
+    /* FIX: Kun opacity og transform animeres — ingen layout-reflow */
     transition: opacity 0.3s ease;
     position: relative;
     padding: 5px 0;
+    display: inline-block; /* Kræves for transform på <a> */
 }
 
 .nav__link:hover,
@@ -267,7 +258,7 @@ header {
     opacity: 1;
 }
 
-/* Animated underline */
+/* Animated underline via transform — GPU-accelereret */
 .nav__link::after {
     content: '';
     position: absolute;
@@ -279,6 +270,7 @@ header {
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
 }
 
 .nav__link:hover::after,
@@ -287,7 +279,7 @@ header {
     transform-origin: left;
 }
 
-/* Burger-menu knap */
+/* Burger */
 .nav-burger {
     display: none;
     flex-direction: column;
@@ -305,7 +297,6 @@ header {
     margin-right: -10px;
 }
 
-/* a11y: Fokus-state for burger-knap */
 .nav-burger:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 4px;
@@ -316,16 +307,18 @@ header {
     width: 28px;
     height: 2px;
     background-color: var(--text-color);
-    transition: 0.4s ease;
+    transition: transform 0.4s ease, background-color 0.4s ease;
+    will-change: transform;
 }
 
-.nav-burger.active .bar                  { background-color: var(--accent-color); }
-.nav-burger.active .bar:nth-child(1)     { transform: translateY(5px) rotate(45deg); }
-.nav-burger.active .bar:nth-child(2)     { transform: translateY(-5px) rotate(-45deg); }
+.nav-burger.active .bar                 { background-color: var(--accent-color); }
+.nav-burger.active .bar:nth-child(1)    { transform: translateY(5px) rotate(45deg); }
+.nav-burger.active .bar:nth-child(2)    { transform: translateY(-5px) rotate(-45deg); }
 
-/* 
-  FIX: Mobil-nav manglede transition på visibility.
-  visibility alene hopper – kombinér med opacity + transition.
+/*
+    FIX: Mobilmenu starter med visibility:hidden + opacity:0.
+    GSAP's autoAlpha håndterer begge i ét — se Header.astro.
+    CSS definerer kun starttilstand.
 */
 .nav--mobile {
     position: fixed;
@@ -337,15 +330,9 @@ header {
     z-index: 1500;
     opacity: 0;
     visibility: hidden;
-    /* FIX: transition på både opacity og visibility */
-    transition: opacity 0.35s ease, visibility 0.35s ease;
     display: flex;
     flex-direction: column;
-}
-
-.nav--mobile.is-open {
-    opacity: 1;
-    visibility: visible;
+    will-change: opacity;
 }
 
 .nav--mobile__inner {
@@ -393,6 +380,7 @@ header {
     opacity: 0.3;
     letter-spacing: 2px;
     text-transform: uppercase;
+    margin: 0;
 }
 
 /* ==========================================================================
@@ -433,6 +421,7 @@ header {
     transform-origin: top;
     height: 100%;
     transform: scaleY(0);
+    /* GPU-lag til scroll-drevet animation */
     will-change: transform;
 }
 
@@ -444,11 +433,6 @@ header {
 /* ==========================================================================
    6. KOMPONENTER
    ========================================================================== */
-
-/* 
-  FIX: Tilføjet position: relative på .soft-glow-bg
-  Manglede dette – ::before med position:absolute havde ingen stacking context
-*/
 .soft-glow-bg {
     position: relative;
     z-index: 2;
@@ -470,7 +454,7 @@ header {
     pointer-events: none;
 }
 
-/* Knap-komponent */
+/* Knap */
 .knap__container {
     display: flex;
     justify-content: center;
@@ -492,8 +476,10 @@ header {
     position: relative;
     overflow: hidden;
     z-index: 2;
+    /* FIX: Kun color og border-color animeres — ingen layout-reflow */
     transition: color 0.4s ease, border-color 0.4s ease;
     cursor: pointer;
+    will-change: transform;
 }
 
 .knap::before {
@@ -508,6 +494,7 @@ header {
     transform-origin: bottom;
     transition: transform 0.4s ease;
     z-index: -1;
+    will-change: transform;
 }
 
 .knap:hover {
@@ -517,10 +504,7 @@ header {
 
 .knap:hover::before { transform: scaleY(1); }
 
-/* 
-  FIX: Tilføjet overflow: hidden på visual-wrapper
-  Uden dette stikker skalerede child-elementer ud over kortets kanter
-*/
+/* Cases */
 .case-item {
     display: flex;
     align-items: center;
@@ -533,12 +517,15 @@ header {
     position: relative;
     border-radius: 4px;
     background-color: #050505;
+    /* FIX: Kun transform og box-shadow animeres */
     transition: transform 0.8s ease, box-shadow 0.8s ease;
     padding: 1px;
     box-shadow:
         0 30px 60px -10px rgba(0, 0, 0, 0.9),
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    overflow: hidden; /* FIX: clip children ved scale-transform */
+    /* FIX: overflow:hidden clipper children ved scale-hover */
+    overflow: hidden;
+    will-change: transform;
 }
 
 .case-item__inner {
@@ -546,6 +533,8 @@ header {
     width: 100%;
     overflow: hidden;
     border-radius: 3px;
+    /* FIX: contain:layout isolerer media-repaint fra resten af kortets layout */
+    contain: layout;
 }
 
 .case-item:hover .case-item__visual-wrapper {
@@ -563,7 +552,9 @@ header {
     display: block;
     transform: scale(1.05);
     filter: grayscale(80%) contrast(1.1) brightness(0.8);
+    /* FIX: transform og filter er begge compositor-properties — korrekt */
     transition: transform 1.2s ease, filter 1.2s ease;
+    will-change: transform, filter;
 }
 
 .case-item:hover .premium-media {
@@ -619,11 +610,12 @@ header {
     text-transform: uppercase;
     font-weight: 500;
     margin: 20px 0;
+    font-family: var(--font-headline);
 }
 
 .case-item--reversed { flex-direction: row-reverse; }
 
-/* Skills-sektion */
+/* Skills */
 .skills-header { text-align: center; }
 
 .skills-list {
@@ -636,7 +628,7 @@ header {
     position: relative;
     padding: 30px 0;
     cursor: pointer;
-    transition: 0.4s ease;
+    transition: padding-left 0.4s ease;
     background-color: var(--bg-color);
     z-index: 2;
 }
@@ -704,6 +696,7 @@ footer {
     border-top: 1px solid rgba(243, 226, 200, 0.1);
     position: relative;
     z-index: 10;
+    contain: layout style;
 }
 
 .footer__inner {
@@ -736,6 +729,7 @@ footer {
     transition: color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    will-change: transform;
 }
 
 .social-links a:hover {
@@ -772,10 +766,10 @@ footer {
 
 .hook p { margin: 0 auto; }
 
-/* Stats-sektion */
 .stats-section {
     margin-bottom: var(--section-spacing);
     text-align: center;
+    position: relative;
 }
 
 .stats-flex {
@@ -787,18 +781,13 @@ footer {
     margin-bottom: 40px;
 }
 
-/* 
-  FIX: .stat-number er nu et <p>-element (ikke <h2>).
-  display: inline-block og font-size beholdes, margin nulstilles.
-  .stat-label håndterer label-teksten under tallet.
-*/
 .stat-number {
     font-size: clamp(50px, 6vw, 90px);
     font-family: var(--font-headline);
     color: var(--accent-color);
     line-height: 1;
     display: inline-block;
-    margin: 0; /* FIX: override global p margin-bottom: 1.5rem */
+    margin: 0;
 }
 
 .stat-item span {
@@ -807,10 +796,6 @@ footer {
     color: var(--accent-color);
 }
 
-/* 
-  FIX: Omdøbt fra .stat-item p til .stat-label
-  Undgår konflikt med global p-regel og er mere eksplicit.
-*/
 .stat-label {
     font-size: 0.9rem;
     letter-spacing: 2px;
@@ -825,21 +810,7 @@ footer {
     margin: 0 auto;
 }
 
-.staff-badge {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto var(--section-spacing);
-}
 
-.staff-badge img {
-    max-width: 250px;
-    border-radius: 5px;
-}
-
-/* Cases-sektion */
-.cases-section { /* intentionally unstyled – layout styres af children */ }
-
-/* About-side */
 .hero--small {
     min-height: 35vh;
     display: flex;
@@ -860,6 +831,7 @@ footer {
     height: 65vh;
     margin-bottom: var(--section-spacing);
     overflow: hidden;
+    contain: layout paint; /* FIX: Isoler paint af fuld-bredde billede */
 }
 
 .studio-img {
@@ -867,9 +839,9 @@ footer {
     height: 100%;
     object-fit: cover;
     object-position: left center;
+    display: block;
 }
 
-/* BTS-sektion */
 .bts {
     max-width: 1000px;
     margin: 0 auto var(--section-spacing);
@@ -885,7 +857,6 @@ footer {
 .bts__col { flex: 1; }
 .bts p { margin-top: 0; }
 
-/* Process-grid */
 .process {
     max-width: 1200px;
     margin: 0 auto var(--section-spacing);
@@ -919,7 +890,7 @@ footer {
     letter-spacing: 2px;
 }
 
-/* Kontaktside */
+/* Kontakt */
 .contact-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -968,11 +939,10 @@ footer {
 
 .detail-link:hover { color: var(--accent-color); }
 
-/* Kontaktformular */
 .glass-form {
     background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     padding: 50px;
     border: 1px solid rgba(243, 226, 200, 0.1);
     display: flex;
@@ -982,12 +952,6 @@ footer {
 
 .form-group { position: relative; }
 
-/*
-  NOTE: Label-animation med :not(:placeholder-shown) kræver
-  at dine inputs har placeholder=" " (enkelt mellemrum) – ellers virker
-  label-animationen ikke når feltet har indhold.
-  Eksempel: <input type="text" placeholder=" " />
-*/
 input,
 textarea {
     width: 100%;
@@ -1001,13 +965,27 @@ textarea {
     transition: border-color 0.3s ease;
     resize: vertical;
     font-family: var(--font-body);
+    /* FIX: appearance:none fjerner iOS-styling der kan forårsage zoom */
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 input:focus,
 textarea:focus {
     border-bottom-color: var(--accent-color);
+    /* Override global :focus-visible outline — felterne har deres egen border-bottom focus-stil */
+    outline: none;
 }
 
+input:focus-visible,
+textarea:focus-visible {
+    outline: none;
+}
+
+/*
+    FIX: Label-animation med :not(:placeholder-shown).
+    Kræver placeholder=" " (enkelt mellemrum) på hvert input/textarea.
+*/
 .form-group label {
     position: absolute;
     top: 15px;
@@ -1036,15 +1014,12 @@ button.knap {
 }
 
 /* ==========================================================================
-   8. GSAP ANIMATIONER
+   8. GSAP REVEAL-KLASSER
    ========================================================================== */
-
 /*
-  FIX: .reveal-up definerer starttilstand for GSAP-animationer.
-  GSAP overskriver disse inline – CSS-definitionen fungerer som
-  "ingen JS fallback" og forhindrer FOUC.
-  
-  a11y: prefers-reduced-motion – vis elementerne direkte uden animation.
+    FIX: .reveal-up definerer starttilstand.
+    GSAP overskriver med inline styles — CSS er fallback/FOUC-prevention.
+    will-change fjernes af GSAP efter animation via cleanup i gsap.context().
 */
 .reveal-up {
     opacity: 0;
@@ -1052,28 +1027,54 @@ button.knap {
     will-change: transform, opacity;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .reveal-up {
-        opacity: 1 !important;
-        transform: none !important;
-        will-change: auto;
-    }
-
-    .scroll-ticker {
-        will-change: auto;
-    }
-
-    .timeline__line {
-        will-change: auto;
-    }
+/*
+    FIX: .reveal-mask starttilstand matcher hvad GSAP sætter.
+    clip-path: inset(0% 0 100% 0) = fuldt skjult fra bunden.
+*/
+.reveal-mask {
+    clip-path: inset(0% 0 100% 0);
+    will-change: clip-path;
 }
 
 /* ==========================================================================
-   9. RESPONSIVE – MOBIL (max-width: 768px)
+   9. PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    /* Vis alle animerede elementer direkte */
+    .reveal-up,
+    .reveal-mask {
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+        will-change: auto !important;
+    }
+
+    .timeline__line {
+        transform: scaleY(1) !important;
+        will-change: auto !important;
+    }
+
+    .scroll-ticker { will-change: auto !important; }
+
+    .site-wrapper::after { animation: none !important; }
+
+    /* Stop video-autoplay — håndteres i CaseItem.astro */
+    .smart-video { pointer-events: none; }
+}
+
+/* ==========================================================================
+   10. RESPONSIVE — MOBIL
    ========================================================================== */
 @media (max-width: 768px) {
     :root {
-        --mask-padding: 15px;
         --section-spacing: clamp(60px, 15vh, 120px);
     }
 
@@ -1086,12 +1087,9 @@ button.knap {
 
     .timeline__track--short { height: 25vh !important; }
 
-    /* Navigation */
     .nav         { display: none; }
     .nav-burger  { display: flex; }
-    .nav--mobile__list { gap: 40px; }
 
-    /* Cases */
     .case-item,
     .case-item--reversed {
         flex-direction: column;
@@ -1103,9 +1101,6 @@ button.knap {
         align-items: flex-start;
     }
 
-    .case-description { max-width: 65ch; }
-
-    /* Tekst-alignment */
     .stats-section,
     .bts__header,
     .bts__header h2,
@@ -1115,7 +1110,6 @@ button.knap {
 
     p { text-align: left !important; }
 
-    /* Footer */
     .footer__inner {
         flex-direction: column;
         gap: 25px;
@@ -1128,21 +1122,17 @@ button.knap {
         gap: 25px;
     }
 
-    /* Stats */
     .stats-flex {
         flex-wrap: wrap;
         text-align: center;
         gap: 50px;
     }
 
-    /* BTS & Process */
     .bts__content       { flex-direction: column; gap: 30px; }
     .process__grid      { grid-template-columns: 1fr; gap: 30px; }
 
-    /* Intro */
     .intro-container { height: 45vh; }
 
-    /* Skills */
     .skill-desc { display: none; }
     .skill-row__content {
         grid-template-columns: 40px 1fr;
@@ -1150,11 +1140,9 @@ button.knap {
     }
     .skills-header { text-align: left; }
 
-    /* Kontakt */
     .contact-wrapper { gap: 60px; flex-direction: column; }
     .glass-form      { padding: 30px; }
 
-    /* Hook */
     .hook h2 { text-align: left; }
     .hook p  { margin: 0; }
     .stats-description { margin: 0; }

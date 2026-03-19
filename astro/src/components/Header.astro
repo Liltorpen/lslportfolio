@@ -13,30 +13,59 @@ const navLinks = [
 <header>
     <div class="header__inner">
         <div class="logo">
-            <a href="/"><img src="/images/lsl_logo.svg" alt="LSL Studio Logo"></a>
+            <!--
+                FIX 1: Eksplicitte width/height undgår CLS (layout shift)
+                mens SVG loades. Browseren reserverer pladsen på forhånd.
+            -->
+            <a href="/"><img src="/images/lsl_logo.svg" alt="LSL Studio Logo" width="40" height="40"></a>
         </div>
-        <nav>
+        <nav aria-label="Primær navigation">
             <ul class="nav">
                 {navLinks.map(link => (
-                    <li><a class:list={["nav__link", { active: isActive(link.path) }]} href={link.path}>{link.name}</a></li>
+                    <li>
+                        <a
+                            class:list={["nav__link", { active: isActive(link.path) }]}
+                            href={link.path}
+                            aria-current={isActive(link.path) ? "page" : undefined}
+                        >
+                            {link.name}
+                        </a>
+                    </li>
                 ))}
             </ul>
-            <button class="nav-burger" aria-label="Menu">
+            <!--
+                FIX 2: aria-expanded startes på "false" i HTML
+                så skærmlæsere ved menuens tilstand før JS kører.
+                aria-controls peger på mobilnavens id.
+            -->
+            <button class="nav-burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-nav">
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
         </nav>
     </div>
     
-    <div class="nav--mobile">
+    <!--
+        FIX 3: id="mobile-nav" matcher aria-controls på burger-knappen.
+        aria-hidden="true" som standard — JS toggler dette.
+    -->
+    <div class="nav--mobile" id="mobile-nav" aria-hidden="true">
         <div class="nav--mobile__inner">
             <div class="nav--mobile__logo">
-                <a href="/"><img src="/images/lsl_logo.svg" alt="LSL STUDIO"></a>
+                <a href="/"><img src="/images/lsl_logo.svg" alt="LSL STUDIO" width="40" height="40"></a>
             </div>
 
             <ul class="nav--mobile__list">
                 {navLinks.map(link => (
-                    <li><a class:list={["nav__link", { active: isActive(link.path) }]} href={link.path}>{link.name}</a></li>
+                    <li>
+                        <a
+                            class:list={["nav__link", { active: isActive(link.path) }]}
+                            href={link.path}
+                            aria-current={isActive(link.path) ? "page" : undefined}
+                        >
+                            {link.name}
+                        </a>
+                    </li>
                 ))}
             </ul>
             
@@ -51,12 +80,16 @@ const navLinks = [
     import { gsap } from 'gsap';
 
     const initBurger = () => {
-        const burger = document.querySelector('.nav-burger');
-        const navMobile = document.querySelector('.nav--mobile');
+        const burger = document.querySelector<HTMLButtonElement>('.nav-burger');
+        const navMobile = document.querySelector<HTMLElement>('.nav--mobile');
         const menuElements = document.querySelectorAll('.nav--mobile__list li, .nav--mobile__footer');
         
         if (!burger || !navMobile) return;
 
+        // FIX 4: GSAP-timeline med autoAlpha (opacity + visibility i ét)
+        // erstatter den separate CSS visibility/opacity-toggle.
+        // autoAlpha sætter visibility:hidden når opacity=0,
+        // så elementet er korrekt ude af tab-order.
         const menuTl = gsap.timeline({ paused: true });
         
         menuTl.to(navMobile, {
@@ -73,19 +106,45 @@ const navLinks = [
             ease: "power3.out"
         }, "-=0.1");
 
+        const openMenu = () => {
+            burger.classList.add('active');
+            navMobile.classList.add('is-open');
+            burger.setAttribute('aria-expanded', 'true');
+            navMobile.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            menuTl.play();
+        };
+
+        const closeMenu = () => {
+            burger.classList.remove('active');
+            navMobile.classList.remove('is-open');
+            burger.setAttribute('aria-expanded', 'false');
+            navMobile.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            menuTl.reverse();
+        };
+
         burger.addEventListener('click', () => {
-            const isActive = burger.classList.toggle('active');
-            navMobile.classList.toggle('active');
-            
-            if (isActive) {
-                menuTl.play();
-                document.body.style.overflow = 'hidden';
-            } else {
-                menuTl.reverse();
-                document.body.style.overflow = 'auto';
+            burger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+        });
+
+        // FIX 5: Escape-tast lukker menuen og returnerer fokus til burger-knappen
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMobile.classList.contains('is-open')) {
+                closeMenu();
+                burger.focus();
+            }
+        });
+
+        // FIX 6: Klik på et nav-link i mobilmenuen lukker menuen
+        // (vigtigt med Astro View Transitions — siden skifter uden fuld reload)
+        navMobile.addEventListener('click', (e) => {
+            if ((e.target as HTMLElement).closest('.nav__link')) {
+                closeMenu();
             }
         });
     };
 
+    // FIX 7: astro:page-load sikrer re-initialisering ved View Transitions
     document.addEventListener('astro:page-load', initBurger);
 </script>

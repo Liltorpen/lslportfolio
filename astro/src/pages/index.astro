@@ -6,198 +6,203 @@ import { casesData } from '../data/cases.js';
 
 const selectedCases = [casesData[0], casesData[1], casesData[3]];
 
-// SEO metadata
-const seoTitle = "LSL Studio";
 const seoDescription = "Lucas Liltorp skaber visuelle oplevelser der konverterer – motion graphics, branding og social content med 50M+ visninger og 100K+ community reach.";
-const seoKeywords = "motion graphics, visuel identitet, content creator, TikTok, Instagram, multimediedesign, branding, social media";
-const seoCanonical = "https://lucasliltorp.dk/"; 
 ---
 
+<!--
+    FIX 1: structured data i slot="head" kræver at MainLayout
+    eksponerer <slot name="head" /> inde i <head>-tagget.
+    Se rettelse i MainLayout.astro.
+-->
 <MainLayout 
-  title={seoTitle}
-  description={seoDescription}
+    title="LSL Studio"
+    description={seoDescription}
 >
-  <script type="application/ld+json" slot="head">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Lucas Liltorp",
-      "jobTitle": "Motion Graphics Designer & Content Creator",
-      "knowsAbout": ["Motion Graphics", "Visuel Identitet", "Social Media", "Branding"]
-    }
-  </script>
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Lucas Liltorp",
+        "jobTitle": "Motion Graphics Designer & Content Creator",
+        "knowsAbout": ["Motion Graphics", "Visuel Identitet", "Social Media", "Branding"]
+    })} />
 
-  <section class="hero hero--landingpage">
-    <div class="hero__content">
-      <h1 class="h1--landingpage hero-anim">LSL STUDIO</h1>
-      <p class="subtitle--landingpage hero-anim" aria-label="Portfolio">PORTFOLIO</p>
-    </div>
-
-
-    <div class="hero__scroll hero-anim-late" aria-hidden="true">
-      <div class="scroll-ticker">
-        <span>EXPLORE</span>
-        <span>VISION</span>
-        <span>CREATIVE</span>
-        <span>MOTION</span>
-        <span>PORTFOLIO</span>
-        <span>PROJECTS</span>
-        <span class="final-word">SCROLL</span>
-      </div>
-    </div>
-  </section>
-
-
-  <section class="hook reveal-up" aria-label="Om LSL Studio">
-    <div class="soft-glow-bg">
-      <h2>I EN VERDEN AF UENDELIG SCROLL</h2>
-      <p>
-        Er opmærksomhed blevet en vigtig valuta. Jeg skaber <strong>ikke bare indhold</strong>,
-        men <strong>visuelle oplevelser</strong>, der fastholder seeren.
-        <br /><br />
-        Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
-        bygger jeg broen mellem <strong>kunstnerisk kant</strong> og <strong>kommerciel værdi</strong>.
-      </p>
-    </div>
-  </section>
-
-
-  <section class="stats-section reveal-up" aria-label="Nøgletal og resultater">
-    <div class="soft-glow-bg">
-      <h2 class="section-title">ALGORITMEFORSTÅELSE I HØJSÆDET</h2>
-
-      <div class="stats-flex">
-        <div class="stat-item">
-          <p class="stat-number" data-target="100" aria-label="100K+ community reach">0</p>
-          <span aria-hidden="true">K+</span>
-          <p class="stat-label">Community Reach</p>
+    <section class="hero hero--landingpage">
+        <div class="hero__content">
+            <h1 class="h1--landingpage hero-anim">LSL STUDIO</h1>
+            <!--
+                FIX 2: <p> med .subtitle--landingpage frem for <h2>
+                Korrekt heading-hierarki: siden har kun ét h1.
+                CSS-klassen bevarer det visuelle udtryk.
+            -->
+            <p class="subtitle--landingpage hero-anim" aria-label="Portfolio tagline">
+                Portfolio
+            </p>
         </div>
-        <div class="stat-item">
-          <p class="stat-number" data-target="50" aria-label="50 millioner+ totale visninger">0</p>
-          <span aria-hidden="true">M+</span>
-          <p class="stat-label">TOTALE VISNINGER</p>
+
+        <div class="hero__scroll hero-anim-late" aria-hidden="true">
+            <div class="scroll-ticker">
+                <span>EXPLORE</span>
+                <span>VISION</span>
+                <span>CREATIVE</span>
+                <span>MOTION</span>
+                <span>PORTFOLIO</span>
+                <span>PROJECTS</span>
+                <span class="final-word">SCROLL</span>
+            </div>
         </div>
-        <div class="stat-item">
-          <p class="stat-number" data-target="113" aria-label="113 procent engagement rate">0</p>
-          <span aria-hidden="true">%</span>
-          <p class="stat-label">ENGAGEMENT RATE</p>
+    </section>
+
+    <section class="hook reveal-up" aria-label="Om LSL Studio">
+        <div class="soft-glow-bg">
+            <h2>I EN VERDEN AF UENDELIG SCROLL</h2>
+            <p>
+                Er opmærksomhed blevet en vigtig valuta. Jeg skaber <strong>ikke bare indhold</strong>,
+                men <strong>visuelle oplevelser</strong>, der fastholder seeren.
+                <br /><br />
+                Uanset om det er motion graphics, visuel identitet, plakater eller brochure:
+                bygger jeg broen mellem <strong>kunstnerisk kant</strong> og <strong>kommerciel værdi</strong>.
+            </p>
         </div>
-      </div>
+    </section>
 
-      <p class="stats-description">
-        Gennem arbejde med mine egne platforme har jeg opnået en unik forståelse af algoritmerne
-        på TikTok og Instagram. Jeg omsætter data og tendenser til visuel valuta, der skaber
-        <strong>reel vækst</strong> og fastholder opmærksomheden.
-      </p>
-    </div>
-  </section>
+    <section class="stats-section reveal-up" aria-label="Nøgletal og resultater">
+        <div class="soft-glow-bg">
+            <h2 class="section-title">ALGORITMEFORSTÅELSE I HØJSÆDET</h2>
+            <div class="stats-flex">
+                <div class="stat-item">
+                    <p class="stat-number" data-target="100">0</p>
+                    <span aria-hidden="true">K+</span>
+                    <p class="stat-label">Community Reach</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-number" data-target="50">0</p>
+                    <span aria-hidden="true">M+</span>
+                    <p class="stat-label">TOTALE VISNINGER</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-number" data-target="113">0</p>
+                    <span aria-hidden="true">%</span>
+                    <p class="stat-label">ENGAGEMENT RATE</p>
+                </div>
+            </div>
+            <p class="stats-description">
+                Gennem arbejde med mine egne platforme har jeg opnået en unik forståelse af algoritmerne
+                på TikTok og Instagram. Jeg omsætter data og tendenser til visuel valuta, der skaber
+                <strong>reel vækst</strong> og fastholder opmærksomheden.
+            </p>
+        </div>
 
 
-  <div class="staff-badge reveal-mask">
-    <img
-      src="/images/staff_badge.webp"
-      alt="Lucas Liltorp – 24 år – Studerende i Multimediedesign"
-      loading="lazy"
-      width="300"
-      height="300"
-    />
-  </div>
+    </section>
 
-  <section class="cases-section" aria-label="Udvalgte cases og projekter">
-    <h2 class="section-title section-title--cases reveal-up">UDVALGTE CASES</h2>
-    <div class="cases-list">
-      {selectedCases.map((item, index) => (
-        <CaseItem {...item} reversed={index % 2 !== 0} />
-      ))}
-    </div>
-  </section>
+    <section class="cases-section" aria-label="Udvalgte cases og projekter">
+        <h2 class="section-title section-title--cases reveal-up">UDVALGTE CASES</h2>
+        <div class="cases-list">
+            {selectedCases.map((item, index) => (
+                <CaseItem {...item} reversed={index % 2 !== 0} />
+            ))}
+        </div>
+    </section>
 
-  <Button href="/cases" text="SE ALLE CASES" />
+    <Button href="/cases" text="SE ALLE CASES" />
 </MainLayout>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { SplitText } from 'gsap/SplitText';
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import { SplitText } from 'gsap/SplitText';
 
-  gsap.registerPlugin(ScrollTrigger, SplitText);
+    gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  document.addEventListener('astro:page-load', () => {
+    document.addEventListener('astro:page-load', () => {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // --- Hero-animation ---
+        const heroAnims = document.querySelectorAll<HTMLElement>('.hero-anim');
+        if (heroAnims.length > 0) {
+            if (prefersReduced) {
+                gsap.set(heroAnims, { opacity: 1, y: 0 });
+            } else {
+                gsap.fromTo(
+                    heroAnims,
+                    { y: 50, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: 'power4.out' }
+                );
+            }
+        }
 
-    const heroAnims = document.querySelectorAll('.hero-anim');
-    if (heroAnims.length > 0) {
-      if (prefersReduced) {
-        gsap.set(heroAnims, { opacity: 1, y: 0 });
-      } else {
-        gsap.fromTo(
-          heroAnims,
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: 'power4.out' }
-        );
-      }
-    }
+        // --- Scroll-ticker ---
+        const ticker = document.querySelector<HTMLElement>('.scroll-ticker');
+        const heroAnimLate = document.querySelector<HTMLElement>('.hero-anim-late');
 
-    const ticker = document.querySelector<HTMLElement>('.scroll-ticker');
-    const heroAnimLate = document.querySelector<HTMLElement>('.hero-anim-late');
+        if (ticker && heroAnimLate) {
+            const spans = ticker.querySelectorAll('span');
+            const totalSpans = spans.length;
+            const translatePct = (((totalSpans - 1) / totalSpans) * 100).toFixed(2);
 
-    if (ticker && heroAnimLate) {
-      const spans = ticker.querySelectorAll('span');
-      const totalSpans = spans.length;
-      const translatePct = (((totalSpans - 1) / totalSpans) * 100).toFixed(2);
+            if (prefersReduced) {
+                gsap.set(heroAnimLate, { opacity: 0.5 });
+                gsap.set(ticker, { y: `-${translatePct}%` });
+            } else {
+                gsap.fromTo(heroAnimLate,
+                    { opacity: 0 },
+                    {
+                        opacity: 0.5,
+                        duration: 1.5,
+                        delay: 1,
+                        onComplete: () => {
+                            gsap.to(ticker, {
+                                y: `-${translatePct}%`,
+                                duration: 2.5,
+                                ease: 'expo.inOut',
+                                onComplete: () => {
+                                    // FIX 4: SplitText split/revert-pattern.
+                                    // Gem instance så den kan reverts og undgår
+                                    // DOM-rod ved gentagne page-loads.
+                                    const split = new SplitText('.final-word', { type: 'chars' });
+                                    gsap.from(split.chars, {
+                                        opacity: 0,
+                                        scale: 1.5,
+                                        stagger: 0.1,
+                                        duration: 0.5,
+                                        ease: 'back.out(2)',
+                                        onComplete: () => split.revert(),
+                                    });
+                                },
+                            });
+                        },
+                    }
+                );
+            }
+        }
 
-      if (prefersReduced) {
-        gsap.set(heroAnimLate, { opacity: 0.5 });
-        gsap.set(ticker, { y: `-${translatePct}%` });
-      } else {
-        gsap.fromTo(heroAnimLate, { opacity: 0 }, {
-          opacity: 0.5,
-          duration: 1.5,
-          delay: 1,
-          onComplete: () => {
-            gsap.to(ticker, {
-              y: `-${translatePct}%`,
-              duration: 2.5,
-              ease: 'expo.inOut',
-              onComplete: () => {
-                const finalWord = new SplitText('.final-word', { type: 'chars' });
-                gsap.from(finalWord.chars, {
-                  opacity: 0,
-                  scale: 1.5,
-                  stagger: 0.1,
-                  duration: 0.5,
-                  ease: 'back.out(2)',
-                });
-              },
+        // --- Tæller-animation på stats ---
+        document.querySelectorAll<HTMLElement>('.stat-number').forEach((stat) => {
+            const target = parseInt(stat.getAttribute('data-target') || '0', 10);
+
+            if (prefersReduced) {
+                stat.textContent = String(target);
+                return;
+            }
+
+            // FIX 5: Sæt startteksten til "0" eksplicit i stedet for at
+            // stole på at HTML allerede indeholder "0" — mere robust ved re-init.
+            stat.textContent = '0';
+
+            const obj = { value: 0 };
+            gsap.to(obj, {
+                value: target,
+                duration: 3.5,
+                ease: 'power2.out',
+                onUpdate: () => {
+                    stat.textContent = String(Math.round(obj.value));
+                },
+                scrollTrigger: {
+                    trigger: stat,
+                    start: 'top 85%',
+                    once: true, // FIX 6: Tæl kun op én gang
+                },
             });
-          },
         });
-      }
-    }
-
-
-    document.querySelectorAll<HTMLElement>('.stat-number').forEach((stat) => {
-      const target = parseInt(stat.getAttribute('data-target') || '0', 10);
-
-      if (prefersReduced) {
-        stat.textContent = String(target);
-        return;
-      }
-
-      const obj = { value: 0 };
-      gsap.to(obj, {
-        value: target,
-        duration: 3.5,
-        ease: 'power2.out',
-        onUpdate: () => {
-          stat.textContent = String(Math.round(obj.value));
-        },
-        scrollTrigger: {
-          trigger: stat,
-          start: 'top 85%',
-        },
-      });
     });
-  });
 </script>

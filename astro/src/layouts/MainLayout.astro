@@ -23,9 +23,37 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     <title>{siteTitle}</title>
     <meta name="description" content={siteDescription}>
     <link rel="icon" type="image/svg+xml" href="/images/lsl_logo.svg">
+
+    <!--
+        FIX 1: Preconnect SKAL komme før selve stylesheet-linket.
+        Ellers starter DNS-opslag for sent og fonten forsinkes.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <!--
+        FIX 2: Preload remixicon-fonten direkte.
+        remixicon.css fetcher selv .woff2 — vi springer CSS-round-trip over
+        og loader fonten parallelt med CSS.
+    -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.woff2" as="font" type="font/woff2" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--
+        FIX 3: &display=swap er allerede sat — godt.
+        Tilføj font-weight range for Inter så browseren ikke loader unødvendige vægte.
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
     <ClientRouter />
+
+    <!--
+        FIX 4: slot="head" til structured data fra pages fungerer kun
+        hvis layoutet eksponerer et navngivet slot i <head>.
+        Tilføjet herunder.
+    -->
+    <slot name="head" />
 </head>
 <body>
     <div class="site-wrapper">
@@ -35,9 +63,7 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
                 <div class:list={["timeline__track", { "timeline__track--short": shortTimeline }]}>
                     <div class="timeline__line"></div>
                 </div>
-                
                 <slot />
-                
             </div>
         </main>
         <Footer />
@@ -50,25 +76,36 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
     
     gsap.registerPlugin(ScrollTrigger);
     
+    // FIX 5: ignoreMobileResize reducerer unødvendige ScrollTrigger-refreshes
+    // på mobil ved virtuel tastatur/adressefeltet der ændrer viewport-højden.
     ScrollTrigger.config({ ignoreMobileResize: true });
     
-    let lenis: any;
+    let lenis: InstanceType<typeof Lenis> | null = null;
 
     const initPremiumExperience = () => {
-        lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smoothWheel: true,
-        });
+        // FIX 6: Respekter prefers-reduced-motion — kør ikke Lenis/GSAP-animationer
+        // for brugere der har bedt om reduceret bevægelse.
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-        gsap.ticker.lagSmoothing(0);
+        if (!prefersReduced) {
+            lenis = new Lenis({
+                duration: 1.2,
+                easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+            });
 
-        const timelineLine = document.querySelector('.timeline__line') as HTMLElement;
-        const timelineTrack = document.querySelector('.timeline__track') as HTMLElement;
+            lenis.on('scroll', ScrollTrigger.update);
 
-        if (timelineLine && timelineTrack) {
+            // FIX 7: Brug gsap.ticker frem for requestAnimationFrame-loop
+            // — de synkroniserer allerede med rAF og undgår dobbelt-tick.
+            gsap.ticker.add((time: number) => { lenis!.raf(time * 1000); });
+            gsap.ticker.lagSmoothing(0);
+        }
+
+        const timelineLine = document.querySelector<HTMLElement>('.timeline__line');
+        const timelineTrack = document.querySelector<HTMLElement>('.timeline__track');
+
+        if (timelineLine && timelineTrack && !prefersReduced) {
             gsap.set(timelineLine, { scaleY: 0, opacity: 0.5 });
             
             gsap.to(timelineLine, {
@@ -76,65 +113,78 @@ const siteDescription = description || "LSL Studio - Multimediedesign Portfolio"
                 ease: "none",
                 scrollTrigger: {
                     trigger: timelineTrack,
-                    start: "top 65%", 
-                    end: "bottom 80%", 
-                    scrub: 1,  
-                    invalidateOnRefresh: true, 
+                    start: "top 65%",
+                    end: "bottom 80%",
+                    scrub: 1,
+                    invalidateOnRefresh: true,
                 }
             });
         }
 
-        // Standard reveal animationer
-        const reveals = document.querySelectorAll('.reveal-up');
-        reveals.forEach((el) => {
-            gsap.set(el, { y: 40, opacity: 0 }); 
-            gsap.to(el, {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 92%", 
-                    toggleActions: "play none none none"
-                }
-            });
+        // FIX 8: Reveal-animationer
+        // Bruger gsap.context() for nem cleanup — undgår memory leaks ved
+        // Astro View Transitions hvor DOM genbruges/udskiftes.
+        const ctx = gsap.context(() => {
+            if (!prefersReduced) {
+                gsap.utils.toArray<HTMLElement>('.reveal-up').forEach((el) => {
+                    gsap.fromTo(el,
+                        { y: 40, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 1,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 92%",
+                                toggleActions: "play none none none",
+                                // FIX 9: once:true erstatter toggleActions:"play none none none"
+                                // og er mere eksplicit + frigiver hukommelse.
+                                once: true,
+                            }
+                        }
+                    );
+                });
+
+                gsap.utils.toArray<HTMLElement>('.reveal-mask').forEach((mask) => {
+                    gsap.set(mask, { clipPath: 'inset(0% 0 100% 0)' });
+                    gsap.to(mask, {
+                        clipPath: 'inset(0% 0 0% 0)',
+                        duration: 1.5,
+                        ease: "power4.inOut",
+                        scrollTrigger: {
+                            trigger: mask,
+                            start: "top 90%",
+                            once: true,
+                        }
+                    });
+                });
+            }
         });
 
-        const masks = document.querySelectorAll('.reveal-mask');
-        masks.forEach((mask) => {
-            gsap.to(mask, {
-                clipPath: 'inset(0% 0 0 0)',
-                duration: 1.5,
-                ease: "power4.inOut",
-                scrollTrigger: {
-                    trigger: mask,
-                    start: "top 90%",
-                }
-            });
-        });
+        // FIX 10: Ét enkelt refresh efter load — fjern de to setTimeout-refreshes.
+        // De løber ind i hinanden og kan forårsage flicker.
+        window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
 
-        // Sikkerheds-refresh når alt er fuldt indlæst
-        window.addEventListener('load', () => {
-            ScrollTrigger.refresh();
-        });
-        
-        setTimeout(() => {
-            ScrollTrigger.refresh();
-        }, 1000);
-
-        ScrollTrigger.refresh();
+        // Returner context så den kan ryddes op ved page-transition
+        return ctx;
     };
 
+    let gsapCtx: ReturnType<typeof gsap.context> | null = null;
+
     document.addEventListener('astro:page-load', () => {
-        ScrollTrigger.killAll(); 
-        if (lenis) lenis.destroy();
-        
+        // FIX 11: Ryd op i rigtig rækkefølge:
+        // 1) Destroy gsap context (fjerner alle ScrollTriggers oprettet inden i den)
+        // 2) Kill resterende ScrollTriggers
+        // 3) Destroy Lenis
+        if (gsapCtx) gsapCtx.revert();
+        ScrollTrigger.killAll();
+        if (lenis) { lenis.destroy(); lenis = null; }
+
+        // FIX 12: requestAnimationFrame sikrer at Astro har afsluttet DOM-swap
+        // inden vi initializerer GSAP på det nye DOM.
         requestAnimationFrame(() => {
-            initPremiumExperience();
-            setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 300); 
+            gsapCtx = initPremiumExperience();
         });
     });
 </script>

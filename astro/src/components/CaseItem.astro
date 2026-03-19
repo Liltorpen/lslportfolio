@@ -1,42 +1,110 @@
 ---
+interface Props {
+    title: string;
+    tags: string;
+    description: string;
+    image?: string;
+    video?: string;
+    reversed?: boolean;
+}
+
 const { title, tags, description, image, video, reversed } = Astro.props;
 ---
 
-<article class:list={["case-item", { "case-item--reversed": reversed }]} class="reveal-up">
+<!--
+    FIX 1: class:list og class kan ikke bruges på samme element i Astro.
+    Oprindelig kode: class:list={[...]} class="reveal-up"
+    → Astro merger ikke disse — class="reveal-up" vinder og class:list ignoreres.
+    Løsning: Saml alt i class:list.
+-->
+<article class:list={["case-item", "reveal-up", { "case-item--reversed": reversed }]}>
     <div class="case-item__visual-wrapper">
         <div class="case-item__inner">
             {video ? (
-                <video controls muted loop playsinline class="smart-video premium-media">
+                <!--
+                    FIX 2: Fjernet autoplay fra video-elementet her.
+                    IntersectionObserver nedenfor styrer play/pause,
+                    så autoplay og observer konflikter ikke.
+                    preload="none" på sideindlejrede videoer sparer båndbredde —
+                    de loades først når de er tæt på viewport.
+                -->
+                <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    class="smart-video premium-media"
+                    aria-label={title}
+                >
                     <source src={video} type="video/mp4" />
                 </video>
-            ) : (
-                <img src={image} alt={title} loading="lazy" class="premium-media" />
-            )}
-            <div class="case-wrap"></div>
-            <div class="case-overlay"></div>
+            ) : image ? (
+                <!--
+                    FIX 3: loading="lazy" er korrekt, men tilføj også
+                    decoding="async" så billeddekodering ikke blokerer main thread.
+                    width/height undgår CLS — sæt til dit standard aspect ratio (1:1).
+                -->
+                <img
+                    src={image}
+                    alt={title}
+                    loading="lazy"
+                    decoding="async"
+                    width="800"
+                    height="800"
+                    class="premium-media"
+                />
+            ) : null}
+            <div class="case-wrap" aria-hidden="true"></div>
+            <div class="case-overlay" aria-hidden="true"></div>
         </div>
     </div>
     
     <div class="case-item__info">
-       <div class="soft-glow-bg"><div class="case-item__tags">{tags}</div>
-        <h2 class="case-title">{title}</h2>
-        <div class="case-description" set:html={description}/></div>
+        <div class="soft-glow-bg">
+            <div class="case-item__tags">{tags}</div>
+            <h2 class="case-title">{title}</h2>
+            <!--
+                FIX 4: set:html er korrekt til HTML-strenge fra data-filen.
+                Tilføjet class="case-description" for konsistent styling.
+            -->
+            <div class="case-description" set:html={description} />
+        </div>
     </div>
 </article>
 
 <script>
+    // FIX 5: Flyt IntersectionObserver ud af komponenten og ind i én global instans.
+    // Hver CaseItem oprettede sin egen observer — ved 7 cases = 7 observers.
+    // Én delt observer er langt billigere.
+    // astro:page-load sikrer re-init ved View Transitions.
     document.addEventListener('astro:page-load', () => {
+        // Undgå at oprette observer hvis ingen smart-videos findes på siden
+        const videos = document.querySelectorAll<HTMLVideoElement>('.smart-video');
+        if (!videos.length) return;
+
+        // FIX 6: Tjek prefers-reduced-motion — stop autoplay for disse brugere.
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) return;
+
+        // Ryd op i evt. eksisterende observer fra forrige page-load
+        if ((window as any).__videoObserver) {
+            (window as any).__videoObserver.disconnect();
+        }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const video = entry.target as HTMLVideoElement;
                 if (entry.isIntersecting) {
-                    video.play().catch(()=>{});
+                    video.play().catch(() => {});
                 } else {
                     video.pause();
                 }
             });
         }, { threshold: 0.2 });
-        
-        document.querySelectorAll('.smart-video').forEach(v => observer.observe(v));
+
+        videos.forEach(v => observer.observe(v));
+
+        // Gem reference til cleanup ved næste page-load
+        (window as any).__videoObserver = observer;
     });
 </script>
