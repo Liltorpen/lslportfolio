@@ -157,11 +157,20 @@ h1 { font-size: clamp(35px, 10vw, 100px); }
     margin: 50px 0;
 }
 
+/*
+    TYPOGRAFI — p:
+    Én enkelt kilde til sandhed for al brødtekst.
+    Specialvarianter (hook__body, stats-body osv.) arver herfra
+    og overskriver KUN det der reelt afviger — farve og max-width.
+    Undgår de 6 duplikerede color/font-size-værdier der lå spredt.
+*/
 p {
-    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
-    color: rgba(243, 226, 200, 0.8);
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+    color: rgba(243, 226, 200, 0.7);
     max-width: 65ch;
+    margin-top: 0;
     margin-bottom: 1.5rem;
+    line-height: 1.75;
     text-align: left;
 }
 
@@ -208,11 +217,9 @@ header {
     -webkit-backdrop-filter: blur(var(--header-blur));
     backdrop-filter: blur(var(--header-blur));
     border-bottom: 1px solid rgba(243, 226, 200, 0.05);
-    /*
-        FIX: contain: layout style isolerer header-repaints
-        fra resten af siden — særligt ved sticky scroll.
-    */
-    contain: layout style;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
 .header__inner {
@@ -325,7 +332,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background-color: var(--bg-color);
     z-index: 1500;
     opacity: 0;
@@ -363,7 +370,8 @@ header {
 
 .nav--mobile__logo {
     position: absolute;
-    top: 15px;
+    /* Placer logo under notchen — bruger calc så den altid er synlig */
+    top: calc(15px + env(safe-area-inset-top));
     left: var(--container-padding);
 }
 
@@ -371,7 +379,8 @@ header {
 
 .nav--mobile__footer {
     position: absolute;
-    bottom: 40px;
+    /* Respekter iOS home indicator bar i bunden */
+    bottom: calc(40px + env(safe-area-inset-bottom));
     left: var(--container-padding);
 }
 
@@ -663,11 +672,13 @@ header {
     margin-top: 5px;
 }
 
+/* .skill-desc er et p-element — override alignment og margin */
 .skill-desc {
     font-size: 0.9rem;
     opacity: 0.5;
     text-align: right;
     margin: 0;
+    max-width: none;
 }
 
 .skill-row__line {
@@ -697,6 +708,8 @@ footer {
     position: relative;
     z-index: 10;
     contain: layout style;
+    /* Safe area for home indicator på iPhone */
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .footer__inner {
@@ -711,6 +724,7 @@ footer {
 
 .copyright {
     margin: 0;
+    max-width: none;
     font-family: var(--font-headline);
     font-size: 0.9rem;
     letter-spacing: 2px;
@@ -742,7 +756,7 @@ footer {
    7. PAGE-SPECIFIKKE SEKTIONER
    ========================================================================== */
 .hero {
-    min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -798,14 +812,11 @@ footer {
     gap: 0;
 }
 
-/* Single, consistent paragraph style for the hook */
+/* .hook__body afviger kun i farve og max-width fra global p */
 .hook__body {
-    font-size: clamp(0.9rem, 1.15vw, 1.05rem);
-    color: rgba(243, 226, 200, 0.65);
-    line-height: 1.8;
+    color: rgba(243, 226, 200, 0.6);
     margin: 0 0 1.2rem;
     max-width: 48ch;
-    text-align: left;
 }
 
 .hook__body:last-of-type { margin-bottom: 0; }
@@ -874,10 +885,9 @@ footer {
     margin: 0 0 32px;
 }
 
+/* .stats-body arver font-size og line-height fra p — kun max-width og dæmpet farve afviger */
 .stats-body {
-    font-size: clamp(0.88rem, 1.1vw, 1rem);
-    color: rgba(243, 226, 200, 0.6);
-    line-height: 1.8;
+    color: rgba(243, 226, 200, 0.55);
     max-width: 38ch;
     margin: 0;
 }
@@ -1069,10 +1079,10 @@ footer {
     min-width: 300px;
 }
 
+/* .pitch arver fra p — kun margin-bottom og størrelse afviger */
 .pitch {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 50px;
-    color: rgba(243, 226, 200, 0.8);
 }
 
 .contact-details {
@@ -1303,6 +1313,10 @@ button.knap {
 
     .contact-wrapper { gap: 60px; flex-direction: column; }
     .glass-form      { padding: 30px; }
+
+    /* Forhindrer iOS Safari auto-zoom ved fokus på inputfelter */
+    input,
+    textarea { font-size: 16px; }
 
     .hook__inner { grid-template-columns: 1fr; gap: 32px; }
     .hook__title { font-size: clamp(40px, 10vw, 60px); }
