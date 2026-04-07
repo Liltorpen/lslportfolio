@@ -15,6 +15,36 @@
     --container-padding: 5vw;
     --header-bg: rgba(17, 16, 16, 0.75);
     --header-blur: 15px;
+
+    /* Text opacity variants */
+    --text-dim-70:    rgba(243, 226, 200, 0.7);
+    --text-dim-60:    rgba(243, 226, 200, 0.6);
+    --text-dim-55:    rgba(243, 226, 200, 0.55);
+    --text-dim-50:    rgba(243, 226, 200, 0.5);
+    --text-dim-35:    rgba(243, 226, 200, 0.35);
+    --text-dim-22:    rgba(243, 226, 200, 0.22);
+
+    /* Border tokens */
+    --border-strong:  rgba(243, 226, 200, 0.3);
+    --border-mid:     rgba(243, 226, 200, 0.2);
+    --border-subtle:  rgba(243, 226, 200, 0.1);
+    --border-ghost:   rgba(243, 226, 200, 0.08);
+    --border-ghost2:  rgba(243, 226, 200, 0.05);
+
+    /* Accent variants */
+    --accent-glow:     rgba(243, 82, 38, 0.4);
+    --accent-hover-bg: rgba(243, 82, 38, 0.03);
+    --accent-shadow:   rgba(243, 82, 38, 0.15);
+    --accent-inset:    rgba(243, 82, 38, 0.3);
+
+    /* Background variants */
+    --bg-deeper:      #050505;
+    --bg-overlay-80:  rgba(17, 16, 16, 0.8);
+
+    /* Neutral utility */
+    --shadow-deep:    rgba(0, 0, 0, 0.9);
+    --glass-bg:       rgba(255, 255, 255, 0.02);
+    --glass-inset:    rgba(255, 255, 255, 0.05);
 }
 
 *,
@@ -166,7 +196,7 @@ h1 { font-size: clamp(35px, 10vw, 100px); }
 */
 p {
     font-size: clamp(0.9rem, 1.2vw, 1.05rem);
-    color: rgba(243, 226, 200, 0.7);
+    color: var(--text-dim-70);
     max-width: 65ch;
     margin-top: 0;
     margin-bottom: 1.5rem;
@@ -216,7 +246,7 @@ header {
     background-color: var(--header-bg);
     -webkit-backdrop-filter: blur(var(--header-blur));
     backdrop-filter: blur(var(--header-blur));
-    border-bottom: 1px solid rgba(243, 226, 200, 0.05);
+    border-bottom: 1px solid var(--border-ghost2);
     padding-top: env(safe-area-inset-top);
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
@@ -425,7 +455,7 @@ header {
     box-shadow:
         0 0 10px var(--accent-color),
         0 0 25px var(--accent-color),
-        0 0 45px rgba(243, 82, 38, 0.4);
+        0 0 45px var(--accent-glow);
     border-radius: 50px;
     z-index: -1;
     transform-origin: top;
@@ -478,7 +508,7 @@ header {
     padding: 15px 40px;
     background: var(--bg-color);
     color: var(--text-color);
-    border: 1px solid rgba(243, 226, 200, 0.2);
+    border: 1px solid var(--border-mid);
     text-decoration: none;
     font-family: var(--font-headline);
     font-size: 1.1rem;
@@ -526,13 +556,13 @@ header {
     flex: 1.4;
     position: relative;
     border-radius: 4px;
-    background-color: #050505;
+    background-color: var(--bg-deeper);
     /* FIX: Kun transform og box-shadow animeres */
     transition: transform 0.8s ease, box-shadow 0.8s ease;
     padding: 1px;
     box-shadow:
-        0 30px 60px -10px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        0 30px 60px -10px var(--shadow-deep),
+        0 0 0 1px var(--glass-inset) inset;
     /* FIX: overflow:hidden clipper children ved scale-hover */
     overflow: hidden;
     will-change: transform;
@@ -550,8 +580,8 @@ header {
 .case-item:hover .case-item__visual-wrapper {
     transform: translateY(-15px) scale(1.02);
     box-shadow:
-        0 50px 80px -20px rgba(243, 82, 38, 0.15),
-        0 0 0 1px rgba(243, 82, 38, 0.3) inset;
+        0 50px 80px -20px var(--accent-shadow),
+        0 0 0 1px var(--accent-inset) inset;
 }
 
 .premium-media {
@@ -576,7 +606,7 @@ header {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: radial-gradient(circle at center, transparent 40%, rgba(17, 16, 16, 0.8) 120%);
+    background: radial-gradient(circle at center, transparent 40%, var(--bg-overlay-80) 120%);
     transition: opacity 0.5s ease;
     pointer-events: none;
 }
@@ -631,7 +661,7 @@ header {
 .skills-list {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid rgba(243, 226, 200, 0.1);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .skill-row {
@@ -688,7 +718,7 @@ header {
     left: 0;
     width: 100%;
     height: 1px;
-    background: rgba(243, 226, 200, 0.1);
+    background: var(--border-subtle);
     transition: background 0.4s ease, height 0.4s ease;
 }
 
@@ -705,7 +735,7 @@ header {
 footer {
     width: 100%;
     background-color: var(--bg-color);
-    border-top: 1px solid rgba(243, 226, 200, 0.1);
+    border-top: 1px solid var(--border-subtle);
     position: relative;
     z-index: 10;
     contain: layout style;
@@ -770,7 +800,7 @@ footer {
 .hook {
     margin: var(--section-spacing) auto;
     max-width: 1400px;
-    border-top: 1px solid rgba(243, 226, 200, 0.08);
+    border-top: 1px solid var(--border-ghost);
     padding-top: clamp(48px, 8vh, 100px);
 }
 
@@ -815,7 +845,7 @@ footer {
 
 /* .hook__body afviger kun i farve og max-width fra global p */
 .hook__body {
-    color: rgba(243, 226, 200, 0.6);
+    color: var(--text-dim-60);
     margin: 0 0 1.2rem;
     max-width: 48ch;
 }
@@ -833,8 +863,8 @@ footer {
     font-size: 0.68rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: rgba(243, 226, 200, 0.22);
-    border-top: 1px solid rgba(243, 226, 200, 0.08);
+    color: var(--text-dim-22);
+    border-top: 1px solid var(--border-ghost);
     padding-top: 20px;
 }
 
@@ -848,8 +878,8 @@ footer {
 .stats-section {
     margin-bottom: var(--section-spacing);
     position: relative;
-    border-top: 1px solid rgba(243, 226, 200, 0.1);
-    border-bottom: 1px solid rgba(243, 226, 200, 0.1);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .stats-grid {
@@ -861,7 +891,7 @@ footer {
 
 .stats-grid__left {
     padding: 64px 64px 64px 0;
-    border-right: 1px solid rgba(243, 226, 200, 0.1);
+    border-right: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -888,7 +918,7 @@ footer {
 
 /* .stats-body arver font-size og line-height fra p — kun max-width og dæmpet farve afviger */
 .stats-body {
-    color: rgba(243, 226, 200, 0.55);
+    color: var(--text-dim-55);
     max-width: 38ch;
     margin: 0;
 }
@@ -905,7 +935,7 @@ footer {
     align-items: center;
     justify-content: space-between;
     padding: 0 0 0 64px;
-    border-bottom: 1px solid rgba(243, 226, 200, 0.1);
+    border-bottom: 1px solid var(--border-subtle);
     position: relative;
     overflow: hidden;
     transition: background 0.4s ease;
@@ -925,14 +955,14 @@ footer {
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .stat-row:hover::before { transform: scaleY(1); }
-.stat-row:hover { background: rgba(243, 82, 38, 0.03); }
+.stat-row:hover { background: var(--accent-hover-bg); }
 
 .stat-row__label {
     font-family: var(--font-headline);
     font-size: 0.75rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: rgba(243, 226, 200, 0.35);
+    color: var(--text-dim-35);
 }
 
 .stat-row__number {
@@ -971,13 +1001,13 @@ footer {
     .stats-grid__left {
         padding: 48px 0;
         border-right: none;
-        border-bottom: 1px solid rgba(243, 226, 200, 0.1);
+        border-bottom: 1px solid var(--border-subtle);
         gap: 24px;
     }
     .stats-body { max-width: 100%; }
     .stat-row {
         padding: 28px 0;
-        border-bottom: 1px solid rgba(243, 226, 200, 0.1);
+        border-bottom: 1px solid var(--border-subtle);
     }
     .stat-row::before { display: none; }
 }
@@ -1112,11 +1142,11 @@ footer {
 .detail-link:hover { color: var(--accent-color); }
 
 .glass-form {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--glass-bg);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     padding: 50px;
-    border: 1px solid rgba(243, 226, 200, 0.1);
+    border: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -1129,7 +1159,7 @@ textarea {
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(243, 226, 200, 0.3);
+    border-bottom: 1px solid var(--border-strong);
     padding: 15px 0;
     color: var(--text-color);
     font-size: 1rem;
@@ -1162,7 +1192,7 @@ textarea:focus-visible {
     position: absolute;
     top: 15px;
     left: 0;
-    color: rgba(243, 226, 200, 0.5);
+    color: var(--text-dim-50);
     pointer-events: none;
     transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
     letter-spacing: 1px;
